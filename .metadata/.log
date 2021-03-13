@@ -4726,3 +4726,54 @@ java.lang.InterruptedException
 	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
 	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
 	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 4 0 2021-03-14 00:26:16.589
+!MESSAGE [Error]	No config file for c:\Java\ShopmeEcommerce\ShopmeProject\ShopmeWebParent\ShopmeBackEnd\src\main\resources\templates\user_form.html
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 00:36:10.597
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 2456, state before: 10 after: 4
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 00:41:13.653
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 2629, state before: 10 after: 4
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 00:49:45.523
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 2602, state before: 10 after: 4
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 00:50:34.261
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 2646, state before: 10 after: 4
+
+!ENTRY org.eclipse.lsp4e 2 0 2021-03-14 01:11:56.765
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:385)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2086)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:70)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:163)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:130)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 01:19:21.191
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 3678, state before: 10 after: 4
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 01:19:26.120
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 3678, state before: 10 after: 4
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 01:29:33.300
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 3770, state before: 10 after: 4
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 01:35:39.459
+!MESSAGE [Log]	Scanner.scan has not advanced at offset 4044, state before: 10 after: 4
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-03-14 02:05:20.935
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.qgASqWjx
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-03-14 02:05:20.946
+!MESSAGE unsubscribing from classpath changes: sts4.classpath.qgASqWjx
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-03-14 02:05:20.956
+!MESSAGE subsribers = {}
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-03-14 02:05:20.966
+!MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.qgASqWjx => OK
