@@ -24,6 +24,12 @@ public class PhanQuyen {
 	
 	public PhanQuyen() {
 	}
+	
+
+	public PhanQuyen(Integer maPhanQuyen) {
+		this.maPhanQuyen = maPhanQuyen;
+	}
+
 
 	public PhanQuyen(String ten) {
 		this.ten = ten;
@@ -57,8 +63,37 @@ public class PhanQuyen {
 	public void setMoTa(String moTa) {
 		this.moTa = moTa;
 	}
-	
-	
-	
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((maPhanQuyen == null) ? 0 : maPhanQuyen.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PhanQuyen other = (PhanQuyen) obj;
+		if (maPhanQuyen == null) {
+			if (other.maPhanQuyen != null)
+				return false;
+		} else if (!maPhanQuyen.equals(other.maPhanQuyen))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "PhanQuyen [ten=" + ten + "]";
+	}
+	
 }
