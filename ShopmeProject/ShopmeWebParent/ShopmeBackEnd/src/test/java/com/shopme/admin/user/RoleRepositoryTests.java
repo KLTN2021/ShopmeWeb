@@ -23,7 +23,7 @@ public class RoleRepositoryTests {
 	
 	@Test
 	public void testCreateFirstRole(){
-		PhanQuyen roleAdmin = new PhanQuyen("QuanTriVien", "có tất cả các quyền");
+		PhanQuyen roleAdmin = new PhanQuyen("Quản trị viên", "có tất cả các quyền");
 		PhanQuyen savedRole = repo.save(roleAdmin);
 		
 		assertThat(savedRole.getMaPhanQuyen()).isGreaterThan(0);
@@ -31,16 +31,16 @@ public class RoleRepositoryTests {
 	
 	@Test
 	public void testCreateRestRoles() {
-		PhanQuyen roleSalesperson = new PhanQuyen("NguoiBanHang", "Quản lý giá sản phẩm, "
+		PhanQuyen roleSalesperson = new PhanQuyen("Nhân viên bán hàng", "Quản lý giá sản phẩm, "
 				+ "Khách hàng, giao hàng, đặt hàng và báo cáo bán hàng");
 		
-		PhanQuyen roleEditor = new PhanQuyen("NguoiChinhSuaNoiDung", "Quản lý danh mục, "
+		PhanQuyen roleEditor = new PhanQuyen("Editor", "Quản lý danh mục, "
 				+ "thương hiệu, bài báo cáo, sản phẩm, menu");
 		
-		PhanQuyen roleShipper = new PhanQuyen("NguoiGiaoHang", "Xem sản phẩm, "
+		PhanQuyen roleShipper = new PhanQuyen("Shipper", "Xem sản phẩm, "
 				+ "đơn đặt hàng, hóa đơn và cập nhật trạng thái của đơn hàng");
 		
-		PhanQuyen roleAssistant = new PhanQuyen("PhuTa", "Quản lý câu hỏi "
+		PhanQuyen roleAssistant = new PhanQuyen("Phụ tá", "Quản lý câu hỏi "
 				+ "và nhận xét, đánh giá của khách hàng");
 		
 		repo.saveAll(List.of(roleSalesperson, roleEditor, roleShipper, roleAssistant));

@@ -93,7 +93,7 @@ public class PhanQuyen {
 
 	@Override
 	public String toString() {
-		return "PhanQuyen [ten=" + ten + "]";
+		return this.ten;
 	}
 	
 }
