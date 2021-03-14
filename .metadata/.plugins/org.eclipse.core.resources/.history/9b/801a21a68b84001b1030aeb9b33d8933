@@ -22,6 +22,10 @@ build/
 ### VS Code ###
 .vscode/
 
+
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
 ### STS ###
 .metadata/**
 .apt_generated
