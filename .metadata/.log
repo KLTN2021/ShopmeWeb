@@ -5617,3 +5617,18 @@ java.lang.InterruptedException
 
 !ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2021-03-14 12:49:55.749
 !MESSAGE ClasspathListenerHandler removeClasspathListener sts4.classpath.MJcThmHW => OK
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 13:01:12.426
+!MESSAGE [Info]	Angular language server process ID: 10144
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 13:01:12.437
+!MESSAGE [Info]	Using typescript/lib/tsserverlibrary v4.0.5 from C:\Java\STS4\sts-4.9.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.13.202012011111\node_modules\typescript\lib\tsserverlibrary.js
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 13:01:12.446
+!MESSAGE [Info]	Using @angular/language-service v10.2.2 from C:\Java\STS4\sts-4.9.0.RELEASE\plugins\org.eclipse.wildwebdeveloper_0.5.13.202012011111\node_modules\@angular\language-service\bundles\language-service.js
+
+!ENTRY org.eclipse.lsp4e 1 0 2021-03-14 13:01:12.456
+!MESSAGE [Info]	Log file: undefined
+
+!ENTRY org.eclipse.lsp4e 4 0 2021-03-14 13:01:14.334
+!MESSAGE [Error]	No config file for c:\Java\ShopmeEcommerce\ShopmeProject\ShopmeWebParent\ShopmeBackEnd\src\main\resources\templates\TestGit.html
