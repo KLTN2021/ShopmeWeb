@@ -7,6 +7,8 @@
 	<title>Trang chủ - Shopme Admin </title>
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/fontawesome/all.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
 	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
@@ -77,7 +79,7 @@
 					<th>Email</th>
 					<th>Họ</th>
 					<th>Tên</th>
-					<th>Quyền</th>
+					<th>Chức vụ</th>
 					<th>Trạng thái</th>
 					<th> </th>
 				</tr>
@@ -85,14 +87,20 @@
 			<tbody>
 				<tr th:each="user : ${listUsers}">
 					<td>[[${user.maTK}]]</td>
-					<td> </td>
+					<td><span class="fas fa-portrait fa-3x icon-silver"></span> </td>
 					<td>[[${user.Email}]]</td>
 					<td>[[${user.ho}]]</td>
 					<td>[[${user.ten}]]</td>
 					<td>[[${user.phanquyen}]]</td>
-					<td>[[${user.trangThai}]]</td>
+					
 					<td>
-						Edit &nbsp; Delete
+						<a th:if="${user.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" href=""></a>
+						<a th:if="${user.trangThai == false}" class="fas fa-check-circle fa-2x icon-dark" href=""></a>
+					</td>
+					<td>
+						<a class="fas fa-edit fa-2x icon-green" href=""></a>
+						&nbsp; 
+						<a class="fas fa-trash fa-2x icon-dark" href=""></a>
 					</td>
 				</tr>
 			</tbody>
