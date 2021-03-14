@@ -2,7 +2,6 @@
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
-.metadata/**
 .apt_generated
 .classpath
 .factorypath
@@ -16,7 +15,7 @@
 
 ### Eclipse ###
 
-.metadata/**
+.metadata
 bin/
 tmp/
 *.tmp
