@@ -38,4 +38,10 @@ public class UserService {
 		String encodedPassword = passwordEncoder.encode(user.getMatKhau());
 		user.setMatKhau(encodedPassword);
 	}
+	
+	public boolean isEmailUnique(String email) {
+		TaiKhoan userByEmail = userRepo.getUserByEmail(email);
+		
+		return userByEmail == null;
+	}
 }
