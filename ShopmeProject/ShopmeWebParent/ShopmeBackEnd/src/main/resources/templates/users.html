@@ -98,7 +98,8 @@
 						<a th:if="${user.trangThai == false}" class="fas fa-check-circle fa-2x icon-dark" href=""></a>
 					</td>
 					<td>
-						<a class="fas fa-edit fa-2x icon-green" href=""></a>
+						<a class="fas fa-edit fa-2x icon-green" th:href="@{'/users/edit/' + ${user.maTK}}"
+							title="Chỉnh sửa thông tin tài khoản"></a>
 						&nbsp; 
 						<a class="fas fa-trash fa-2x icon-dark" href=""></a>
 					</td>
