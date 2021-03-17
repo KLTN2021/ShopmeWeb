@@ -25,8 +25,8 @@ public class UserRepositotyTest {
 	
 	@Test
 	public void testCreateNewUserWithOneRole() {
-		PhanQuyen roleAdmin = entityManager.find(PhanQuyen.class, 1);
-		TaiKhoan userTam = new TaiKhoan("nvtamnt99@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
+		PhanQuyen roleAdmin = entityManager.find(PhanQuyen.class, 2);
+		TaiKhoan userTam = new TaiKhoan("nvtamnt@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
 		userTam.addPhanQuyen(roleAdmin);
 		
 		TaiKhoan savedUser = repo.save(userTam);

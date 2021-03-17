@@ -3,14 +3,17 @@ package com.shopme.common.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,25 +30,23 @@ public class TaiKhoan {
 	private String matKhau;
 	
 	@Column(name = "ho", length = 45, nullable = false)
-	private String Ho;
+	private String ho;
 	
 	@Column(name = "ten", length = 45, nullable = false)
-	private String Ten;
+	private String ten;
 	
 	@Column(length = 64)
 	private String hinhAnh;
 	
 	private boolean trangThai;
-	
+
 	@ManyToMany
 	@JoinTable(
 			name = "vaitro_taikhoan",
 			joinColumns = @JoinColumn(name = "ma_tk"),
-			inverseJoinColumns = @JoinColumn(name = "ma_pk")
+			inverseJoinColumns = @JoinColumn(name = "ma_pq")
 			)
 	private Set<PhanQuyen> phanquyen = new HashSet<>();
-	
-	
 
 	public TaiKhoan() {
 	}
@@ -55,8 +56,8 @@ public class TaiKhoan {
 	public TaiKhoan(String email, String matKhau, String ho, String ten) {
 		this.email = email;
 		this.matKhau = matKhau;
-		Ho = ho;
-		Ten = ten;
+		this.ho = ho;
+		this.ten = ten;
 	}
 
 
@@ -86,19 +87,19 @@ public class TaiKhoan {
 	}
 
 	public String getHo() {
-		return Ho;
+		return ho;
 	}
 
 	public void setHo(String ho) {
-		Ho = ho;
+		this.ho = ho;
 	}
 
 	public String getTen() {
-		return Ten;
+		return ten;
 	}
 
 	public void setTen(String ten) {
-		Ten = ten;
+		this.ten = ten;
 	}
 
 	public String getHinhAnh() {
@@ -125,15 +126,15 @@ public class TaiKhoan {
 		this.phanquyen = phanquyen;
 	}
 	
-	public void addPhanQuyen(PhanQuyen pk) {
-		this.phanquyen.add(pk);
+	public void addPhanQuyen(PhanQuyen pq) {
+		this.phanquyen.add(pq);
 	}
 
 
 
 	@Override
 	public String toString() {
-		return "TaiKhoan [maTK=" + maTK + ", email=" + email + ", Ho=" + Ho + ", Ten=" + Ten + ", phanquyen="
+		return "TaiKhoan [maTK=" + maTK + ", email=" + email + ", Ho=" + ho + ", Ten=" + ten + ", phanquyen="
 				+ phanquyen + "]";
 	}
 	
