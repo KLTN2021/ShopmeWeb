@@ -3,6 +3,8 @@ package com.shopme.admin.user;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.shopme.common.entity.PhanQuyen;
 import com.shopme.common.entity.TaiKhoan;
 
 @Service
+@Transactional
 public class UserService {
 	
 	@Autowired
@@ -86,5 +89,9 @@ public class UserService {
 		}
 		
 		userRepo.deleteById(maTK);
+	}
+	
+	public void capNhatTrangThaiNguoiDung(Integer maTK, boolean trangThai) {
+		userRepo.capNhatTrangThai(maTK, trangThai);
 	}
 }

@@ -102,4 +102,16 @@ public class UserRepositotyTest {
 		
 		assertThat(countByMaTK).isNotNull().isGreaterThan(0);
 	}
+	
+	@Test
+	public void kiemThuTatTrangThaiNguoiDung() {
+		Integer maTK = 12;
+		repo.capNhatTrangThai(maTK, false);
+	}
+	
+	@Test
+	public void kiemThuBatTrangThaiNguoiDung() {
+		Integer maTK = 12;
+		repo.capNhatTrangThai(maTK, true);
+	}
 }

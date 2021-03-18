@@ -1,5 +1,6 @@
 package com.shopme.admin.user;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,5 +13,12 @@ public interface UserRepository extends CrudRepository<TaiKhoan, Integer>{
 	
 	//public Long countById(Integer maTK);
 	public Long countByMaTK(Integer maTK);
+	
+	
+	@Query("UPDATE TaiKhoan u SET u.trangThai = ?2 WHERE u.maTK = ?1")
+	@Modifying
+	public void capNhatTrangThai(Integer maTK, boolean trangThai);
+//	public void updateEnabledStatus(Integer maTK, boolean trangThai);
+	
 	
 }

@@ -84,4 +84,17 @@ public class UserController {
 		
 		return "redirect:/users";
 	}
+	
+	@GetMapping("users/{maTK}/trangThai/{itrangthai}") 
+	public String capNhatTrangThaiKichHoatNguoiDung(@PathVariable("maTK") Integer maTK,
+			@PathVariable ("itrangthai") boolean trangThai, RedirectAttributes redirectAttributes) {
+		service.capNhatTrangThaiNguoiDung(maTK, trangThai);
+		String itrangthai = trangThai? " kích hoạt" : " tắt kích hoạt";
+		String thongbao = "Người dùng có mã tài khoản " + maTK + " đã" + itrangthai;
+		redirectAttributes.addFlashAttribute("message", thongbao);
+		
+		return "redirect:/users";
+		
+		}
+	
 }
