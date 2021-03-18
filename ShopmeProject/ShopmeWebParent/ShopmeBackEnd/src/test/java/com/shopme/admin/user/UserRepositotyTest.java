@@ -26,7 +26,7 @@ public class UserRepositotyTest {
 	@Test
 	public void testCreateNewUserWithOneRole() {
 		PhanQuyen roleAdmin = entityManager.find(PhanQuyen.class, 1);
-		TaiKhoan userTam = new TaiKhoan("nvtamnt2111020@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
+		TaiKhoan userTam = new TaiKhoan("nvtamnt@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
 		userTam.addPhanQuyen(roleAdmin);
 		
 		TaiKhoan savedUser = repo.save(userTam);
@@ -56,7 +56,7 @@ public class UserRepositotyTest {
 	
 	@Test
 	public void testGetUserById() {
-		TaiKhoan userTam = repo.findById(2).get();
+		TaiKhoan userTam = repo.findById(1).get();
 		System.out.println(userTam);
 		assertThat(userTam).isNotNull();
 	}
@@ -89,17 +89,9 @@ public class UserRepositotyTest {
 	
 	@Test
 	public void testGetUserByEmail() {
-		String email = "nvToan@gmail.com";
+		String email = "ravi@gmail.com";
 		TaiKhoan user = repo.getUserByEmail(email);
 		
 		assertThat(user).isNotNull();
 	}
-	
-//	@Test
-//	public void testCountById() {
-//		Integer maTK = 1;
-//		Long countById = repo.countById(maTK);
-//		
-//		assertThat(countById).isNotNull().isGreaterThan(0);
-//	}
 }

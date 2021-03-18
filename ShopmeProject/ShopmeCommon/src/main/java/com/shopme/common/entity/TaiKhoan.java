@@ -27,10 +27,10 @@ public class TaiKhoan {
 	private String matKhau;
 	
 	@Column(name = "ho", length = 45, nullable = false)
-	private String ho;
+	private String nHo;
 	
 	@Column(name = "ten", length = 45, nullable = false)
-	private String ten;
+	private String nTen;
 	
 	@Column(length = 64)
 	private String hinhAnh;
@@ -53,8 +53,8 @@ public class TaiKhoan {
 	public TaiKhoan(String email, String matKhau, String ho, String ten) {
 		this.email = email;
 		this.matKhau = matKhau;
-		this.ho = ho;
-		this.ten = ten;
+		nHo = ho;
+		nTen = ten;
 	}
 
 
@@ -84,19 +84,19 @@ public class TaiKhoan {
 	}
 
 	public String getHo() {
-		return ho;
+		return nHo;
 	}
 
 	public void setHo(String ho) {
-		this.ho = ho;
+		nHo = ho;
 	}
 
 	public String getTen() {
-		return ten;
+		return nTen;
 	}
 
 	public void setTen(String ten) {
-		this.ten = ten;
+		nTen = ten;
 	}
 
 	public String getHinhAnh() {
@@ -131,7 +131,7 @@ public class TaiKhoan {
 
 	@Override
 	public String toString() {
-		return "TaiKhoan [maTK=" + maTK + ", email=" + email + ", Ho=" + ho + ", Ten=" + ten + ", phanquyen="
+		return "TaiKhoan [maTK=" + maTK + ", email=" + email + ", Ho=" + nHo + ", Ten=" + nTen + ", phanquyen="
 				+ phanquyen + "]";
 	}
 	
