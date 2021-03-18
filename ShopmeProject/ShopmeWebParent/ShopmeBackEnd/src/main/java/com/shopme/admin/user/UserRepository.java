@@ -9,4 +9,7 @@ import com.shopme.common.entity.TaiKhoan;
 public interface UserRepository extends CrudRepository<TaiKhoan, Integer>{
 	@Query("SELECT u FROM TaiKhoan u WHERE u.email = :email")
 	public TaiKhoan getUserByEmail(@Param("email") String email);
+	
+	public Integer countById(Integer maTK);
+	
 }
