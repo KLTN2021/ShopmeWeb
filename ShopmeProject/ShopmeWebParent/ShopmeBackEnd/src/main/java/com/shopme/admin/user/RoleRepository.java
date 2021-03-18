@@ -7,5 +7,4 @@ import com.shopme.common.entity.PhanQuyen;
 
 @Repository
 public interface RoleRepository extends CrudRepository<PhanQuyen, Integer>{
-               
 }

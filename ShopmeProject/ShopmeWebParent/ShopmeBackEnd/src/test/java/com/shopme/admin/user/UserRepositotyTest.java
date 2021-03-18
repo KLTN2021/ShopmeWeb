@@ -27,7 +27,7 @@ public class UserRepositotyTest {
 	public void testCreateNewUserWithOneRole() {
 		PhanQuyen roleAdmin = entityManager.find(PhanQuyen.class, 1);
 		TaiKhoan userTam = new TaiKhoan("nvtamnt@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
-		userTam.addPhanQuyen(roleAdmin);
+		userTam.themPhanQuyen(roleAdmin);
 		
 		TaiKhoan savedUser = repo.save(userTam);
 		assertThat(savedUser.getMaTK()).isGreaterThan(0);
@@ -40,8 +40,8 @@ public class UserRepositotyTest {
 		PhanQuyen roleEditor = new PhanQuyen(3);
 		PhanQuyen roleAssistant = new PhanQuyen(5);
 		
-		userRavi.addPhanQuyen(roleEditor);
-		userRavi.addPhanQuyen(roleAssistant);
+		userRavi.themPhanQuyen(roleEditor);
+		userRavi.themPhanQuyen(roleAssistant);
 		
 		TaiKhoan savedUser = repo.save(userRavi);
 		
@@ -76,7 +76,7 @@ public class UserRepositotyTest {
 		PhanQuyen roleSalesperson = new PhanQuyen(2);
 		
 		userRavi.getPhanquyen().remove(roleEditor);
-		userRavi.addPhanQuyen(roleSalesperson);
+		userRavi.themPhanQuyen(roleSalesperson);
 		
 		repo.save(userRavi);
 	}

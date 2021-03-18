@@ -34,10 +34,10 @@ public class RoleRepositoryTests {
 		PhanQuyen roleSalesperson = new PhanQuyen("Nhân viên bán hàng", "Quản lý giá sản phẩm, "
 				+ "Khách hàng, giao hàng, đặt hàng và báo cáo bán hàng");
 		
-		PhanQuyen roleEditor = new PhanQuyen("Editor", "Quản lý danh mục, "
+		PhanQuyen roleEditor = new PhanQuyen("Người chỉnh sửa nội dung", "Quản lý danh mục, "
 				+ "thương hiệu, bài báo cáo, sản phẩm, menu");
 		
-		PhanQuyen roleShipper = new PhanQuyen("Shipper", "Xem sản phẩm, "
+		PhanQuyen roleShipper = new PhanQuyen("Người giao hàng", "Xem sản phẩm, "
 				+ "đơn đặt hàng, hóa đơn và cập nhật trạng thái của đơn hàng");
 		
 		PhanQuyen roleAssistant = new PhanQuyen("Phụ tá", "Quản lý câu hỏi "

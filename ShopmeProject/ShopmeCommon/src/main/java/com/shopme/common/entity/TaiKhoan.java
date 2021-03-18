@@ -123,7 +123,7 @@ public class TaiKhoan {
 		this.phanquyen = phanquyen;
 	}
 	
-	public void addPhanQuyen(PhanQuyen pq) {
+	public void themPhanQuyen(PhanQuyen pq) {
 		this.phanquyen.add(pq);
 	}
 
