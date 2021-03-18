@@ -94,4 +94,12 @@ public class UserRepositotyTest {
 		
 		assertThat(user).isNotNull();
 	}
+	
+	@Test
+	public void testCountByMaTK() {
+		Integer maTK = 3;
+		Long countByMaTK = repo.countByMaTK(maTK);
+		
+		assertThat(countByMaTK).isNotNull().isGreaterThan(0);
+	}
 }

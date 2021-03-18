@@ -78,4 +78,13 @@ public class UserService {
 			throw new UserNotFoundException("Không tìm thấy người dùng có mã tài khoản: " + maTK);
 		}
 	}
+	
+	public void delete(Integer maTK) throws UserNotFoundException {
+		Long countByMaTK = userRepo.countByMaTK(maTK);
+		if (countByMaTK == null || countByMaTK == 0) {
+			throw new UserNotFoundException("Không tìm thấy người dùng có mã tài khoản: " + maTK);
+		}
+		
+		userRepo.deleteById(maTK);
+	}
 }

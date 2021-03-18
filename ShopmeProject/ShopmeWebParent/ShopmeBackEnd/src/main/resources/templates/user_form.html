@@ -169,12 +169,12 @@
 			if (response == "OK") {
 				form.submit();
 			}else if (response == "Duplicated") {
-				showModalDialog("Warning", "There is another use having the email: " + userEmail);
+				showModalDialog("Cảnh báo", "Đã có người sử dụng địa chỉ email : " + userEmail);
 			} else {
-				showModalDialog("Error", "Unknown response from server");
+				showModalDialog("Lỗi", "Phản hồi không xác định từ máy chủ");
 			}
 		}).fail(function() {
-			showModalDialog("Error", "Could not connect to the server");
+			showModalDialog("Lỗi", "Không thể kết nối đến máy chủ");
 		});
 		
 		return false;

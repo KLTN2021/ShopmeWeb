@@ -10,6 +10,7 @@ public interface UserRepository extends CrudRepository<TaiKhoan, Integer>{
 	@Query("SELECT u FROM TaiKhoan u WHERE u.email = :email")
 	public TaiKhoan getUserByEmail(@Param("email") String email);
 	
-	public Long countById(Integer maTK);
+	//public Long countById(Integer maTK);
+	public Long countByMaTK(Integer maTK);
 	
 }

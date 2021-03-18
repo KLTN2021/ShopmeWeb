@@ -46,7 +46,7 @@ public class UserController {
 		System.out.println(user);
 		service.save(user);
 		
-		redirectAttributes.addFlashAttribute("message", "The user has been saved successfully.");
+		redirectAttributes.addFlashAttribute("message", "Thông tin người dùng đã được lưu thành công");
 		
 		return "redirect:/users";
 	}
@@ -68,5 +68,20 @@ public class UserController {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/users";
 		}
+	}
+	
+	@GetMapping("/users/delete/{maTK}")
+	public String deleteUser(@PathVariable(name = "maTK") Integer maTK,
+			Model model,
+			RedirectAttributes redirectAttributes) {
+		try {
+			service.delete(maTK);;
+			redirectAttributes.addFlashAttribute("message", "Xóa người dùng có mã tài khoản: " 
+					+ maTK + " thành công");
+		} catch (UserNotFoundException ex) {
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+		}
+		
+		return "redirect:/users";
 	}
 }
