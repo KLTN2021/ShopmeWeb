@@ -32,7 +32,7 @@ public class UserService {
 		return (List<PhanQuyen>) roleRepo.findAll();
 	}
 
-	public void save(TaiKhoan user) {
+	public TaiKhoan save(TaiKhoan user) {
 		boolean isUpdatingUser = (user.getMaTK() != null);
 		
 		if(isUpdatingUser) {
@@ -47,7 +47,7 @@ public class UserService {
 			encodePassword(user);
 		}
 		
-		userRepo.save(user);	
+		return userRepo.save(user);	
 	}
 	
 	private void encodePassword(TaiKhoan user) {

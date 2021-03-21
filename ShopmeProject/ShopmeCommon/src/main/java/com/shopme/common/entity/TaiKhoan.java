@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "taikhoan")
@@ -136,6 +137,11 @@ public class TaiKhoan {
 	}
 	
 	
-	
+	@Transient
+	public String getDuongDanHinhAnh() {
+		if (maTK == null || hinhAnh == null) return "/images/default-user.png";
+		
+		return "/user-photos/" + this.maTK + "/" + this.hinhAnh;
+	}
 	
 }
