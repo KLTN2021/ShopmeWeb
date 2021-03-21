@@ -42,7 +42,7 @@ public class FileUploadUtil {
 				}
 			});
 		} catch (IOException ex) {
-			System.out.println("Không thể hiển thị danh sách thư mục: " + dirPath);
+			System.out.println("không thể liệt kê thư mục: " + dirPath);
 		}
 	}
 }
