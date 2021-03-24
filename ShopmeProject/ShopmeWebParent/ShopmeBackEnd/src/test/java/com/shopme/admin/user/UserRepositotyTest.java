@@ -31,7 +31,7 @@ public class UserRepositotyTest {
 	@Test
 	public void testCreateNewUserWithOneRole() {
 		PhanQuyen roleAdmin = entityManager.find(PhanQuyen.class, 1);
-		TaiKhoan userTam = new TaiKhoan("nvtamnt99@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
+		TaiKhoan userTam = new TaiKhoan("nguyentam@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
 		userTam.themPhanQuyen(roleAdmin);
 		
 		TaiKhoan savedUser = repo.save(userTam);
