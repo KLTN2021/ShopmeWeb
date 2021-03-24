@@ -63,5 +63,9 @@ public class ShopmeUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return user.isTrangThai();
 	}
+	
+	public String getFullname() {
+		return this.user.getHo() + " " + this.user.getTen();
+	}
 
 }
