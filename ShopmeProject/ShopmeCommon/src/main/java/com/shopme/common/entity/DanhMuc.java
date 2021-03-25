@@ -39,6 +39,24 @@ public class DanhMuc {
 	@OneToMany(mappedBy = "danhMucCha")
 	private Set<DanhMuc> danhMuccon = new HashSet<>();
 
+	public DanhMuc() {
+	}
+	
+	public DanhMuc(Integer maDanhMuc) {
+		this.maDanhMuc = maDanhMuc;
+	}
+
+	public DanhMuc(String ten) {
+		this.ten = ten;
+		this.biDanh = ten;
+		this.hinhAnh = "default.png";
+	}
+	
+	public DanhMuc(String ten, DanhMuc danhMucCha) {
+		this(ten);
+		this.danhMucCha = danhMucCha;
+	}
+
 	public Integer getMaDanhMuc() {
 		return maDanhMuc;
 	}
