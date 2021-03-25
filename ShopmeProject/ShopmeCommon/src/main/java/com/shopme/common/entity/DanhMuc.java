@@ -25,7 +25,7 @@ public class DanhMuc {
 	private String ten;
 	
 	@Column(length = 64, nullable = false, unique = true)
-	private String bietHieu;
+	private String biDanh;
 	
 	@Column(length = 128, nullable = false)
 	private String hinhAnh;
@@ -33,11 +33,11 @@ public class DanhMuc {
 	private boolean trangThai;
 	
 	@OneToOne
-	@JoinColumn(name = "cha_id")
-	private DanhMuc cha;
+	@JoinColumn(name = "danhMucCha_id")
+	private DanhMuc danhMucCha;
 	
-	@OneToMany(mappedBy = "cha")
-	private Set<DanhMuc> con = new HashSet<>();
+	@OneToMany(mappedBy = "danhMucCha")
+	private Set<DanhMuc> danhMuccon = new HashSet<>();
 
 	public Integer getMaDanhMuc() {
 		return maDanhMuc;
@@ -55,12 +55,12 @@ public class DanhMuc {
 		this.ten = ten;
 	}
 
-	public String getBietHieu() {
-		return bietHieu;
+	public String getBiDanh() {
+		return biDanh;
 	}
 
-	public void setBietHieu(String bietHieu) {
-		this.bietHieu = bietHieu;
+	public void setBiDanh(String biDanh) {
+		this.biDanh = biDanh;
 	}
 
 	public String getHinhAnh() {
@@ -79,21 +79,19 @@ public class DanhMuc {
 		this.trangThai = trangThai;
 	}
 
-	public DanhMuc getCha() {
-		return cha;
+	public DanhMuc getDanhMucCha() {
+		return danhMucCha;
 	}
 
-	public void setCha(DanhMuc cha) {
-		this.cha = cha;
+	public void setDanhMucCha(DanhMuc danhMucCha) {
+		this.danhMucCha = danhMucCha;
 	}
 
-	public Set<DanhMuc> getCon() {
-		return con;
+	public Set<DanhMuc> getDanhMuccon() {
+		return danhMuccon;
 	}
 
-	public void setCon(Set<DanhMuc> con) {
-		this.con = con;
+	public void setDanhMuccon(Set<DanhMuc> danhMuccon) {
+		this.danhMuccon = danhMuccon;
 	}
-	
-	
 }
