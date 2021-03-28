@@ -74,13 +74,81 @@
 		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class = "thead-dark">
 				<tr>
-					<th>Mã tài khoản </th>
+					<th>
+						<a th:if="${sortField != 'maTK'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=maTK&sortDir=' + ${sortDir}}" >
+							Mã tài khoản 
+						</a>
+						<a th:if="${sortField == 'maTK'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=maTK&sortDir=' + ${reverseSortDir}}" >
+							Mã tài khoản 
+						</a>
+						
+						
+						<span th:if="${sortField == 'maTK'}"
+							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+					</th>
 					<th>Ảnh đại diện</th>
-					<th>Email</th>
-					<th>Họ</th>
-					<th>Tên</th>
-					<th>Chức vụ</th>
-					<th>Trạng thái</th>
+					<th>
+						<a th:if="${sortField != 'email'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir}}" >
+							Email
+						</a>
+						<a th:if="${sortField == 'email'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}" >
+							Email
+						</a>
+						
+						
+						<span th:if="${sortField == 'email'}"
+							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+					</th>
+					
+					<th>
+						<a th:if="${sortField != 'nHo'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=nHo&sortDir=' + ${sortDir}}" >
+							Họ
+						</a>
+						<a th:if="${sortField == 'nHo'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=nHo&sortDir=' + ${reverseSortDir}}" >
+							Họ
+						</a>
+						
+						
+						<span th:if="${sortField == 'nHo'}"
+							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+					</th>
+					
+					<th>
+						<a th:if="${sortField != 'nTen'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=nTen&sortDir=' + ${sortDir}}" >
+							Tên
+						</a>
+						<a th:if="${sortField == 'nTen'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=nTen&sortDir=' + ${reverseSortDir}}" >
+							Tên
+						</a>
+						
+						
+						<span th:if="${sortField == 'nTen'}"
+							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+					</th>
+					<th>Chức vụ</th>					
+					<th>
+						<a th:if="${sortField != 'trangThai'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=trangThai&sortDir=' + ${sortDir}}" >
+							Trạng thái
+						</a>
+						<a th:if="${sortField == 'trangThai'}" class="text-white"
+							th:href="@{'/users/page/' + ${currentPage} + '?sortField=trangThai&sortDir=' + ${reverseSortDir}}" >
+							Trạng thái
+						</a>
+						
+						
+						<span th:if="${sortField == 'trangThai'}"
+							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+					</th>
+					
 					<th> </th>
 				</tr>
 			</thead>
@@ -131,24 +199,24 @@
 		<nav>
 			<ul class="pagination justify-content-center">
 				<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{/users/page/1}">Trang đầu</a>
+					<a class="page-link" th:href="@{'/users/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Trang đầu</a>
 				</li>
 				
 				<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{'/users/page/' + ${currentPage - 1}}">Trở về</a>
+					<a class="page-link" th:href="@{'/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Trở về</a>
 				</li>
 				
 				<li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" 
 					th:each="i : ${#numbers.sequence(1, totalPages)}">
-					<a class="page-link" th:href="@{'/users/page/' + ${i}}">[[${i}]]</a>
+					<a class="page-link" th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
 				</li>
 				
 				<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{'/users/page/' + ${currentPage + 1}}">Trang tiếp theo</a>
+					<a class="page-link" th:href="@{'/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Trang tiếp theo</a>
 				</li>
 				
 				<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{'/users/page/' + ${totalPages}}">Trang cuối</a>
+					<a class="page-link" th:href="@{'/users/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Trang cuối</a>
 				</li>
 			</ul>
 		</nav>
