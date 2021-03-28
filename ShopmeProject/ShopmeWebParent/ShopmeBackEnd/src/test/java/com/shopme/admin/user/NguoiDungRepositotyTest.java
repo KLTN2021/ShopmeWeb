@@ -32,7 +32,7 @@ public class NguoiDungRepositotyTest {
 	@Test
 	public void testCreateNewUserWithOneRole() {
 		PhanQuyen roleAdmin = entityManager.find(PhanQuyen.class, 1);
-		TaiKhoan userTam = new TaiKhoan("nguyentam@gmail.com", "tam2020", "Nguyễn Văn", "Tâm");
+		TaiKhoan userTam = new TaiKhoan("nguyenson@gmail.com", "tam2020", "Nguyễn Văn", "Sonw");
 		userTam.themPhanQuyen(roleAdmin);
 		
 		TaiKhoan savedUser = repo.save(userTam);
@@ -41,7 +41,7 @@ public class NguoiDungRepositotyTest {
 	
 	@Test
 	public void testCreateNewUserWithTwoRole() {
-		TaiKhoan userRavi = new TaiKhoan("ravi@gmail.com", "ravi2020", "Ravi", "Khunmar");
+		TaiKhoan userRavi = new TaiKhoan("ravi12@gmail.com", "ravi2020", "Ravi", "Khunmar");
 		
 		PhanQuyen roleEditor = new PhanQuyen(3);
 		PhanQuyen roleAssistant = new PhanQuyen(5);
@@ -77,7 +77,7 @@ public class NguoiDungRepositotyTest {
 	
 	@Test
 	public void testUpdateUserRoles() {
-		TaiKhoan userRavi = repo.findById(2).get();
+		TaiKhoan userRavi = repo.findById(23).get();
 		PhanQuyen roleEditor = new PhanQuyen(3);
 		PhanQuyen roleSalesperson = new PhanQuyen(2);
 		
@@ -89,13 +89,13 @@ public class NguoiDungRepositotyTest {
 	
 	@Test
 	public void testDeleteUser() {
-		Integer userId = 2;	
+		Integer userId = 23;	
 		repo.deleteById(userId);
 	}
 	
 	@Test
 	public void testGetUserByEmail() {
-		String email = "ravi@gmail.com";
+		String email = "nvtamnt99@gmail.com";
 		TaiKhoan user = repo.getUserByEmail(email);
 		
 		assertThat(user).isNotNull();
@@ -103,7 +103,7 @@ public class NguoiDungRepositotyTest {
 	
 	@Test
 	public void testCountByMaTK() {
-		Integer maTK = 3;
+		Integer maTK = 14;
 		Long countByMaTK = repo.countByMaTK(maTK);
 		
 		assertThat(countByMaTK).isNotNull().isGreaterThan(0);
@@ -111,20 +111,20 @@ public class NguoiDungRepositotyTest {
 	
 	@Test
 	public void kiemThuTatTrangThaiNguoiDung() {
-		Integer maTK = 12;
+		Integer maTK = 14;
 		repo.capNhatTrangThai(maTK, false);
 	}
 	
 	@Test
 	public void kiemThuBatTrangThaiNguoiDung() {
-		Integer maTK = 12;
+		Integer maTK = 14;
 		repo.capNhatTrangThai(maTK, true);
 	}
 	
 	@Test
 	public void testListFirstPage() {
-		int pageNumber = 1;
-		int pageSize = 4;
+		int pageNumber = 2;
+		int pageSize = 2;
 		
 		Pageable pageable = PageRequest.of(pageNumber, pageSize);
 		Page<TaiKhoan> page = repo.findAll(pageable);
@@ -134,5 +134,23 @@ public class NguoiDungRepositotyTest {
 		listUsers.forEach(user -> System.out.println(user));
 		
 		assertThat(listUsers.size()).isEqualTo(pageSize);
+	}
+	
+	@Test
+	public void testTimKiemTaiKhoan() {
+		String keyword = "tâm";
+		
+		int pageNumber = 0;
+		int pageSize = 4;
+		
+		Pageable pageable = PageRequest.of(pageNumber, pageSize);
+		Page<TaiKhoan> page = repo.timKiem(keyword, pageable);
+		
+		List<TaiKhoan> listUsers = page.getContent();
+		
+		listUsers.forEach(user -> System.out.println(user));
+		
+		assertThat(listUsers.size()).isGreaterThan(0);
+		
 	}
 }

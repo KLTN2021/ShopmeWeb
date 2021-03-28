@@ -1,5 +1,7 @@
 package com.shopme.admin.nguoidung;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -14,6 +16,10 @@ public interface NguoiDungRepository extends PagingAndSortingRepository<TaiKhoan
 	
 	//public Long countById(Integer maTK);
 	public Long countByMaTK(Integer maTK);
+	
+	@Query("SELECT u FROM TaiKhoan u WHERE CONCAT(u.maTK, ' ', u.email, ' ', u.nHo, ' ',"
+			+ " u.nTen) LIKE %?1%")
+	public Page<TaiKhoan> timKiem(String keyword, Pageable pageable);
 	
 	
 	@Query("UPDATE TaiKhoan u SET u.trangThai = ?2 WHERE u.maTK = ?1")

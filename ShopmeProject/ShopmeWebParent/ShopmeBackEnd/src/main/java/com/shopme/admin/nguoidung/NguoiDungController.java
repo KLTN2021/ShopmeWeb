@@ -27,19 +27,21 @@ public class NguoiDungController {
 	
 	@GetMapping("/nguoidung")
 	public String listFirstPage(Model model) {
-		return listByPage(1, model, "nHo", "asc");
+		return listByPage(1, model, "nHo", "asc", null);
 	}
 	
 	@GetMapping("/nguoidung/page/{pageNum}")
-	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
-			@Param("sortField") String sortField, @Param("sortDir") String sortDir
+	public String listByPage(
+			@PathVariable(name = "pageNum") int pageNum, Model model,
+			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
+			@Param("keyword") String keyword
 			) {
 		System.out.println("sort Field: " + sortField);
 		
 		System.out.println("sort Order: " + sortDir);
 		
 		
-		Page<TaiKhoan> page = service.listByPage(pageNum, sortField, sortDir);
+		Page<TaiKhoan> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		
 		List<TaiKhoan> listUsers = page.getContent();
 		
@@ -60,7 +62,7 @@ public class NguoiDungController {
 		model.addAttribute("sortField", sortField);
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", reverseSortDir);
-		
+		model.addAttribute("keyword", keyword);
 		return "nguoidung";
 	}
 	
