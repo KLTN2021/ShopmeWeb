@@ -1,4 +1,4 @@
-package com.shopme.admin.user;
+package com.shopme.admin.nguoidung;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserRestController {
+public class NguoiDungRestController {
 	@Autowired
-	private UserService service;
+	private NguoiDungService service;
 	
-	@PostMapping("/users/check_email")
+	@PostMapping("/nguoidung/check_email")
 	public String checkDuplicateEmail(@Param("maTK") Integer maTK, @Param("email") String email) {
 		return service.isEmailUnique(maTK ,email) ? "OK" : "Duplicated";
 	}

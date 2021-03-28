@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import com.shopme.admin.danhmuc.DanhMucRepository;
 import com.shopme.common.entity.DanhMuc;
 
 @DataJpaTest(showSql = false)
@@ -21,7 +22,7 @@ import com.shopme.common.entity.DanhMuc;
 public class CategoryRepositoryTests {
 	
 	@Autowired
-	private CategoryRepository repo;
+	private DanhMucRepository repo;
 	
 	@Test
 	public void testCreateRootCategory() {

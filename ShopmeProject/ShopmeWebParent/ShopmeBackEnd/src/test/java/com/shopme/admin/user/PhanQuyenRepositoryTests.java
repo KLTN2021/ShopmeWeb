@@ -11,15 +11,16 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
+import com.shopme.admin.nguoidung.PhanQuyenRepository;
 import com.shopme.common.entity.PhanQuyen;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
-public class RoleRepositoryTests {
+public class PhanQuyenRepositoryTests {
 	
 	@Autowired
-	private RoleRepository repo;
+	private PhanQuyenRepository repo;
 	
 	@Test
 	public void testCreateFirstRole(){

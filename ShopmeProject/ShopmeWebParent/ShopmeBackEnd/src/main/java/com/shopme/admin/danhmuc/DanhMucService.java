@@ -1,4 +1,4 @@
-package com.shopme.admin.category;
+package com.shopme.admin.danhmuc;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import com.shopme.common.entity.DanhMuc;
 
 @Service
-public class CategoryService {
+public class DanhMucService {
 	@Autowired
-	private CategoryRepository repo;
+	private DanhMucRepository repo;
 	
 	public List<DanhMuc> listAll() {
 		return (List<DanhMuc>) repo.findAll();

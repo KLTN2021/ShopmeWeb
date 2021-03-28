@@ -1,4 +1,4 @@
-package com.shopme.admin.user;
+package com.shopme.admin.nguoidung;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,16 +21,16 @@ import com.shopme.common.entity.PhanQuyen;
 import com.shopme.common.entity.TaiKhoan;
 
 @Controller
-public class UserController {
+public class NguoiDungController {
 	@Autowired
-	private UserService service;
+	private NguoiDungService service;
 	
-	@GetMapping("/users")
+	@GetMapping("/nguoidung")
 	public String listFirstPage(Model model) {
 		return listByPage(1, model, "nHo", "asc");
 	}
 	
-	@GetMapping("/users/page/{pageNum}")
+	@GetMapping("/nguoidung/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model,
 			@Param("sortField") String sortField, @Param("sortDir") String sortDir
 			) {
@@ -43,8 +43,8 @@ public class UserController {
 		
 		List<TaiKhoan> listUsers = page.getContent();
 		
-		long startCount = (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
-		long endCount = startCount + UserService.USERS_PER_PAGE - 1;
+		long startCount = (pageNum - 1) * NguoiDungService.USERS_PER_PAGE + 1;
+		long endCount = startCount + NguoiDungService.USERS_PER_PAGE - 1;
 		if(endCount > page.getTotalElements()) {
 			endCount = page.getTotalElements();
 		}
@@ -61,10 +61,10 @@ public class UserController {
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		
-		return "users";
+		return "nguoidung";
 	}
 	
-	@GetMapping("/users/new")
+	@GetMapping("/nguoidung/new")
 	public String newUser(Model model) {
 		List<PhanQuyen> listRoles = service.listRoles();
 		
@@ -75,10 +75,10 @@ public class UserController {
 		model.addAttribute("listRoles", listRoles);
 		model.addAttribute("pageTitle", "Tạo tài khoản mới");
 		
-		return "user_form";
+		return "nguoidung_form";
 	}
 	
-	@PostMapping("/users/save")
+	@PostMapping("/nguoidung/save")
 	public String saveUser(TaiKhoan user, RedirectAttributes redirectAttributes,
 			 @RequestParam("image") MultipartFile multipartFile) throws IOException {
 		
@@ -98,10 +98,10 @@ public class UserController {
 		}
 		redirectAttributes.addFlashAttribute("message", "Thông tin người dùng đã được lưu thành công");
 		
-		return "redirect:/users";
+		return "redirect:/nguoidung";
 	}
 	
-	@GetMapping("/users/edit/{maTK}")
+	@GetMapping("/nguoidung/edit/{maTK}")
 	public String editUser(@PathVariable(name = "maTK") Integer maTK,
 			Model model,
 			RedirectAttributes redirectAttributes) {
@@ -113,14 +113,14 @@ public class UserController {
 			model.addAttribute("pageTitle", "Chỉnh sửa thông tin người dùng (mã tài khoản: " + maTK + ")");
 			model.addAttribute("listRoles", listRoles);
 			
-			return "user_form";
-		} catch (UserNotFoundException ex) {
+			return "nguoidung_form";
+		} catch (NguoiDungNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
-			return "redirect:/users";
+			return "redirect:/nguoidung";
 		}
 	}
 	
-	@GetMapping("/users/delete/{maTK}")
+	@GetMapping("/nguoidung/delete/{maTK}")
 	public String deleteUser(@PathVariable(name = "maTK") Integer maTK,
 			Model model,
 			RedirectAttributes redirectAttributes) {
@@ -128,14 +128,14 @@ public class UserController {
 			service.delete(maTK);;
 			redirectAttributes.addFlashAttribute("message", "Xóa người dùng có mã tài khoản: " 
 					+ maTK + " thành công");
-		} catch (UserNotFoundException ex) {
+		} catch (NguoiDungNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 		}
 		
-		return "redirect:/users";
+		return "redirect:/nguoidung";
 	}
 	
-	@GetMapping("users/{maTK}/trangThai/{itrangthai}") 
+	@GetMapping("nguoidung/{maTK}/trangThai/{itrangthai}") 
 	public String capNhatTrangThaiKichHoatNguoiDung(@PathVariable("maTK") Integer maTK,
 			@PathVariable ("itrangthai") boolean trangThai, RedirectAttributes redirectAttributes) {
 		service.capNhatTrangThaiNguoiDung(maTK, trangThai);
@@ -143,7 +143,7 @@ public class UserController {
 		String thongbao = "Người dùng có mã tài khoản " + maTK + " đã" + itrangthai;
 		redirectAttributes.addFlashAttribute("message", thongbao);
 		
-		return "redirect:/users";
+		return "redirect:/nguoidung";
 		
 		}
 	

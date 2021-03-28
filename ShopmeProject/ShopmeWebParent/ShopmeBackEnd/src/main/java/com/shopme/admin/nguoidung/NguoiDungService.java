@@ -1,4 +1,4 @@
-package com.shopme.admin.user;
+package com.shopme.admin.nguoidung;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,14 +18,14 @@ import com.shopme.common.entity.TaiKhoan;
 
 @Service
 @Transactional
-public class UserService {
+public class NguoiDungService {
 	public static final int USERS_PER_PAGE = 4;
 	
 	@Autowired
-	private UserRepository userRepo;
+	private NguoiDungRepository userRepo;
 	
 	@Autowired
-	private RoleRepository roleRepo;
+	private PhanQuyenRepository roleRepo;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -87,18 +87,18 @@ public class UserService {
 		return true;
 	}
 
-	public TaiKhoan get(Integer maTK) throws UserNotFoundException {
+	public TaiKhoan get(Integer maTK) throws NguoiDungNotFoundException {
 		try {
 			return userRepo.findById(maTK).get();
 		} catch (NoSuchElementException ex) {
-			throw new UserNotFoundException("Không tìm thấy người dùng có mã tài khoản: " + maTK);
+			throw new NguoiDungNotFoundException("Không tìm thấy người dùng có mã tài khoản: " + maTK);
 		}
 	}
 	
-	public void delete(Integer maTK) throws UserNotFoundException {
+	public void delete(Integer maTK) throws NguoiDungNotFoundException {
 		Long countByMaTK = userRepo.countByMaTK(maTK);
 		if (countByMaTK == null || countByMaTK == 0) {
-			throw new UserNotFoundException("Không tìm thấy người dùng có mã tài khoản: " + maTK);
+			throw new NguoiDungNotFoundException("Không tìm thấy người dùng có mã tài khoản: " + maTK);
 		}
 		
 		userRepo.deleteById(maTK);

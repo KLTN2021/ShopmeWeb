@@ -1,4 +1,4 @@
-package com.shopme.admin.category;
+package com.shopme.admin.danhmuc;
 
 import java.util.List;
 
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.shopme.common.entity.DanhMuc;
 
 @Controller
-public class CategoryController {
+public class DanhMucController {
 	@Autowired
-	private CategoryService service;
+	private DanhMucService service;
 	
-	@GetMapping("/categories")
+	@GetMapping("/danhmuc")
 	public String listAll(Model model) {
 		List<DanhMuc> listCategories = service.listAll();
 		model.addAttribute("listCategories", listCategories);
 		
-		return "categories/categories";
+		return "danhmuc/danhmuc";
 	}
 }

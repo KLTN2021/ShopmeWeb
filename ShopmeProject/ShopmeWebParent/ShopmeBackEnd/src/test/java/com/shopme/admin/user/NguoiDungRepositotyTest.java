@@ -15,15 +15,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.annotation.Rollback;
 
+import com.shopme.admin.nguoidung.NguoiDungRepository;
 import com.shopme.common.entity.PhanQuyen;
 import com.shopme.common.entity.TaiKhoan;
 
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
-public class UserRepositotyTest {
+public class NguoiDungRepositotyTest {
 	@Autowired
-	private UserRepository repo;
+	private NguoiDungRepository repo;
 	
 	@Autowired
 	private TestEntityManager entityManager;
