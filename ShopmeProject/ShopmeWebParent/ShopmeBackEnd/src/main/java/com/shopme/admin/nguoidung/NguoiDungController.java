@@ -100,7 +100,12 @@ public class NguoiDungController {
 		}
 		redirectAttributes.addFlashAttribute("message", "Thông tin người dùng đã được lưu thành công");
 		
-		return "redirect:/nguoidung";
+		return getRedirectURLtoAffectedTaiKhoan(user);
+	}
+
+	private String getRedirectURLtoAffectedTaiKhoan(TaiKhoan user) {
+		String firstPartOfEmail = user.getEmail().split("@")[0];
+		return "redirect:/nguoidung/page/1?sortField=maTK&sortDir=asc&keyword=" + firstPartOfEmail;
 	}
 	
 	@GetMapping("/nguoidung/edit/{maTK}")

@@ -87,80 +87,15 @@
 		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class = "thead-dark">
 				<tr>
-					<th>
-						<a th:if="${sortField != 'maTK'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=maTK&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-							Mã tài khoản 
-						</a>
-						<a th:if="${sortField == 'maTK'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=maTK&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">
-							Mã tài khoản 
-						</a>
-						
-						
-						<span th:if="${sortField == 'maTK'}"
-							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-					</th>
+					<th th:replace="fragments :: column_link('maTK', 'Mã tài khoản')" /> 
 					<th>Ảnh đại diện</th>
-					<th>
-						<a th:if="${sortField != 'email'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Email
-						</a>
-						<a th:if="${sortField == 'email'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Email
-						</a>
-						
-						
-						<span th:if="${sortField == 'email'}"
-							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-					</th>
+					<th th:replace="fragments :: column_link('email', 'E-mail')" /> 
 					
-					<th>
-						<a th:if="${sortField != 'nHo'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=nHo&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Họ
-						</a>
-						<a th:if="${sortField == 'nHo'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=nHo&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Họ
-						</a>
-						
-						
-						<span th:if="${sortField == 'nHo'}"
-							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-					</th>
+					<th th:replace="fragments :: column_link('nHo', 'Họ')" />
 					
-					<th>
-						<a th:if="${sortField != 'nTen'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=nTen&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Tên
-						</a>
-						<a th:if="${sortField == 'nTen'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=nTen&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Tên
-						</a>
-						
-						
-						<span th:if="${sortField == 'nTen'}"
-							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-					</th>
+					<th th:replace="fragments :: column_link('nTen', 'Tên')" />
 					<th>Chức vụ</th>					
-					<th>
-						<a th:if="${sortField != 'trangThai'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=trangThai&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Trạng thái
-						</a>
-						<a th:if="${sortField == 'trangThai'}" class="text-white"
-							th:href="@{'/nguoidung/page/' + ${currentPage} + '?sortField=trangThai&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}" >
-							Trạng thái
-						</a>
-						
-						
-						<span th:if="${sortField == 'trangThai'}"
-							th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-					</th>
+					<th th:replace="fragments :: column_link('trangThai', 'Trạng thái')" />
 					
 					<th> </th>
 				</tr>
@@ -212,24 +147,24 @@
 		<nav>
 			<ul class="pagination justify-content-center">
 				<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{'/nguoidung/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Trang đầu</a>
+					<a th:replace="fragments :: page_link(1, 'Trang đầu')"></a>
 				</li>
 				
 				<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{'/nguoidung/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Trở về</a>
+					<a th:replace="fragments :: page_link(${currentPage - 1}, 'Trở về')"></a>
 				</li>
 				
 				<li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" 
 					th:each="i : ${#numbers.sequence(1, totalPages)}">
-					<a class="page-link" th:href="@{'/nguoidung/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${i}]]</a>
+					<a th:replace="fragments :: page_link(${i}, ${i})"></a>
 				</li>
 				
 				<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{'/nguoidung/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Trang tiếp theo</a>
+					<a th:replace="fragments :: page_link(${currentPage + 1}, 'Trang tiếp theo')"></a>
 				</li>
 				
 				<li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-					<a class="page-link" th:href="@{'/nguoidung/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Trang cuối</a>
+					<a th:replace="fragments :: page_link(${totalPages}, 'Trang cuối')"></a>
 				</li>
 			</ul>
 		</nav>
