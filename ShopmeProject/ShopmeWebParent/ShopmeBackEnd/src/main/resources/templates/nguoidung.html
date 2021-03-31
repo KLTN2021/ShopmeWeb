@@ -64,6 +64,8 @@
 	<div>
 		<h2>Quản lý tài khoản người dùng</h2>
 		<a th:href="@{/nguoidung/new}">Tạo tài khoản mới</a>
+		&nbsp;|&nbsp;
+		<a th:href="@{/nguoidung/export/csv}">Xuất file CSV</a>
 	</div>
 	
 	<div th:if="${message != null}" class = "alert alert-success text-center">

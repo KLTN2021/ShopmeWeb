@@ -31,7 +31,7 @@ public class NguoiDungService {
 	private PasswordEncoder passwordEncoder;
 	
 	public List<TaiKhoan> listAll(){
-		return (List<TaiKhoan>) userRepo.findAll();
+		return (List<TaiKhoan>) userRepo.findAll(Sort.by("nHo").ascending());
 	}
 	
 	public List<PhanQuyen> listRoles(){

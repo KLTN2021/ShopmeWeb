@@ -3,6 +3,8 @@ package com.shopme.admin.nguoidung;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -153,5 +155,12 @@ public class NguoiDungController {
 		return "redirect:/nguoidung";
 		
 		}
+	
+	@GetMapping("/nguoidung/export/csv")
+	public void xuatFileCSV(HttpServletResponse response) throws IOException {
+		List<TaiKhoan> listUsers = service.listAll();
+		NguoiDungCsvExporter exporter = new NguoiDungCsvExporter();
+		exporter.export(listUsers, response);
+	}
 	
 }
