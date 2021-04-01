@@ -163,4 +163,12 @@ public class NguoiDungController {
 		exporter.export(listUsers, response);
 	}
 	
+	@GetMapping("/nguoidung/export/excel")
+	public void xuatFileExcel(HttpServletResponse response) throws IOException {
+		List<TaiKhoan> listUsers = service.listAll();
+		
+		NguoiDungExcelExporter exporter = new NguoiDungExcelExporter();
+		exporter.export(listUsers, response);
+	}
+	
 }
