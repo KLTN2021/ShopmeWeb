@@ -171,4 +171,12 @@ public class NguoiDungController {
 		exporter.export(listUsers, response);
 	}
 	
+	@GetMapping("/nguoidung/export/pdf")
+	public void xuatFilePDF(HttpServletResponse response) throws IOException {
+		List<TaiKhoan> listUsers = service.listAll();
+		
+		NguoiDungPDFExporter exporter = new NguoiDungPDFExporter();
+		exporter.export(listUsers, response);
+	}
+	
 }
