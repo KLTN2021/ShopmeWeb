@@ -63,13 +63,13 @@
 	</div>
 	<div>
 		<h2>Quản lý tài khoản người dùng</h2>
-		<a th:href="@{/nguoidung/new}">Tạo tài khoản mới</a>
-		&nbsp;|&nbsp;
-		<a th:href="@{/nguoidung/export/csv}">Xuất file CSV</a>
-		&nbsp;|&nbsp;
-		<a th:href="@{/nguoidung/export/excel}">Xuất file Excel</a>
-		&nbsp;|&nbsp;
-		<a th:href="@{/nguoidung/export/pdf}">Xuất file PDF</a>
+		<a th:href="@{/nguoidung/new}" class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+		
+		<a th:href="@{/nguoidung/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
+		
+		<a th:href="@{/nguoidung/export/excel}" class="fas fa-file-excel fa-2x icon-dark mr-2"></a>
+		
+		<a th:href="@{/nguoidung/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark"></a>
 	</div>
 	
 	<div th:if="${message != null}" class = "alert alert-success text-center">
@@ -83,38 +83,48 @@
 			Lọc kết quả: &nbsp;
 			<input type="search" name="keyword" th:value="${keyword}" class="form-control" required />
 			 &nbsp; &nbsp;
-			 <input type="submit" value="Tìm kiếm" class="btn btn-primary" />
+			 <button type="submit" class="btn btn-primary" >
+			 	<i class="fas fa-search"></i>
+			 </button>
 			 &nbsp; &nbsp;
-			 <input type="button" value="Xóa rỗng" class="btn btn-secondary" onclick="clearFilter()" />
+			 <button type="button" class="btn btn-secondary" onclick="clearFilter()" >
+			 	<i class="fas fa-eraser"></i>
+			 </button>
 		</form>
 	</div>
 	
-	<div>
+	<div class="full-details">
 		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class = "thead-dark">
 				<tr>
-					<th th:replace="fragments :: column_link('maTK', 'Mã tài khoản')" /> 
+					<th class="hideable-column">
+						<th th:replace="fragments :: column_link('maTK', 'Mã tài khoản', 'tag')" /> 
+					</th>
+					
 					<th>Ảnh đại diện</th>
-					<th th:replace="fragments :: column_link('email', 'E-mail')" /> 
 					
-					<th th:replace="fragments :: column_link('nHo', 'Họ')" />
+					<th class="hideable-column">
+						<th th:replace="fragments :: column_link('email', 'E-mail', 'tag')" /> 
+					</th>
 					
-					<th th:replace="fragments :: column_link('nTen', 'Tên')" />
+					<th th:replace="fragments :: column_link('nHo', 'Họ', 'none')" />
+					
+					<th th:replace="fragments :: column_link('nTen', 'Tên', 'none')" />
 					<th>Chức vụ</th>					
-					<th th:replace="fragments :: column_link('trangThai', 'Trạng thái')" />
+					<th th:replace="fragments :: column_link('trangThai', 'Trạng thái', 'none')" />
 					
 					<th> </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="user : ${listUsers}">
-					<td>[[${user.maTK}]]</td>
+					<td class="hideable-column">[[${user.maTK}]]</td>
 					<td>
 						<span th:if="${user.hinhAnh == null}" class="fas fa-portrait fa-3x icon-silver"></span> 
 						<img th:if="${user.hinhAnh != null}" th:src="@{${user.duongDanHinhAnh}}"
 							style="width: 100px" />
 					</td>
-					<td>[[${user.Email}]]</td>
+					<td class="hideable-column">[[${user.Email}]]</td>
 					<td>[[${user.ho}]]</td>
 					<td>[[${user.ten}]]</td>
 					<td>[[${user.phanquyen}]]</td>
@@ -142,6 +152,43 @@
 		</table>
 	</div>
 	
+	<div class="less-details">
+		<div th:each="user : ${listUsers}" class="row m-1">
+			<div class="col-4">
+				<span th:if="${user.hinhAnh == null}" class="fas fa-portrait fa-3x icon-silver"></span> 
+				<img th:if="${user.hinhAnh != null}" th:src="@{${user.duongDanHinhAnh}}"
+					style="width: 100px" />
+			</div>
+			<div class="col-8">
+				<div>[[${user.hoTen}]]</div>
+				<div>[[${user.phanquyen}]]</div>
+				<div class="mt-1">
+					<a th:if="${user.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
+						th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/false'}"
+						title="Tắt kích hoạt">
+						</a>
+								
+					<a th:if="${user.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
+						th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/true'}"
+						title="Bật kích hoạt">
+						</a>
+						&nbsp;
+					<a class="fas fa-edit fa-2x icon-green" th:href="@{'/nguoidung/edit/' + ${user.maTK}}"
+						title="Chỉnh sửa thông tin tài khoản">
+						</a>
+						&nbsp; 
+					<a class="fas fa-trash fa-2x icon-dark link-delete" 
+						th:href="@{'/nguoidung/delete/' + ${user.maTK}}"
+						th:userId="${user.maTK}"
+						title="Xóa tài khoản">
+						</a>
+			</div>
+			</div>
+			
+		<div>&nbsp;</div>
+		</div>
+	</div>
+	
 	<div class="text-center m-1" th:if="${totalItems > 0}">
 		<span>Hiển thị người dùng # [[${startCount}]] tới [[${endCount}]] của [[${totalItems}]]</span>
 	</div>
@@ -151,7 +198,7 @@
 	
 	<div th:if="${totalPages > 1}">
 		<nav>
-			<ul class="pagination justify-content-center">
+			<ul class="pagination justify-content-center flex-wrap">
 				<li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
 					<a th:replace="fragments :: page_link(1, 'Trang đầu')"></a>
 				</li>

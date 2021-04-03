@@ -145,4 +145,9 @@ public class TaiKhoan {
 		return "/user-photos/" + this.maTK + "/" + this.hinhAnh;
 	}
 	
+	@Transient
+	public String getHoTen() {
+		return nHo + " " + nTen;
+	}
+	
 }
