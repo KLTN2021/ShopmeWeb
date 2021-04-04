@@ -120,9 +120,7 @@
 				<tr th:each="user : ${listUsers}">
 					<td class="hideable-column">[[${user.maTK}]]</td>
 					<td>
-						<span th:if="${user.hinhAnh == null}" class="fas fa-portrait fa-3x icon-silver"></span> 
-						<img th:if="${user.hinhAnh != null}" th:src="@{${user.duongDanHinhAnh}}"
-							style="width: 100px" />
+						<div th:replace="fragments :: user_photos" />
 					</td>
 					<td class="hideable-column">[[${user.Email}]]</td>
 					<td>[[${user.ho}]]</td>
@@ -130,22 +128,10 @@
 					<td>[[${user.phanquyen}]]</td>
 					
 					<td>
-						<a th:if="${user.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
-							th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/false'}"
-							title="Tắt kích hoạt"></a>
-							
-						<a th:if="${user.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
-							th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/true'}"
-							title="Bật kích hoạt"></a>
+						<div th:replace="fragments :: user_status" />
 					</td>
 					<td>
-						<a class="fas fa-edit fa-2x icon-green" th:href="@{'/nguoidung/edit/' + ${user.maTK}}"
-							title="Chỉnh sửa thông tin tài khoản"></a>
-						&nbsp; 
-						<a class="fas fa-trash fa-2x icon-dark link-delete" 
-							th:href="@{'/nguoidung/delete/' + ${user.maTK}}"
-							th:userId="${user.maTK}"
-							title="Xóa tài khoản"></a>
+						<div th:replace="fragments :: user_actions" />
 					</td>
 				</tr>
 			</tbody>
@@ -155,33 +141,15 @@
 	<div class="less-details">
 		<div th:each="user : ${listUsers}" class="row m-1">
 			<div class="col-4">
-				<span th:if="${user.hinhAnh == null}" class="fas fa-portrait fa-3x icon-silver"></span> 
-				<img th:if="${user.hinhAnh != null}" th:src="@{${user.duongDanHinhAnh}}"
-					style="width: 100px" />
+				<div th:replace="fragments :: user_photos" />
 			</div>
 			<div class="col-8">
 				<div>[[${user.hoTen}]]</div>
 				<div>[[${user.phanquyen}]]</div>
-				<div class="mt-1">
-					<a th:if="${user.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
-						th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/false'}"
-						title="Tắt kích hoạt">
-						</a>
-								
-					<a th:if="${user.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
-						th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/true'}"
-						title="Bật kích hoạt">
-						</a>
-						&nbsp;
-					<a class="fas fa-edit fa-2x icon-green" th:href="@{'/nguoidung/edit/' + ${user.maTK}}"
-						title="Chỉnh sửa thông tin tài khoản">
-						</a>
-						&nbsp; 
-					<a class="fas fa-trash fa-2x icon-dark link-delete" 
-						th:href="@{'/nguoidung/delete/' + ${user.maTK}}"
-						th:userId="${user.maTK}"
-						title="Xóa tài khoản">
-						</a>
+				<div class="mt-2">
+					<div th:replace="fragments :: user_status" />
+					&nbsp; 			
+					<div th:replace="fragments :: user_actions" />
 			</div>
 			</div>
 			

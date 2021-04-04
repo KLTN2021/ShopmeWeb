@@ -18,5 +18,33 @@
 	<a th:fragment="page_link(pageNum, label)"
 		class="page-link"
 		th:href="@{'/nguoidung/page/' + ${pageNum} + '?sortField=' +  ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword: ''}}">[[${label}]]</a>
+
+	<div th:fragment="user_photos" th:remove="tag">
+		<span th:if="${user.hinhAnh == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+		<img th:if="${user.hinhAnh != null}" th:src="@{${user.duongDanHinhAnh}}"
+			style="width: 100px" />	
+	</div>
+
+	<div th:fragment="user_status" th:remove="tag">
+		<a th:if="${user.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
+			th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/false'}"
+			title="Tắt kích hoạt"
+			></a>
+
+		<a th:if="${user.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
+			th:href="@{'/nguoidung/' + ${user.maTK} + '/trangThai/true'}"
+			title="Bật kích hoạt"
+			></a>	
+	</div>
+
+	<div th:fragment="user_actions" th:remove="tag">
+		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/nguoidung/edit/' + ${user.maTK}}"
+			title="chỉnh sửa thông tin"></a>
+		&nbsp; 
+		<a class="fas fa-trash fa-2x icon-dark link-delete" 
+			th:href="@{'/nguoidung/delete/' + ${user.maTK}}"
+			th:userId="${user.maTK}"
+			title="Xóa tài khoản"></a>	
+	</div>
 </body>
 </html>
