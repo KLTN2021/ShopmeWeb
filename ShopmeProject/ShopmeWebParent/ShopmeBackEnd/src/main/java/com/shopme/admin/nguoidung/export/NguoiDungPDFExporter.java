@@ -15,7 +15,6 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.shopme.admin.nguoidung.AbstractExporter;
 import com.shopme.common.entity.TaiKhoan;
 
 public class NguoiDungPDFExporter extends AbstractExporter{

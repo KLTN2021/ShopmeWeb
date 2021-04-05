@@ -1,4 +1,4 @@
-package com.shopme.admin.nguoidung;
+package com.shopme.admin.nguoidung.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopme.admin.FileUploadUtil;
+import com.shopme.admin.nguoidung.NguoiDungNotFoundException;
+import com.shopme.admin.nguoidung.NguoiDungService;
 import com.shopme.admin.nguoidung.export.NguoiDungCsvExporter;
 import com.shopme.admin.nguoidung.export.NguoiDungExcelExporter;
 import com.shopme.admin.nguoidung.export.NguoiDungPDFExporter;
@@ -68,7 +70,7 @@ public class NguoiDungController {
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
-		return "nguoidung";
+		return "nguoidung/nguoidung";
 	}
 	
 	@GetMapping("/nguoidung/new")
@@ -82,7 +84,7 @@ public class NguoiDungController {
 		model.addAttribute("listRoles", listRoles);
 		model.addAttribute("pageTitle", "Tạo tài khoản mới");
 		
-		return "nguoidung_form";
+		return "nguoidung/nguoidung_form";
 	}
 	
 	@PostMapping("/nguoidung/save")
@@ -125,7 +127,7 @@ public class NguoiDungController {
 			model.addAttribute("pageTitle", "Chỉnh sửa thông tin người dùng (mã tài khoản: " + maTK + ")");
 			model.addAttribute("listRoles", listRoles);
 			
-			return "nguoidung_form";
+			return "nguoidung/nguoidung_form";
 		} catch (NguoiDungNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
 			return "redirect:/nguoidung";

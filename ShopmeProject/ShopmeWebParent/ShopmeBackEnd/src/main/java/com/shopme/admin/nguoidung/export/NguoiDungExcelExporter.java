@@ -14,7 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.shopme.admin.nguoidung.AbstractExporter;
 import com.shopme.common.entity.TaiKhoan;
 
 public class NguoiDungExcelExporter extends AbstractExporter{

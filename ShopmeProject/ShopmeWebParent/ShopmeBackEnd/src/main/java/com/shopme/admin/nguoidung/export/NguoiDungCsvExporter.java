@@ -12,7 +12,6 @@ import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
-import com.shopme.admin.nguoidung.AbstractExporter;
 import com.shopme.common.entity.TaiKhoan;
 
 public class NguoiDungCsvExporter extends AbstractExporter{
