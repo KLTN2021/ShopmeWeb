@@ -30,6 +30,10 @@ public class NguoiDungService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	public TaiKhoan getByEmail(String email) {
+		return userRepo.getUserByEmail(email);
+	}
+	
 	public List<TaiKhoan> listAll(){
 		return (List<TaiKhoan>) userRepo.findAll(Sort.by("nHo").ascending());
 	}
@@ -68,6 +72,24 @@ public class NguoiDungService {
 		}
 		
 		return userRepo.save(user);	
+	}
+	
+	public TaiKhoan updateAccount(TaiKhoan userInForm) {
+		TaiKhoan userInDB = userRepo.findById(userInForm.getMaTK()).get();
+		
+		if (!userInForm.getMatKhau().isEmpty()) {
+			userInDB.setMatKhau(userInForm.getMatKhau());
+			encodePassword(userInDB);
+		}
+		
+		if (userInForm.getHinhAnh() != null) {
+			userInDB.setHinhAnh(userInForm.getHinhAnh());
+		}
+		
+		userInDB.setHo(userInForm.getHo());
+		userInDB.setTen(userInForm.getTen());
+		
+		return userRepo.save(userInDB);
 	}
 	
 	private void encodePassword(TaiKhoan user) {
