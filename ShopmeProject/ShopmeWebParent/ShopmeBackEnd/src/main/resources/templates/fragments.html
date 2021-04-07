@@ -60,5 +60,27 @@
 			th:userId="${user.maTK}"
 			title="Xóa tài khoản"></a>	
 	</div>
+	
+	<div th:fragment="category_status" th:remove="tag">
+		<a th:if="${cat.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
+			th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/false'}"
+			title="Disable this category"
+			></a>
+
+		<a th:if="${cat.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
+			th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/danhmuc/true'}"
+			title="Enable this category"
+			></a>	
+	</div>
+
+	<div th:fragment="category_actions" th:remove="tag">
+		<a class="fas fa-edit fa-2x icon-green" th:href="@{'/danhmuc/edit/' + ${cat.maDanhMuc}}"
+			title="Edit this category"></a>
+		&nbsp; 
+		<a class="fas fa-trash fa-2x icon-dark link-delete" 
+			th:href="@{'/danhmuc/delete/' + ${cat.maDanhMuc}}"
+			th:catId="${cat.maDanhMuc}"
+			title="Delete this category"></a>	
+	</div>	
 </body>
 </html>
