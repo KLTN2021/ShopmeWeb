@@ -12,6 +12,10 @@
 		
 	</div>
 	
+	<div th:if="${message != null}" class="alert alert-success text-center">
+		[[${message}]]
+	</div>
+	
 	<div>
 		<form th:action="@{/danhmuc/page/1}" class="form-inline m-3">
 			Filter:&nbsp;
@@ -42,15 +46,27 @@
 			<tbody>
 				<tr th:each="cat : ${listCategories}">
 					<td>[[${cat.maDanhMuc}]]</td>
-					<td> </td>
+					<td>[[${cat.hinhAnh}]] </td>
 					<td>[[${cat.ten}]]</td>
 					<td>[[${cat.biDanh}]]</td>
 					<td>
-						<div th:replace="fragments :: category_status" />
+						<a th:if="${cat.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
+							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/false'}"
+							title="Tắt kích hoạt"></a>
+
+						<a th:if="${cat.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
+							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/true'}"
+							title="Bật kích hoạt"></a>
 					</td>
 					<td>
-						<div th:replace="fragments :: category_actions" />
-					</td>	
+						<a class="fas fa-edit fa-2x icon-green" th:href="@{'/danhmuc/edit/' + ${cat.maDanhMuc}}"
+							title="Edit this category"></a>
+						&nbsp; 
+						<a class="fas fa-trash fa-2x icon-dark link-delete" 
+							th:href="@{'/danhmuc/delete/' + ${cat.maDanhMuc}}"
+							th:catId="${cat.maDanhMuc}"
+							title="Delete this category"></a>
+					</td>
 				</tr>
 			</tbody>
 		</table>

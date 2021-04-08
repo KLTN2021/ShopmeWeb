@@ -45,6 +45,22 @@ public class DanhMuc {
 	public DanhMuc(Integer maDanhMuc) {
 		this.maDanhMuc = maDanhMuc;
 	}
+	
+	public static DanhMuc copyMaVaTen(DanhMuc danhmuc) {
+		DanhMuc copyDanhMuc = new DanhMuc();
+		copyDanhMuc.setMaDanhMuc(danhmuc.getMaDanhMuc());
+		copyDanhMuc.setTen(danhmuc.getTen());
+
+		return copyDanhMuc;
+	}
+
+	public static DanhMuc copyMaVaTen(Integer maDanhMuc, String ten) {
+		DanhMuc copyDanhMuc = new DanhMuc();
+		copyDanhMuc.setMaDanhMuc(maDanhMuc);
+		copyDanhMuc.setTen(ten);
+
+		return copyDanhMuc;
+	}
 
 	public DanhMuc(String ten) {
 		this.ten = ten;
