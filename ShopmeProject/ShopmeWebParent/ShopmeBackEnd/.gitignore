@@ -11,7 +11,7 @@
 .springBeans
 .sts4-cache
 user-photos/**
-**/category-images/**
+C:\Java\ShopmeEcommerce\ShopmeProject\ShopmeWebParent\category-images
 # Created by https://www.gitignore.io/api/git,java,maven,eclipse,windows
 
 ### Eclipse ###
