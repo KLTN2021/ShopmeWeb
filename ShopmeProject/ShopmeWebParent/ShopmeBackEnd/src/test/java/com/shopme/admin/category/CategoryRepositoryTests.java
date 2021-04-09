@@ -96,4 +96,10 @@ public class CategoryRepositoryTests {
 			printChildren(subCategory, newSubLevel);
 		}
 	}
+	
+	@Test
+	public void testLietKeDanhMucGoc() {
+		List<DanhMuc> lietKeDanhMucGoc = repo.timDanhMucGoc();
+		lietKeDanhMucGoc.forEach(cat -> System.out.println(cat.getTen()));
+	}
 }

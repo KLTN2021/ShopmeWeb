@@ -1,6 +1,7 @@
 package com.shopme.admin.danhmuc;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,46 @@ public class DanhMucService {
 	private DanhMucRepository repo;
 	
 	public List<DanhMuc> listAll() {
-		return (List<DanhMuc>) repo.findAll();
+		List<DanhMuc> rootCategories = repo.timDanhMucGoc(); 
+		return listHierarchicalCategories(rootCategories);
+	}
+	
+	private List<DanhMuc> listHierarchicalCategories(List<DanhMuc> rootCategories) {
+		List<DanhMuc> hierarchicalCategories = new ArrayList<>();
+		
+		for (DanhMuc rootCategory : rootCategories) {
+			hierarchicalCategories.add(DanhMuc.copyTatCa(rootCategory));
+			
+			Set<DanhMuc> children = rootCategory.getDanhMuccon();
+			
+			for (DanhMuc subCategory : children) {
+				String name = "--" + subCategory.getTen();
+				hierarchicalCategories.add(DanhMuc.copyTatCa(subCategory, name));
+				
+				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1);
+			}
+		}
+		
+		return hierarchicalCategories;
+	}
+	
+	private void listSubHierarchicalCategories(List<DanhMuc> hierarchicalCategories, 
+			DanhMuc parent, int subLevel) {
+		Set<DanhMuc> children = parent.getDanhMuccon();
+		int newSubLevel = subLevel + 1;
+		
+		for (DanhMuc subCategory : children) {
+			String name = "";
+			for (int i = 0; i < newSubLevel; i++) {				
+				name += "--";
+			}
+			name += subCategory.getTen();
+			
+			hierarchicalCategories.add(DanhMuc.copyTatCa(subCategory, name));
+			
+			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel);
+		}
+		
 	}
 	
 	public DanhMuc save(DanhMuc category) {
@@ -37,7 +77,7 @@ public class DanhMucService {
 					String name = "--" + subCategory.getTen();
 					categoriesUsedInForm.add(DanhMuc.copyMaVaTen(subCategory.getMaDanhMuc(), name));
 
-					listChildren(categoriesUsedInForm, subCategory, 1);
+					listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, 1);
 				}
 			}
 		}		
@@ -45,7 +85,8 @@ public class DanhMucService {
 		return categoriesUsedInForm;
 	}
 
-	private void listChildren(List<DanhMuc> categoriesUsedInForm, DanhMuc parent, int subLevel) {
+	private void listSubCategoriesUsedInForm(List<DanhMuc> categoriesUsedInForm, 
+			DanhMuc parent, int subLevel) {
 		int newSubLevel = subLevel + 1;
 		Set<DanhMuc> children = parent.getDanhMuccon();
 
@@ -58,7 +99,7 @@ public class DanhMucService {
 
 			categoriesUsedInForm.add(DanhMuc.copyMaVaTen(subCategory.getMaDanhMuc(), name));
 
-			listChildren(categoriesUsedInForm, subCategory, newSubLevel);
+			listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, newSubLevel);
 		}		
 	}
 

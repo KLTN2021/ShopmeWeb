@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "danhmuc")
@@ -59,6 +60,24 @@ public class DanhMuc {
 		copyDanhMuc.setMaDanhMuc(maDanhMuc);
 		copyDanhMuc.setTen(ten);
 
+		return copyDanhMuc;
+	}
+	
+	public static DanhMuc copyTatCa(DanhMuc danhmuc) {
+		DanhMuc copyDanhMuc = new DanhMuc();
+		copyDanhMuc.setMaDanhMuc(danhmuc.getMaDanhMuc());
+		copyDanhMuc.setTen(danhmuc.getTen());
+		copyDanhMuc.setHinhAnh(danhmuc.getHinhAnh());
+		copyDanhMuc.setBiDanh(danhmuc.getBiDanh());
+		copyDanhMuc.setTrangThai(danhmuc.isTrangThai());
+		
+		return copyDanhMuc;
+	}
+	
+	public static DanhMuc copyTatCa(DanhMuc danhmuc, String ten) { 
+		DanhMuc copyDanhMuc = DanhMuc.copyTatCa(danhmuc);
+		copyDanhMuc.setTen(ten);
+		
 		return copyDanhMuc;
 	}
 
@@ -127,5 +146,10 @@ public class DanhMuc {
 
 	public void setDanhMuccon(Set<DanhMuc> danhMuccon) {
 		this.danhMuccon = danhMuccon;
+	}
+	
+	@Transient
+	public String getDuongDanHinhAnh() {
+		return "/category-images/" + this.maDanhMuc + "/" + this.hinhAnh;
 	}
 }
