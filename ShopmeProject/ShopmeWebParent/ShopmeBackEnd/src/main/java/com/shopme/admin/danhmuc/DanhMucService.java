@@ -3,6 +3,7 @@ package com.shopme.admin.danhmuc;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +104,13 @@ public class DanhMucService {
 		}		
 	}
 
-	
+	public DanhMuc get(Integer maDanhMuc) throws DanhMucNotFoundException {
+		try {
+			return repo.findById(maDanhMuc).get();
+		} catch (NoSuchElementException ex) {
+			throw new DanhMucNotFoundException("Could not find any category with ID " + maDanhMuc);
+		}
+	}
 	
 	
 	

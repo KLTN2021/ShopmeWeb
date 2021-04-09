@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,14 +45,39 @@ public class DanhMucController {
 	public String saveCategory(DanhMuc category, 
 			@RequestParam("fileImage") MultipartFile multipartFile,
 			RedirectAttributes ra) throws IOException {
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		category.setHinhAnh(fileName);
+		
+		if (!multipartFile.isEmpty()) {
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			category.setHinhAnh(fileName);
 
-		DanhMuc savedCategory = service.save(category);
-		String uploadDir = "../category-images/" + savedCategory.getMaDanhMuc();
-		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			DanhMuc savedCategory = service.save(category);
+			String uploadDir = "../category-images/" + savedCategory.getMaDanhMuc();
+			
+			FileUploadUtil.cleanDir(uploadDir);
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+		} else {
+			service.save(category);
+		}
 
-		ra.addFlashAttribute("message", "The category has been saved successfully.");
+		ra.addFlashAttribute("message", "Danh mục đã được lưu thành công.");
 		return "redirect:/danhmuc";
+	}
+	
+	@GetMapping("/danhmuc/edit/{maDanhMuc}")
+	public String editCategory(@PathVariable(name = "maDanhMuc") Integer maDanhMuc, Model model,
+			RedirectAttributes ra) {
+		try {
+			DanhMuc category = service.get(maDanhMuc);
+			List<DanhMuc> listCategories = service.listCategoriesUsedInForm();
+
+			model.addAttribute("category", category);
+			model.addAttribute("listCategories", listCategories);
+			model.addAttribute("pageTitle", "Edit Category (ID: " + maDanhMuc + ")");
+
+			return "danhmuc/danhmuc_form";			
+		} catch (DanhMucNotFoundException ex) {
+			ra.addFlashAttribute("message", ex.getMessage());
+			return "redirect:/danhmuc";
+		}
 	}
 }

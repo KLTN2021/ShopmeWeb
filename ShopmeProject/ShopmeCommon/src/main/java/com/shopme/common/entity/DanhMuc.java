@@ -150,6 +150,8 @@ public class DanhMuc {
 	
 	@Transient
 	public String getDuongDanHinhAnh() {
+		if (this.maDanhMuc == null) return "/images/image-thumbnail.png";
+		
 		return "/category-images/" + this.maDanhMuc + "/" + this.hinhAnh;
 	}
 }
