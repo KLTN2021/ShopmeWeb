@@ -24,19 +24,33 @@ public class DanhMucController {
 	private DanhMucService service;
 	
 	@GetMapping("/danhmuc")
-	public String listAll(@Param("sortDir") String sortDir, Model model) {
+	public String listFirstPage(@Param("sortDir") String sortDir, Model model) {
+		return listByPage(1, sortDir, model);
+	} 
+	
+	@GetMapping("/danhmuc/page/{pageNum}") 
+	public String listByPage(@PathVariable(name = "pageNum") int pageNum, 
+			@Param("sortDir") String sortDir, Model model) {
 		if (sortDir ==  null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}
-
-		List<DanhMuc> listCategories = service.listAll(sortDir);
+		
+		DanhMucPageInfo pageInfo = new DanhMucPageInfo();
+		List<DanhMuc> listCategories = service.listByPage(pageInfo, pageNum, sortDir);
 
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
+		model.addAttribute("totalPages", pageInfo.getTotalPages());
+		model.addAttribute("totalItems", pageInfo.getTotalElements());
+		model.addAttribute("currentPage", pageNum);
+		model.addAttribute("sortField", "name");
+		model.addAttribute("sortDir", sortDir);
+
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("reverseSortDir", reverseSortDir);
-
+		
 		return "danhmuc/danhmuc";
+		
 	}
 	
 	@GetMapping("/danhmuc/new")

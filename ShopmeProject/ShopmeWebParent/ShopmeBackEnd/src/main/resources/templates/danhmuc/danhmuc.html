@@ -37,7 +37,7 @@
 					<th>Mã danh mục </th>
 					<th>Hình ảnh</th>
 					<th>
-						<a class="text-white" th:href="@{'/danhmuc?sortDir=' + ${reverseSortDir}}">Tên danh mục</a>
+						<a class="text-white" th:href="@{'/danhmuc/page/' + ${pageNum} + '?sortDir=' + ${reverseSortDir}}">Tên danh mục</a>
 						<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>						
 					</th>
 					<th>Bí danh</th>
@@ -68,15 +68,32 @@
 						&nbsp; 
 						<a class="fas fa-trash fa-2x icon-dark link-delete" 
 							th:href="@{'/danhmuc/delete/' + ${cat.maDanhMuc}}"
-							th:catId="${cat.maDanhMuc}"
+							th:entityId="${cat.maDanhMuc}"
 							title="Delete this category"></a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-
+	
+	<div th:replace="fragments :: pagination('/danhmuc', 'danhmuc')"></div>
+	
+	<div th:replace="modal_fragments :: confirm_modal" />
+	
 	<div th:replace="fragments :: footer"></div>
 </div>
+
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+	moduleURL = "[[@{/danhmuc}]]";
+
+	$(document).ready(function() {
+		$(".link-delete").on("click", function(e) {
+			e.preventDefault();
+			showDeleteConfirmModal($(this), 'danhmuc');
+		});
+	});
+</script>
+</script>
 </body>
 </html> 

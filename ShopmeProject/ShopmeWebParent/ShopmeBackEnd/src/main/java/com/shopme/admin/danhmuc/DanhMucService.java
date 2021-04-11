@@ -12,6 +12,9 @@ import java.util.TreeSet;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +23,12 @@ import com.shopme.common.entity.DanhMuc;
 @Service
 @Transactional
 public class DanhMucService {
+	private static final int ROOT_CATEGORIES_PER_PAGE = 2;
+	
 	@Autowired
 	private DanhMucRepository repo;
 	
-	public List<DanhMuc> listAll(String sortDir) {
+	public List<DanhMuc> listByPage(DanhMucPageInfo pageInfo, int pageNum, String sortDir) {
 		Sort sort = Sort.by("ten");
 
 		if (sortDir.equals("asc")) {
@@ -32,7 +37,13 @@ public class DanhMucService {
 			sort = sort.descending();
 		}
 
-		List<DanhMuc> rootCategories = repo.findRootDanhMuc(sort);
+		Pageable pageable = PageRequest.of(pageNum - 1, ROOT_CATEGORIES_PER_PAGE, sort);
+
+		Page<DanhMuc> pageCategories = repo.findRootDanhMuc(pageable);
+		List<DanhMuc> rootCategories = pageCategories.getContent();
+
+		pageInfo.setTotalElements(pageCategories.getTotalElements());
+		pageInfo.setTotalPages(pageCategories.getTotalPages());
 
 		return listHierarchicalCategories(rootCategories, sortDir);
 	}

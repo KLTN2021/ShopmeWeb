@@ -2,6 +2,8 @@ package com.shopme.admin.danhmuc;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +15,9 @@ public interface DanhMucRepository extends PagingAndSortingRepository<DanhMuc, I
 	
 	@Query("SELECT c FROM DanhMuc c WHERE c.danhMucCha.maDanhMuc is NULL")
 	public List<DanhMuc> findRootDanhMuc(Sort sort);
+	
+	@Query("SELECT c FROM DanhMuc c WHERE c.danhMucCha.maDanhMuc is NULL")
+	public Page<DanhMuc> findRootDanhMuc(Pageable pageable);
 	
 	public Long countBymaDanhMuc(Integer maDanhMuc);
 	
