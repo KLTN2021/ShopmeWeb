@@ -26,7 +26,7 @@
 						<a class="text-white" th:href="@{'/danhmuc/page/' + ${currentPage} + '?sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Tên danh mục</a>
 						<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>						
 					</th>
-					<th>Bí danh</th>
+					<th class="hideable-column">Bí danh</th>
 					<th>Trạng thái</th>
 					<th></th>
 				</tr>
@@ -38,7 +38,7 @@
 						<img th:src="@{${cat.duongDanHinhAnh}}" style="width: 100px" class="img-fluid" />
 					</td>
 					<td>[[${cat.ten}]]</td>
-					<td>[[${cat.biDanh}]]</td>
+					<td class="hideable-column">[[${cat.biDanh}]]</td>
 					<td>
 						<a th:if="${cat.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
 							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/false'}"
@@ -61,6 +61,39 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	
+	<div class="less-details">
+		<div th:each="cat : ${listCategories}" class="row m-1">
+			<div class="col-4">
+				<img th:src="@{${cat.duongDanHinhAnh}}" style="width: 100px" class="img-fluid"/>			
+			</div>
+			<div class="col-8">
+				<div>[[${cat.ten}]]</div>
+				<div class="mt-2">
+					<td>
+						<a th:if="${cat.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
+							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/false'}"
+							title="Tắt kích hoạt"></a>
+
+						<a th:if="${cat.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
+							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/true'}"
+							title="Bật kích hoạt"></a>
+					</td>
+					<td>
+						<a class="fas fa-edit fa-2x icon-green" th:href="@{'/danhmuc/edit/' + ${cat.maDanhMuc}}"
+							title="Edit this category"></a>
+						&nbsp; 
+						<th:block th:if="${cat.hasDanhMucCon == false}">
+						<a class="fas fa-trash fa-2x icon-dark link-delete" 
+							th:href="@{'/danhmuc/delete/' + ${cat.maDanhMuc}}"
+							th:entityId="${cat.maDanhMuc}"
+							title="Delete this category"></a>
+					</td>
+				</div>
+			</div>
+			<div>&nbsp;</div>
+		</div>	
 	</div>
 	
 	<div th:if="${keyword != null}" class="text-center">
