@@ -23,12 +23,13 @@ import com.shopme.common.entity.DanhMuc;
 @Service
 @Transactional
 public class DanhMucService {
-	private static final int ROOT_CATEGORIES_PER_PAGE = 2;
+	public static final int ROOT_CATEGORIES_PER_PAGE = 3;
 	
 	@Autowired
 	private DanhMucRepository repo;
 	
-	public List<DanhMuc> listByPage(DanhMucPageInfo pageInfo, int pageNum, String sortDir) {
+	public List<DanhMuc> listByPage(DanhMucPageInfo pageInfo, int pageNum, String sortDir,
+			 String keyword) {
 		Sort sort = Sort.by("ten");
 
 		if (sortDir.equals("asc")) {
@@ -39,13 +40,30 @@ public class DanhMucService {
 
 		Pageable pageable = PageRequest.of(pageNum - 1, ROOT_CATEGORIES_PER_PAGE, sort);
 
-		Page<DanhMuc> pageCategories = repo.findRootDanhMuc(pageable);
+		Page<DanhMuc> pageCategories = null;
+		
+		if (keyword != null && !keyword.isEmpty()) {
+			pageCategories = repo.search(keyword, pageable);	
+		} else {
+			pageCategories = repo.findRootDanhMuc(pageable);
+		}
+		
 		List<DanhMuc> rootCategories = pageCategories.getContent();
 
 		pageInfo.setTotalElements(pageCategories.getTotalElements());
 		pageInfo.setTotalPages(pageCategories.getTotalPages());
 
-		return listHierarchicalCategories(rootCategories, sortDir);
+		if (keyword != null && !keyword.isEmpty()) {
+			List<DanhMuc> searchResult = pageCategories.getContent();
+			for (DanhMuc category : searchResult) {
+				category.setHasDanhMucCon(category.getDanhMuccon().size() > 0);
+			}
+
+			return searchResult;
+
+		} else {
+			return listHierarchicalCategories(rootCategories, sortDir);
+		}
 	}
 	
 	private List<DanhMuc> listHierarchicalCategories(List<DanhMuc> rootCategories, String sortDir) {

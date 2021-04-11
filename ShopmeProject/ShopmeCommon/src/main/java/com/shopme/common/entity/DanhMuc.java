@@ -167,7 +167,7 @@ public class DanhMuc {
 		return hasDanhMucCon;
 	}
 	
-	private void setHasDanhMucCon(boolean hasDanhMucCon) {
+	public void setHasDanhMucCon(boolean hasDanhMucCon) {
 		this.hasDanhMucCon = hasDanhMucCon;
 	}
 	

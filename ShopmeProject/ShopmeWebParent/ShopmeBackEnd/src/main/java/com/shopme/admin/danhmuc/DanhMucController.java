@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopme.admin.FileUploadUtil;
+import com.shopme.admin.nguoidung.NguoiDungService;
 import com.shopme.common.entity.DanhMuc;
 
 @Controller
@@ -25,18 +26,26 @@ public class DanhMucController {
 	
 	@GetMapping("/danhmuc")
 	public String listFirstPage(@Param("sortDir") String sortDir, Model model) {
-		return listByPage(1, sortDir, model);
+		return listByPage(1, sortDir, null, model);
 	} 
 	
 	@GetMapping("/danhmuc/page/{pageNum}") 
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, 
-			@Param("sortDir") String sortDir, Model model) {
+			@Param("sortDir") String sortDir,
+			@Param("keyword") String keyword,
+			Model model) {
 		if (sortDir ==  null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		}
 		
 		DanhMucPageInfo pageInfo = new DanhMucPageInfo();
-		List<DanhMuc> listCategories = service.listByPage(pageInfo, pageNum, sortDir);
+		List<DanhMuc> listCategories = service.listByPage(pageInfo, pageNum, sortDir, keyword);
+		
+		long startCount = (pageNum - 1) * DanhMucService.ROOT_CATEGORIES_PER_PAGE + 1;
+		long endCount = startCount + DanhMucService.ROOT_CATEGORIES_PER_PAGE - 1;
+		if (endCount > pageInfo.getTotalElements()) {
+			endCount = pageInfo.getTotalElements();
+		}
 
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
@@ -45,6 +54,9 @@ public class DanhMucController {
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("sortField", "name");
 		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("startCount", startCount);
+		model.addAttribute("endCount", endCount);
 
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("reverseSortDir", reverseSortDir);
