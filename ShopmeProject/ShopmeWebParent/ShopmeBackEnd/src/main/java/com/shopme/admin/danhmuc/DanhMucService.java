@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.shopme.common.entity.DanhMuc;
 
 @Service
+@Transactional
 public class DanhMucService {
 	@Autowired
 	private DanhMucRepository repo;
@@ -171,5 +174,10 @@ public class DanhMucService {
 		sortedChildren.addAll(children);
 
 		return sortedChildren;
+	}
+	
+
+	public void updateCategoryEnabledStatus(Integer maDanhMuc, boolean trangThai) {
+		repo.updateEnabledStatus(maDanhMuc, trangThai);
 	}
 }

@@ -89,4 +89,15 @@ public class DanhMucController {
 			return "redirect:/danhmuc";
 		}
 	}
+	
+	@GetMapping("/danhmuc/{maDanhMuc}/trangThai/{status}")
+	public String updateCategoryEnabledStatus(@PathVariable("maDanhMuc") Integer maDanhMuc,
+			@PathVariable("status") boolean trangThai, RedirectAttributes redirectAttributes) {
+		service.updateCategoryEnabledStatus(maDanhMuc, trangThai);
+		String status = trangThai ? "bật kích hoạt" : "tắt kích hoạt";
+		String message = "Danh mục có ID " + maDanhMuc + " đã được " + status;
+		redirectAttributes.addFlashAttribute("message", message);
+
+		return "redirect:/danhmuc";
+	}
 }
