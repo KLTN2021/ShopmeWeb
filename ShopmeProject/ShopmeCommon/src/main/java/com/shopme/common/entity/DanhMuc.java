@@ -70,6 +70,7 @@ public class DanhMuc {
 		copyDanhMuc.setHinhAnh(danhmuc.getHinhAnh());
 		copyDanhMuc.setBiDanh(danhmuc.getBiDanh());
 		copyDanhMuc.setTrangThai(danhmuc.isTrangThai());
+		copyDanhMuc.setHasDanhMucCon(danhmuc.getDanhMuccon().size() > 0);
 		
 		return copyDanhMuc;
 	}
@@ -161,4 +162,15 @@ public class DanhMuc {
 		
 		return "/category-images/" + this.maDanhMuc + "/" + this.hinhAnh;
 	}
+	
+	public boolean isHasDanhMucCon() {
+		return hasDanhMucCon;
+	}
+	
+	private void setHasDanhMucCon(boolean hasDanhMucCon) {
+		this.hasDanhMucCon = hasDanhMucCon;
+	}
+	
+	@Transient
+	private boolean hasDanhMucCon;
 }

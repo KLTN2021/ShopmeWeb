@@ -180,4 +180,13 @@ public class DanhMucService {
 	public void updateCategoryEnabledStatus(Integer maDanhMuc, boolean trangThai) {
 		repo.updateEnabledStatus(maDanhMuc, trangThai);
 	}
+	
+	public void delete(Integer maDanhMuc) throws DanhMucNotFoundException {
+		Long countByMaDanhMuc = repo.countBymaDanhMuc(maDanhMuc);
+		if (countByMaDanhMuc == null || countByMaDanhMuc == 0) {
+			throw new DanhMucNotFoundException("Không thể tìm thấy bất kỳ danh mục nào có ID " + maDanhMuc);
+		}
+
+		repo.deleteById(maDanhMuc);
+	}
 }

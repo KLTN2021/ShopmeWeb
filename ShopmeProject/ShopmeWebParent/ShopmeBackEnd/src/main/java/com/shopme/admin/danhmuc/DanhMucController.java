@@ -100,4 +100,22 @@ public class DanhMucController {
 
 		return "redirect:/danhmuc";
 	}
+	
+	@GetMapping("/danhmuc/delete/{maDanhMuc}")
+	public String deleteCategory(@PathVariable(name = "maDanhMuc") Integer maDanhMuc, 
+			Model model,
+			RedirectAttributes redirectAttributes) {
+		try {
+			service.delete(maDanhMuc);
+			String categoryDir = "../category-images/" + maDanhMuc;
+			FileUploadUtil.removeDir(categoryDir);
+
+			redirectAttributes.addFlashAttribute("message", 
+					"Danh mục có ID " + maDanhMuc + " đã được xóa thành công");
+		} catch (DanhMucNotFoundException ex) {
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+		}
+
+		return "redirect:/danhmuc";
+	}
 }

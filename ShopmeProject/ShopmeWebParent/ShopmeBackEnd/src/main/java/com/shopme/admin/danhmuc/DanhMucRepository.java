@@ -14,6 +14,8 @@ public interface DanhMucRepository extends PagingAndSortingRepository<DanhMuc, I
 	@Query("SELECT c FROM DanhMuc c WHERE c.danhMucCha.maDanhMuc is NULL")
 	public List<DanhMuc> findRootDanhMuc(Sort sort);
 	
+	public Long countBymaDanhMuc(Integer maDanhMuc);
+	
 	public DanhMuc findByTen(String ten);
 	
 	public DanhMuc findByBiDanh(String biDanh);

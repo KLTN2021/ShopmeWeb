@@ -50,4 +50,15 @@ public class FileUploadUtil {
 //			System.out.println("không thể liệt kê thư mục: " + dirPath);
 		}
 	}
+	
+	public static void removeDir(String dir) {
+		cleanDir(dir);
+
+		try {
+			Files.delete(Paths.get(dir));
+		} catch (IOException e) {
+			LOGGER.error("Không thể xóa thư mục: " + dir);
+		}
+
+	}
 }
