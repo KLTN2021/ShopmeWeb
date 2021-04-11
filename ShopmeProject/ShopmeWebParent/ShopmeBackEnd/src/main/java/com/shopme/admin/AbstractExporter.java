@@ -1,4 +1,4 @@
-package com.shopme.admin.nguoidung.export;
+package com.shopme.admin;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -12,10 +12,10 @@ import com.shopme.common.entity.TaiKhoan;
 
 public class AbstractExporter {
 	public void setResponseHeader(HttpServletResponse response, String contentType,
-			String extension) throws IOException {
+			String extension, String prefix) throws IOException {
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 		String timestamp = dateFormatter.format(new Date());
-		String fileName = "nguoidung_" + timestamp + extension;
+		String fileName = prefix + timestamp + extension;
 		
 		response.setContentType(contentType);
 		

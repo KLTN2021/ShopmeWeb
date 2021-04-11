@@ -3,6 +3,8 @@ package com.shopme.admin.danhmuc;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -142,5 +144,12 @@ public class DanhMucController {
 		}
 
 		return "redirect:/danhmuc";
+	}
+	
+	@GetMapping("/danhmuc/export/csv")
+	public void exportToCSV(HttpServletResponse response) throws IOException {
+		List<DanhMuc> listCategories = service.listCategoriesUsedInForm();
+		DanhMucCsvExporter exporter = new DanhMucCsvExporter();
+		exporter.export(listCategories, response);
 	}
 }

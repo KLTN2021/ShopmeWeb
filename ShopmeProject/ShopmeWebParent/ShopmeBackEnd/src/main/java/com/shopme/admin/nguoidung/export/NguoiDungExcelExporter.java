@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.shopme.admin.AbstractExporter;
 import com.shopme.common.entity.TaiKhoan;
 
 public class NguoiDungExcelExporter extends AbstractExporter{
@@ -59,7 +60,7 @@ public class NguoiDungExcelExporter extends AbstractExporter{
 	}
 	
 	public void export(List<TaiKhoan> listUsers, HttpServletResponse response) throws IOException {
-		super.setResponseHeader(response, "application/octet-stream", ".xlsx");
+		super.setResponseHeader(response, "application/octet-stream", ".xlsx", "nguoidung_");
 	
 		writeHeaderLine();
 		writeDataLines(listUsers);
