@@ -66,6 +66,7 @@
 						<a class="fas fa-edit fa-2x icon-green" th:href="@{'/danhmuc/edit/' + ${cat.maDanhMuc}}"
 							title="Edit this category"></a>
 						&nbsp; 
+						<th:block th:if="${cat.hasDanhMucCon == false}">
 						<a class="fas fa-trash fa-2x icon-dark link-delete" 
 							th:href="@{'/danhmuc/delete/' + ${cat.maDanhMuc}}"
 							th:entityId="${cat.maDanhMuc}"
