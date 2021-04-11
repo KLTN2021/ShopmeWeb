@@ -1,4 +1,4 @@
-package com.shopme.admin.category;
+package com.shopme.admin.danhmuc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,7 +19,7 @@ import com.shopme.common.entity.DanhMuc;
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
-public class CategoryRepositoryTests {
+public class DanhMucRepositoryTests {
 	
 	@Autowired
 	private DanhMucRepository repo;
@@ -102,4 +102,25 @@ public class CategoryRepositoryTests {
 		List<DanhMuc> lietKeDanhMucGoc = repo.timDanhMucGoc();
 		lietKeDanhMucGoc.forEach(cat -> System.out.println(cat.getTen()));
 	}
+	
+	
+	@Test
+	public void testFindByTen() {
+		String name = "máy tính";
+		DanhMuc category = repo.findByTen(name);
+
+		assertThat(category).isNotNull();
+		assertThat(category.getTen()).isEqualTo(name);
+	}
+
+
+	@Test
+	public void testFindByBiDanh() {
+		String alias = "thiết bị điện tử";
+		DanhMuc category = repo.findByBiDanh(alias);
+
+		assertThat(category).isNotNull();
+		assertThat(category.getBiDanh()).isEqualTo(alias);
+	}
+	
 }

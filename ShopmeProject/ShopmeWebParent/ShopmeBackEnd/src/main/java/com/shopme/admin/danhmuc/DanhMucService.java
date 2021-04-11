@@ -112,6 +112,33 @@ public class DanhMucService {
 		}
 	}
 	
-	
+	public String checkUnique(Integer maDanhMuc, String ten, String biDanh) {
+		boolean isCreatingNew = (maDanhMuc == null || maDanhMuc == 0);
+
+		DanhMuc categoryByName = repo.findByTen(ten);
+
+		if (isCreatingNew) {
+			if (categoryByName != null) {
+				return "DuplicateName";
+			} else {
+				DanhMuc categoryByAlias = repo.findByBiDanh(biDanh);
+				if (categoryByAlias != null) {
+					return "DuplicateAlias";	
+				}
+			}
+		} else {
+			if (categoryByName != null && categoryByName.getMaDanhMuc() != maDanhMuc) {
+				return "DuplicateName";
+			}
+
+			DanhMuc categoryByAlias = repo.findByBiDanh(biDanh);
+			if (categoryByAlias != null && categoryByAlias.getMaDanhMuc() != maDanhMuc) {
+				return "DuplicateAlias";
+			}
+
+		}
+
+		return "OK";
+	}
 	
 }

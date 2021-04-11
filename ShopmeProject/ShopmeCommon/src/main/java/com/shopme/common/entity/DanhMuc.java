@@ -91,6 +91,13 @@ public class DanhMuc {
 		this(ten);
 		this.danhMucCha = danhMucCha;
 	}
+	
+	public DanhMuc(Integer maDanhMuc, String ten, String biDanh) {
+		super();
+		this.maDanhMuc = maDanhMuc;
+		this.ten = ten;
+		this.biDanh = biDanh;
+	}
 
 	public Integer getMaDanhMuc() {
 		return maDanhMuc;
