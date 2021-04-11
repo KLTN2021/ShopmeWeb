@@ -1,12 +1,16 @@
 package com.shopme.admin.danhmuc;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.shopme.common.entity.DanhMuc;
@@ -16,24 +20,33 @@ public class DanhMucService {
 	@Autowired
 	private DanhMucRepository repo;
 	
-	public List<DanhMuc> listAll() {
-		List<DanhMuc> rootCategories = repo.timDanhMucGoc(); 
-		return listHierarchicalCategories(rootCategories);
+	public List<DanhMuc> listAll(String sortDir) {
+		Sort sort = Sort.by("ten");
+
+		if (sortDir.equals("asc")) {
+			sort = sort.ascending();
+		} else if (sortDir.equals("desc")) {
+			sort = sort.descending();
+		}
+
+		List<DanhMuc> rootCategories = repo.findRootDanhMuc(sort);
+
+		return listHierarchicalCategories(rootCategories, sortDir);
 	}
 	
-	private List<DanhMuc> listHierarchicalCategories(List<DanhMuc> rootCategories) {
+	private List<DanhMuc> listHierarchicalCategories(List<DanhMuc> rootCategories, String sortDir) {
 		List<DanhMuc> hierarchicalCategories = new ArrayList<>();
 		
 		for (DanhMuc rootCategory : rootCategories) {
 			hierarchicalCategories.add(DanhMuc.copyTatCa(rootCategory));
 			
-			Set<DanhMuc> children = rootCategory.getDanhMuccon();
+			Set<DanhMuc> children = sortSubCategories(rootCategory.getDanhMuccon(), sortDir);
 			
 			for (DanhMuc subCategory : children) {
 				String name = "--" + subCategory.getTen();
 				hierarchicalCategories.add(DanhMuc.copyTatCa(subCategory, name));
 				
-				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1);
+				listSubHierarchicalCategories(hierarchicalCategories, subCategory, 1, sortDir);
 			}
 		}
 		
@@ -41,8 +54,8 @@ public class DanhMucService {
 	}
 	
 	private void listSubHierarchicalCategories(List<DanhMuc> hierarchicalCategories, 
-			DanhMuc parent, int subLevel) {
-		Set<DanhMuc> children = parent.getDanhMuccon();
+			DanhMuc parent, int subLevel, String sortDir) {
+		Set<DanhMuc> children = sortSubCategories(parent.getDanhMuccon(), sortDir);
 		int newSubLevel = subLevel + 1;
 		
 		for (DanhMuc subCategory : children) {
@@ -54,7 +67,7 @@ public class DanhMucService {
 			
 			hierarchicalCategories.add(DanhMuc.copyTatCa(subCategory, name));
 			
-			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel);
+			listSubHierarchicalCategories(hierarchicalCategories, subCategory, newSubLevel, sortDir);
 		}
 		
 	}
@@ -66,20 +79,18 @@ public class DanhMucService {
 	public List<DanhMuc> listCategoriesUsedInForm() {
 		List<DanhMuc> categoriesUsedInForm = new ArrayList<>();
 
-		Iterable<DanhMuc> categoriesInDB = repo.findAll();
+		Iterable<DanhMuc> categoriesInDB = repo.findRootDanhMuc(Sort.by("ten").ascending());
 
 		for (DanhMuc category : categoriesInDB) {
-			if (category.getDanhMucCha() == null) {
-				categoriesUsedInForm.add(DanhMuc.copyMaVaTen(category));
+			categoriesUsedInForm.add(DanhMuc.copyMaVaTen(category));
 
-				Set<DanhMuc> children = category.getDanhMuccon();
+			Set<DanhMuc> children = sortSubCategories(category.getDanhMuccon());
 
-				for (DanhMuc subCategory : children) {
-					String name = "--" + subCategory.getTen();
-					categoriesUsedInForm.add(DanhMuc.copyMaVaTen(subCategory.getMaDanhMuc(), name));
+			for (DanhMuc subCategory : children) {
+				String name = "--" + subCategory.getTen();
+				categoriesUsedInForm.add(DanhMuc.copyMaVaTen(subCategory.getMaDanhMuc(), name));
 
-					listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, 1);
-				}
+				listSubCategoriesUsedInForm(categoriesUsedInForm, subCategory, 1);
 			}
 		}		
 
@@ -89,7 +100,7 @@ public class DanhMucService {
 	private void listSubCategoriesUsedInForm(List<DanhMuc> categoriesUsedInForm, 
 			DanhMuc parent, int subLevel) {
 		int newSubLevel = subLevel + 1;
-		Set<DanhMuc> children = parent.getDanhMuccon();
+		Set<DanhMuc> children = sortSubCategories(parent.getDanhMuccon());
 
 		for (DanhMuc subCategory : children) {
 			String name = "";
@@ -141,4 +152,24 @@ public class DanhMucService {
 		return "OK";
 	}
 	
+	private SortedSet<DanhMuc> sortSubCategories(Set<DanhMuc> children) {
+		return sortSubCategories(children, "asc");
+	}
+
+	private SortedSet<DanhMuc> sortSubCategories(Set<DanhMuc> children, String sortDir) {
+		SortedSet<DanhMuc> sortedChildren = new TreeSet<>(new Comparator<DanhMuc>() {
+			@Override
+			public int compare(DanhMuc cat1, DanhMuc cat2) {
+				if (sortDir.equals("asc")) {
+					return cat1.getTen().compareTo(cat2.getTen());
+				} else {
+					return cat2.getTen().compareTo(cat1.getTen());
+				}
+			}
+		});
+
+		sortedChildren.addAll(children);
+
+		return sortedChildren;
+	}
 }

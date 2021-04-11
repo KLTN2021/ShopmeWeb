@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
 import com.shopme.admin.danhmuc.DanhMucRepository;
@@ -99,7 +100,7 @@ public class DanhMucRepositoryTests {
 	
 	@Test
 	public void testLietKeDanhMucGoc() {
-		List<DanhMuc> lietKeDanhMucGoc = repo.timDanhMucGoc();
+		List<DanhMuc> lietKeDanhMucGoc = repo.findRootDanhMuc(Sort.by("ten").ascending());
 		lietKeDanhMucGoc.forEach(cat -> System.out.println(cat.getTen()));
 	}
 	

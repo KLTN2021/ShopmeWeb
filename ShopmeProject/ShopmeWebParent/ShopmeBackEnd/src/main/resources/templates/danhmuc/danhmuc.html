@@ -36,7 +36,10 @@
 				<tr>
 					<th>Mã danh mục </th>
 					<th>Hình ảnh</th>
-					<th>Tên danh mục</th>
+					<th>
+						<a class="text-white" th:href="@{'/danhmuc?sortDir=' + ${reverseSortDir}}">Tên danh mục</a>
+						<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>						
+					</th>
 					<th>Bí danh</th>
 					<th>Trạng thái</th>
 					<th></th>
