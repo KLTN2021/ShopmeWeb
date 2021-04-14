@@ -173,4 +173,11 @@ public class DanhMuc {
 	
 	@Transient
 	private boolean hasDanhMucCon;
+
+	@Override
+	public String toString() {
+		return this.ten;
+	}
+	
+	
 }

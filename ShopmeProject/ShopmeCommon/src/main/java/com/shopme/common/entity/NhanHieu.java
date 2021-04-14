@@ -35,6 +35,14 @@ public class NhanHieu {
 			)
 	private Set<DanhMuc> danhmuc = new HashSet<>();
 
+	public NhanHieu() {
+	}
+	
+	public NhanHieu(String ten) {
+		this.ten = ten;
+		this.logo = "brand-logo.png";
+	}
+
 	public Integer getMaNhanHieu() {
 		return maNhanHieu;
 	}
@@ -65,6 +73,11 @@ public class NhanHieu {
 
 	public void setDanhmuc(Set<DanhMuc> danhmuc) {
 		this.danhmuc = danhmuc;
+	}
+
+	@Override
+	public String toString() {
+		return "NhanHieu [maNhanHieu=" + maNhanHieu + ", ten=" + ten + ", danhmuc=" + danhmuc + "]";
 	}
 	
 	
