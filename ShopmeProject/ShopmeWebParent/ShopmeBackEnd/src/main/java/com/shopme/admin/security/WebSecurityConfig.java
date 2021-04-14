@@ -44,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/nguoidung/**").hasAuthority("Quản trị viên")
 			.antMatchers("/danhmuc/**", "/nhanhieu/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung")
+			.antMatchers("/sanpham/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung", "Nhân viên bán hàng", "Người giao hàng")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
