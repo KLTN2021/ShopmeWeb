@@ -16,31 +16,27 @@
 		<a th:href="@{/nguoidung/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark"></a>
 	</div>
 	
-	<div th:if="${message != null}" class = "alert alert-success text-center">
-		[[${message}]]
-	</div>
-	
-	<div th:replace="fragments :: search_form('/nguoidung/page/1')" />
+	<div th:replace="fragments :: search_form_and_message('/nguoidung/page/1')" />
 	
 	<div class="full-details">
 		<table class = "table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class = "thead-dark">
 				<tr>
 					<th class="hideable-column">
-						<th th:replace="fragments :: column_link('maTK', 'Mã tài khoản', 'tag')" /> 
+						<th th:replace="fragments :: column_link('/nguoidung' ,'maTK', 'Mã tài khoản', 'tag')" /> 
 					</th>
 					
 					<th>Ảnh đại diện</th>
 					
 					<th class="hideable-column">
-						<th th:replace="fragments :: column_link('email', 'E-mail', 'tag')" /> 
+						<th th:replace="fragments :: column_link('/nguoidung' ,'email', 'E-mail', 'tag')" /> 
 					</th>
 					
-					<th th:replace="fragments :: column_link('nHo', 'Họ', 'none')" />
+					<th th:replace="fragments :: column_link('/nguoidung' ,'nHo', 'Họ', 'none')" />
 					
-					<th th:replace="fragments :: column_link('nTen', 'Tên', 'none')" />
+					<th th:replace="fragments :: column_link('/nguoidung' ,'nTen', 'Tên', 'none')" />
 					<th>Chức vụ</th>					
-					<th th:replace="fragments :: column_link('trangThai', 'Trạng thái', 'none')" />
+					<th th:replace="fragments :: column_link('/nguoidung' ,'trangThai', 'Trạng thái', 'none')" />
 					
 					<th> </th>
 				</tr>
@@ -57,10 +53,12 @@
 					<td>[[${user.phanquyen}]]</td>
 					
 					<td>
-						<div th:replace="fragments :: user_status" />
+						<div th:replace="fragments :: status(${user.trangThai}, 'nguoidung', '/nguoidung/' + ${user.maTK})" />
 					</td>
 					<td>
-						<div th:replace="fragments :: user_actions" />
+						<div th:replace="fragments :: edit('nguoidung', '/nguoidung/edit/' + ${user.maTK})" />
+						&nbsp;&nbsp;
+						<div th:replace="fragments :: delete('nguoidung', ${user.maTK}, '/nguoidung/delete/' + ${user.maTK}, true)" />
 					</td>
 				</tr>
 			</tbody>
@@ -76,9 +74,11 @@
 				<div>[[${user.hoTen}]]</div>
 				<div>[[${user.phanquyen}]]</div>
 				<div class="mt-2">
-					<div th:replace="fragments :: user_status" />
+					<div th:replace="fragments :: status(${user.trangThai}, 'nguoidung', '/nguoidung/' + ${user.maTK})" />
 					&nbsp; 			
-					<div th:replace="fragments :: user_actions" />
+					<div th:replace="fragments :: edit('nguoidung', '/nguoidung/edit/' + ${user.maTK})" />
+					&nbsp; 
+					<div th:replace="fragments :: delete('nguoidung', ${user.maTK}, '/nguoidung/delete/' + ${user.maTK}, true)" />
 			</div>
 			</div>
 			

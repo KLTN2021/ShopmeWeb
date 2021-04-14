@@ -23,7 +23,7 @@ import com.shopme.common.entity.DanhMuc;
 @Service
 @Transactional
 public class DanhMucService {
-	public static final int ROOT_CATEGORIES_PER_PAGE = 3;
+	public static final int ROOT_CATEGORIES_PER_PAGE = 4;
 	
 	@Autowired
 	private DanhMucRepository repo;

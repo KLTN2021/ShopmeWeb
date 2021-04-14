@@ -10,11 +10,7 @@
 		<a th:href="@{/danhmuc/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>		
 	</div>
 	
-	<div th:if="${message != null}" class="alert alert-success text-center">
-		[[${message}]]
-	</div>
-	
-	<div th:replace="fragments :: search_form('/danhmuc/page/1')" />
+	<div th:replace="fragments :: search_form_and_message('/danhmuc/page/1')" />
 
 	<div class="full-details">
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
@@ -22,10 +18,7 @@
 				<tr>
 					<th>Mã danh mục </th>
 					<th>Hình ảnh</th>
-					<th>
-						<a class="text-white" th:href="@{'/danhmuc/page/' + ${currentPage} + '?sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Tên danh mục</a>
-						<span th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}" ></span>						
-					</th>
+					<th th:replace="fragments :: column_link('/danhmuc', 'ten', 'Tên danh mục', 'none')" />
 					<th class="hideable-column">Bí danh</th>
 					<th>Trạng thái</th>
 					<th></th>
@@ -40,23 +33,12 @@
 					<td>[[${cat.ten}]]</td>
 					<td class="hideable-column">[[${cat.biDanh}]]</td>
 					<td>
-						<a th:if="${cat.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
-							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/false'}"
-							title="Tắt kích hoạt"></a>
-
-						<a th:if="${cat.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
-							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/true'}"
-							title="Bật kích hoạt"></a>
+						<div th:replace="fragments :: status(${cat.trangThai}, 'danhmuc', '/danhmuc/' + ${cat.maDanhMuc})" />
 					</td>
 					<td>
-						<a class="fas fa-edit fa-2x icon-green" th:href="@{'/danhmuc/edit/' + ${cat.maDanhMuc}}"
-							title="Edit this category"></a>
+						<div th:replace="fragments :: edit('danhmuc', '/danhmuc/edit/' + ${cat.maDanhMuc})" />
 						&nbsp; 
-						<th:block th:if="${cat.hasDanhMucCon == false}">
-						<a class="fas fa-trash fa-2x icon-dark link-delete" 
-							th:href="@{'/danhmuc/delete/' + ${cat.maDanhMuc}}"
-							th:entityId="${cat.maDanhMuc}"
-							title="Delete this category"></a>
+						<div th:replace="fragments :: delete('danhmuc', ${cat.maDanhMuc}, '/danhmuc/delete/' + ${cat.maDanhMuc}, ${!cat.hasDanhMucCon})" />	
 					</td>
 				</tr>
 			</tbody>
@@ -72,23 +54,12 @@
 				<div>[[${cat.ten}]]</div>
 				<div class="mt-2">
 					<td>
-						<a th:if="${cat.trangThai == true}" class="fas fa-check-circle fa-2x icon-green" 
-							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/false'}"
-							title="Tắt kích hoạt"></a>
-
-						<a th:if="${cat.trangThai == false}" class="fas fa-circle fa-2x icon-dark" 
-							th:href="@{'/danhmuc/' + ${cat.maDanhMuc} + '/trangThai/true'}"
-							title="Bật kích hoạt"></a>
+						<div th:replace="fragments :: status(${cat.trangThai}, 'danhmuc', '/danhmuc/' + ${cat.maDanhMuc})" />
 					</td>
 					<td>
-						<a class="fas fa-edit fa-2x icon-green" th:href="@{'/danhmuc/edit/' + ${cat.maDanhMuc}}"
-							title="Edit this category"></a>
-						&nbsp; 
-						<th:block th:if="${cat.hasDanhMucCon == false}">
-						<a class="fas fa-trash fa-2x icon-dark link-delete" 
-							th:href="@{'/danhmuc/delete/' + ${cat.maDanhMuc}}"
-							th:entityId="${cat.maDanhMuc}"
-							title="Delete this category"></a>
+						<div th:replace="fragments :: edit('danhmuc', '/danhmuc/edit/' + ${cat.maDanhMuc})" />
+					&nbsp;
+					<div th:replace="fragments :: delete('danhmuc', ${cat.maDanhMuc}, '/danhmuc/delete/' + ${cat.maDanhMuc}, ${!cat.hasDanhMucCon})" />
 					</td>
 				</div>
 			</div>
@@ -98,7 +69,7 @@
 	
 	<div th:if="${keyword != null}" class="text-center">
 		<span>Kết quả tìm kiếm không hiển thị các danh mục ở dạng phân cấp</span>
-		<div th:replace="fragments :: pagination('danhmuc', 'danhmuc')"></div>
+		<div th:replace="fragments :: pagination('/danhmuc', 'danhmuc')"></div>
 	</div>
 
 	<th:block th:unless="${keyword != null}">
