@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "nhanhieu")
@@ -80,5 +81,10 @@ public class NhanHieu {
 		return "NhanHieu [maNhanHieu=" + maNhanHieu + ", ten=" + ten + ", danhmuc=" + danhmuc + "]";
 	}
 	
-	
+	@Transient
+	public String getLogoPath() {
+		if (this.maNhanHieu == null) return "/images/image-thumbnail.png";
+
+		return "/brand-logos/" + this.maNhanHieu + "/" + this.logo;		
+	}
 }
