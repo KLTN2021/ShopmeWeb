@@ -20,7 +20,7 @@
 				<tr>
 					<th>Mã nhãn hiệu</th>
 					<th>Logo</th>
-					<th>Tên nhãn hiệu</th>
+					<th th:replace="fragments :: column_link('/nhanhieu', 'ten', 'Tên nhãn hiệu', 'none')" />
 					<th>Danh mục</th>
 					<th></th>
 				</tr>								
@@ -47,6 +47,8 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<div th:replace="fragments :: pagination('/nhanhieu', 'nhanhieu')"></div>
 
 	<div th:replace="modal_fragments :: confirm_modal" />
 
