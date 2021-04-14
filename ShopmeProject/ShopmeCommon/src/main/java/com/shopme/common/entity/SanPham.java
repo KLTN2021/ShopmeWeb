@@ -39,8 +39,8 @@ public class SanPham {
 	
 	private boolean trangThai;
 	
-	@Column(name = "soluong")
-	private boolean soLuong;
+	@Column(name = "trongkho")
+	private boolean trongKho;
 	
 	private float chiPhi;
 	
@@ -126,12 +126,12 @@ public class SanPham {
 		this.trangThai = trangThai;
 	}
 
-	public boolean isSoLuong() {
-		return soLuong;
+	public boolean isTrongKho() {
+		return trongKho;
 	}
 
-	public void setSoLuong(boolean soLuong) {
-		this.soLuong = soLuong;
+	public void setTrongKho(boolean trongKho) {
+		this.trongKho = trongKho;
 	}
 
 	public float getChiPhi() {
@@ -205,4 +205,10 @@ public class SanPham {
 	public void setNhanhieu(NhanHieu nhanhieu) {
 		this.nhanhieu = nhanhieu;
 	}
+
+	@Override
+	public String toString() {
+		return "SanPham [maSanPham=" + maSanPham + ", ten=" + ten + "]";
+	}
+	
 }
