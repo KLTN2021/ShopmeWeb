@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/nguoidung/**").hasAuthority("Quản trị viên")
-			.antMatchers("/danhmuc/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung")
+			.antMatchers("/danhmuc/**", "/nhanhieu/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()
