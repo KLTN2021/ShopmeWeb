@@ -43,10 +43,6 @@ public class NguoiDungController {
 			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
 			@Param("keyword") String keyword
 			) {
-		System.out.println("sort Field: " + sortField);
-		
-		System.out.println("sort Order: " + sortDir);
-		
 		
 		Page<TaiKhoan> page = service.listByPage(pageNum, sortField, sortDir, keyword);
 		
