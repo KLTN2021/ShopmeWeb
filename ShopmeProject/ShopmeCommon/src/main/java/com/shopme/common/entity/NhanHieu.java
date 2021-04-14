@@ -43,6 +43,11 @@ public class NhanHieu {
 		this.ten = ten;
 		this.logo = "brand-logo.png";
 	}
+	
+	public NhanHieu(Integer maNhanHieu, String ten) {
+		this.maNhanHieu = maNhanHieu;
+		this.ten = ten;
+	}
 
 	public Integer getMaNhanHieu() {
 		return maNhanHieu;

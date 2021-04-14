@@ -37,4 +37,19 @@ public class NhanHieuService {
 
 		repo.deleteById(maNhanHieu);
 	}
+	
+	public String checkUnique(Integer maNhanHieu, String ten) {
+		boolean isCreatingNew = (maNhanHieu == null || maNhanHieu == 0);
+		NhanHieu brandByName = repo.findByTen(ten);
+
+		if (isCreatingNew) {
+			if (brandByName != null) return "Duplicate";
+		} else {
+			if (brandByName != null && brandByName.getMaNhanHieu() != maNhanHieu) {
+				return "Duplicate";
+			}
+		}
+
+		return "OK";
+	}
 }
