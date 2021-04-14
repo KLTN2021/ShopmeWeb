@@ -1,5 +1,6 @@
 package com.shopme.admin.nhanhieu;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,5 +14,27 @@ public class NhanHieuService {
 
 	public List<NhanHieu> listAll() {
 		return (List<NhanHieu>) repo.findAll();
+	}
+	
+	public NhanHieu save(NhanHieu brand) {
+		return repo.save(brand);
+	}
+
+	public NhanHieu get(Integer maNhanHieu) throws NhanHieuNotFoundException {
+		try {
+			return repo.findById(maNhanHieu).get();
+		} catch (NoSuchElementException ex) {
+			throw new NhanHieuNotFoundException("Không thể tìm thấy bất kỳ nhãn hiệu nào có ID " + maNhanHieu);
+		}
+	}
+
+	public void delete(Integer maNhanHieu) throws NhanHieuNotFoundException {
+		Long countByMaNhanHieu = repo.countByMaNhanHieu(maNhanHieu);
+
+		if (countByMaNhanHieu == null || countByMaNhanHieu == 0) {
+			throw new NhanHieuNotFoundException("Không thể tìm thấy bất kỳ nhãn hiệu nào có ID " + maNhanHieu);			
+		}
+
+		repo.deleteById(maNhanHieu);
 	}
 }

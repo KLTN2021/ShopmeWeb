@@ -5,5 +5,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import com.shopme.common.entity.NhanHieu;
 
 public interface NhanHieuRepository extends PagingAndSortingRepository<NhanHieu, Integer> {
-
+	
+	public Long countByMaNhanHieu(Integer maNhanHieu);
 }
