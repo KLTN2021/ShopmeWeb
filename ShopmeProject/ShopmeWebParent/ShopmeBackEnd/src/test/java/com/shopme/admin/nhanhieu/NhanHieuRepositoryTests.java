@@ -70,7 +70,7 @@ public class NhanHieuRepositoryTests {
 
 	@Test
 	public void testGetById() {
-		NhanHieu brand = repo.findById(1).get();
+		NhanHieu brand = repo.findById(2).get();
 
 		assertThat(brand.getTen()).isEqualTo("Acer");
 	}
