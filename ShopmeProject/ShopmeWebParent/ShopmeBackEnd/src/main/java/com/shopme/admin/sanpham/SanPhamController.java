@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopme.admin.nhanhieu.NhanHieuService;
 import com.shopme.common.entity.NhanHieu;
@@ -41,10 +42,9 @@ public class SanPhamController {
 	}
 
 	@PostMapping("/sanpham/save")
-	public String saveProduct(SanPham product) {
-		System.out.println("Product Name: " + product.getTen());
-		System.out.println("Brand ID: " + product.getNhanhieu().getMaNhanHieu());
-		System.out.println("Category ID: " + product.getDanhmuc().getMaDanhMuc());
+	public String saveProduct(SanPham product, RedirectAttributes ra) {
+		sanPhamService.save(product);
+		ra.addFlashAttribute("message", "Sản phẩm đã được lưu thành công.");
 
 		return "redirect:/sanpham";
 	}
