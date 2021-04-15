@@ -35,7 +35,7 @@ public class SanPhamController {
 
 		model.addAttribute("product", product);
 		model.addAttribute("listBrands", listBrands);
-		model.addAttribute("pageTitle", "Create New Product");
+		model.addAttribute("pageTitle", "Tạo sản phẩm mới");
 
 		return "sanpham/sanpham_form";
 	}
