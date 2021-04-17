@@ -2,12 +2,15 @@ package com.shopme.admin.sanpham;
 import java.util.List;
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopme.common.entity.SanPham;
 
 @Service
+@Transactional
 public class SanPhamService {
 	@Autowired private SanPhamRepository repo;
 
@@ -45,5 +48,9 @@ public class SanPhamService {
 		}
 
 		return "OK";
+	}
+	
+	public void updateProductEnabledStatus(Integer maSanPham, boolean trangThai) {
+		repo.updateEnabledStatus(maSanPham, trangThai);
 	}
 }

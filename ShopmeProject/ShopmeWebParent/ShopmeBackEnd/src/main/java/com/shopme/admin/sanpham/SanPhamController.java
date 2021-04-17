@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -45,6 +46,17 @@ public class SanPhamController {
 	public String saveProduct(SanPham product, RedirectAttributes ra) {
 		sanPhamService.save(product);
 		ra.addFlashAttribute("message", "Sản phẩm đã được lưu thành công.");
+
+		return "redirect:/sanpham";
+	}
+	
+	@GetMapping("/sanpham/{maSanPham}/trangThai/{status}")
+	public String updateCategoryEnabledStatus(@PathVariable("maSanPham") Integer maSanPham,
+			@PathVariable("status") boolean trangThai, RedirectAttributes redirectAttributes) {
+		sanPhamService.updateProductEnabledStatus(maSanPham, trangThai);
+		String status = trangThai ? "kích hoạt" : "tắt kích hoạt";
+		String message = "Sản phẩm có ID " + maSanPham + " đã được " + status;
+		redirectAttributes.addFlashAttribute("message", message);
 
 		return "redirect:/sanpham";
 	}
