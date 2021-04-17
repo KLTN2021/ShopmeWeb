@@ -13,6 +13,13 @@
 user-photos/**
 # Created by https://www.gitignore.io/api/git,java,maven,eclipse,windows
 
+### VS Code ###
+.vscode/
+/user-photos/
+/Shopme-backend-2021-03-12.0.log
+/Shopme-backend-2021-03-13.0.log
+/Shopme-backend.log
+
 ### Eclipse ###
 
 .metadata/**

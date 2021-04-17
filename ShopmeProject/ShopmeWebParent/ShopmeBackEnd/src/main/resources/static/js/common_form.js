@@ -4,15 +4,11 @@ $(document).ready(function() {
 	});
 	
 	$("#fileImage").change(function() {
-		fileSize = this.files[0].size;
-
-		if (fileSize > MAX_FILE_SIZE) {
-			this.setCustomValidity("bạn phải chọn hình ảnh có dung lượng nhỏ hơn" + MAX_FILE_SIZE + "byte!");
-			this.reportValidity();
-		} else {
-			this.setCustomValidity("");
-			showImageThumbnail(this);
+		if (!checkFileSize(this)) {
+			return;
 		}
+		
+		showImageThumbnail(this);	
 	});
 });
 
@@ -24,6 +20,21 @@ function showImageThumbnail(fileInput) {
 	};
 	
 	reader.readAsDataURL(file);
+}
+
+function checkFileSize(fileInput) {
+	fileSize = fileInput.files[0].size;
+
+	if (fileSize > MAX_FILE_SIZE) {
+		fileInput.setCustomValidity("Bạn phải chọn một hình ảnh nhỏ hơn " + MAX_FILE_SIZE + " bytes!");
+		fileInput.reportValidity();
+
+		return false;
+	} else {
+		fileInput.setCustomValidity("");
+
+		return true;
+	}	
 }
 
 function showModalDialog(title, message) {
