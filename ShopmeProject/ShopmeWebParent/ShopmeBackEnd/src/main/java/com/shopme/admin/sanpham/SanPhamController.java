@@ -50,25 +50,61 @@ public class SanPhamController {
 
 	@PostMapping("/sanpham/save")
 	public String saveProduct(SanPham product, RedirectAttributes ra,
-			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
-
-		if (!multipartFile.isEmpty()) {
-			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-			product.setHinhAnhChinh(fileName);
+			@RequestParam("fileImage") MultipartFile mainImageMultipart,
+			@RequestParam("extraImage") MultipartFile[] extraImageMultiparts) 
+					throws IOException {
+			
+			setMainImageName(mainImageMultipart, product);
+			setExtraImageNames(extraImageMultiparts, product);
 
 			SanPham savedProduct = sanPhamService.save(product);
+
+			saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
+
+			ra.addFlashAttribute("message", "The product has been saved successfully.");
+
+			return "redirect:/sanpham";
+
+	} 
+	
+	private void saveUploadedImages(MultipartFile mainImageMultipart, 
+			MultipartFile[] extraImageMultiparts, SanPham savedProduct) throws IOException {
+		if (!mainImageMultipart.isEmpty()) {
+			String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
 			String uploadDir = "../product-images/" + savedProduct.getMaSanPham();
 
-			FileUploadUtil.cleanDir(uploadDir);
-			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-
-		} else {
-			sanPhamService.save(product);
+			FileUploadUtil.cleanDir(uploadDir);		
+			FileUploadUtil.saveFile(uploadDir, fileName, mainImageMultipart);
 		}
+		
+		if (extraImageMultiparts.length > 0) {
+			String uploadDir = "../product-images/" + savedProduct.getMaSanPham() + "/extras";
 
-		ra.addFlashAttribute("message", "Sản phẩm đã được lưu thành công.");
+			for (MultipartFile multipartFile : extraImageMultiparts) {
+				if (multipartFile.isEmpty()) continue;
 
-		return "redirect:/sanpham";
+				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+			}
+		}
+	}
+	
+	private void setExtraImageNames(MultipartFile[] extraImageMultiparts, SanPham product) {
+		if (extraImageMultiparts.length > 0) {
+			for (MultipartFile multipartFile : extraImageMultiparts) {
+				if (!multipartFile.isEmpty()) {
+					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+					product.themHinhAnh(fileName);
+				}
+			}
+		}
+	}
+
+	private void setMainImageName(MultipartFile mainImageMultipart, SanPham product) {
+		if (!mainImageMultipart.isEmpty()) {
+			String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
+			product.setHinhAnhChinh(fileName);
+		}
 	}
 	
 	@GetMapping("/sanpham/{maSanPham}/trangThai/{status}")
@@ -88,6 +124,11 @@ public class SanPhamController {
 			RedirectAttributes redirectAttributes) {
 		try {
 			sanPhamService.delete(maSanPham);
+			String productExtraImagesDir = "../product-images/" + maSanPham + "/extras";
+			String productImagesDir = "../product-images/" + maSanPham;
+
+			FileUploadUtil.removeDir(productExtraImagesDir);
+			FileUploadUtil.removeDir(productImagesDir);
 
 			redirectAttributes.addFlashAttribute("message", 
 					"Sản phẩm có ID " + maSanPham + " đã được xóa thành công");
