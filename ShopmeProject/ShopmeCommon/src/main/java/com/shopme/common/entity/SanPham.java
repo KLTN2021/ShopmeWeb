@@ -1,6 +1,10 @@
 package com.shopme.common.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -54,6 +59,10 @@ public class SanPham {
 	private float chieuCao;
 	private float canNang;
 	
+	@Column(name = "hinh_anh_chinh", nullable = false)
+	private String hinhAnhChinh;
+
+	
 	@ManyToOne
 	@JoinColumn(name = "danhmuc_id")
 	private DanhMuc danhmuc;
@@ -61,6 +70,9 @@ public class SanPham {
 	@ManyToOne
 	@JoinColumn(name = "nhanhieu_id")
 	private NhanHieu nhanhieu;
+	
+	@OneToMany(mappedBy = "sanpham", cascade = CascadeType.ALL)
+	private Set<HinhAnhSanPham> hinhAnh = new HashSet<>();
 
 	public Integer getMaSanPham() {
 		return maSanPham;
@@ -210,5 +222,26 @@ public class SanPham {
 	public String toString() {
 		return "SanPham [maSanPham=" + maSanPham + ", ten=" + ten + "]";
 	}
+
+	public String getHinhAnhChinh() {
+		return hinhAnhChinh;
+	}
+
+	public void setHinhAnhChinh(String hinhAnhChinh) {
+		this.hinhAnhChinh = hinhAnhChinh;
+	}
+
+	public Set<HinhAnhSanPham> getHinhAnh() {
+		return hinhAnh;
+	}
+
+	public void setHinhAnh(Set<HinhAnhSanPham> hinhAnh) {
+		this.hinhAnh = hinhAnh;
+	}
+	
+	public void themHinhAnh(String tenHinhAnh) {
+		this.hinhAnh.add(new HinhAnhSanPham(tenHinhAnh, this));
+	}
+	
 	
 }

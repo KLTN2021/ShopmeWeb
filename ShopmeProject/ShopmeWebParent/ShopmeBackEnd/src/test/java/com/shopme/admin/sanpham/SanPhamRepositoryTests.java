@@ -93,4 +93,19 @@ public class SanPhamRepositoryTests {
 
 		assertThat(!result.isPresent());
 	}
+	
+	@Test
+	public void testSaveProductWithImages() {
+		Integer productId = 2;
+		SanPham product = repo.findById(productId).get();
+
+		product.setHinhAnhChinh("main image.jpg");
+		product.themHinhAnh("extra image 1.png");
+		product.themHinhAnh("extra_image_2.png");
+		product.themHinhAnh("extra-image3.png");
+
+		SanPham savedProduct = repo.save(product);
+
+		assertThat(savedProduct.getHinhAnh().size()).isEqualTo(3);
+	}
 }
