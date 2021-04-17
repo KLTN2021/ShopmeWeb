@@ -13,4 +13,6 @@ public interface SanPhamRepository extends PagingAndSortingRepository<SanPham, I
 	@Query("UPDATE SanPham p SET p.trangThai = ?2 WHERE p.maSanPham = ?1")
 	@Modifying
 	public void updateEnabledStatus(Integer maSanPham, boolean trangThai);	
+	
+	public Long countByMaSanPham(Integer maSanPham);
 }

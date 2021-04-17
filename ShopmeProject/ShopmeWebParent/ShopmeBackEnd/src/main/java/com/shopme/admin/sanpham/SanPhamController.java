@@ -60,4 +60,20 @@ public class SanPhamController {
 
 		return "redirect:/sanpham";
 	}
+	
+	@GetMapping("/sanpham/delete/{maSanPham}")
+	public String deleteProduct(@PathVariable(name = "maSanPham") Integer maSanPham, 
+			Model model,
+			RedirectAttributes redirectAttributes) {
+		try {
+			sanPhamService.delete(maSanPham);
+
+			redirectAttributes.addFlashAttribute("message", 
+					"Sản phẩm có ID " + maSanPham + " đã được xóa thành công");
+		} catch (SanPhamNotFoundException ex) {
+			redirectAttributes.addFlashAttribute("message", ex.getMessage());
+		}
+
+		return "redirect:/sanpham";
+	}
 }

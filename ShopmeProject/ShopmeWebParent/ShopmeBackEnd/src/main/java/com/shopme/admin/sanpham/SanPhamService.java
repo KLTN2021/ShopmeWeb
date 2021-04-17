@@ -53,4 +53,14 @@ public class SanPhamService {
 	public void updateProductEnabledStatus(Integer maSanPham, boolean trangThai) {
 		repo.updateEnabledStatus(maSanPham, trangThai);
 	}
+	
+	public void delete(Integer maSanPham) throws SanPhamNotFoundException {
+		Long countByMaSanPham = repo.countByMaSanPham(maSanPham);
+
+		if (countByMaSanPham == null || countByMaSanPham == 0) {
+			throw new SanPhamNotFoundException("Không thể tìm thấy bất kỳ sản phẩm nào có ID " + maSanPham);			
+		}
+
+		repo.deleteById(maSanPham);
+	}
 }
