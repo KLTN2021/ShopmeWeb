@@ -31,4 +31,19 @@ public class SanPhamService {
 
 		return repo.save(product);
 	}
+	
+	public String checkUnique(Integer maSanPham, String ten) {
+		boolean isCreatingNew = (maSanPham == null || maSanPham == 0);
+		SanPham productByName = repo.findByTen(ten);
+
+		if (isCreatingNew) {
+			if (productByName != null) return "Duplicate";
+		} else {
+			if (productByName != null && productByName.getMaSanPham() != maSanPham) {
+				return "Duplicate";
+			}
+		}
+
+		return "OK";
+	}
 }
