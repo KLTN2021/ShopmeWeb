@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "sanpham")
@@ -243,5 +244,10 @@ public class SanPham {
 		this.hinhAnh.add(new HinhAnhSanPham(tenHinhAnh, this));
 	}
 	
-	
+	@Transient
+	public String getDuongDanHinhAnhChinh() {
+		if (maSanPham == null || hinhAnhChinh == null) return "/images/image-thumbnail.png";
+
+		return "/product-images/" + this.maSanPham + "/" + this.hinhAnhChinh;
+	}
 }

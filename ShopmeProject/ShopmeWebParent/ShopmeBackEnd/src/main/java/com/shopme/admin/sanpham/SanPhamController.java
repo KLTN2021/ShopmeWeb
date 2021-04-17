@@ -1,14 +1,20 @@
 package com.shopme.admin.sanpham;
+
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.shopme.admin.FileUploadUtil;
 import com.shopme.admin.nhanhieu.NhanHieuService;
 import com.shopme.common.entity.NhanHieu;
 import com.shopme.common.entity.SanPham;
@@ -43,8 +49,23 @@ public class SanPhamController {
 	}
 
 	@PostMapping("/sanpham/save")
-	public String saveProduct(SanPham product, RedirectAttributes ra) {
-		sanPhamService.save(product);
+	public String saveProduct(SanPham product, RedirectAttributes ra,
+			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+
+		if (!multipartFile.isEmpty()) {
+			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			product.setHinhAnhChinh(fileName);
+
+			SanPham savedProduct = sanPhamService.save(product);
+			String uploadDir = "../product-images/" + savedProduct.getMaSanPham();
+
+			FileUploadUtil.cleanDir(uploadDir);
+			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
+		} else {
+			sanPhamService.save(product);
+		}
+
 		ra.addFlashAttribute("message", "Sản phẩm đã được lưu thành công.");
 
 		return "redirect:/sanpham";

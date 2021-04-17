@@ -13,6 +13,7 @@
 	</div>
 
 	<form th:action="@{/sanpham/save}" method="post" onsubmit="return checkUnique(this)"
+		enctype="multipart/form-data"
 		th:object="${product}">
 		<input type="hidden" th:field="*{maSanPham}" />
 	<div>
@@ -41,7 +42,9 @@
 		  <div class="tab-pane" id="description" role="tabpanel">
 		  	<div th:replace="sanpham/sanpham_description :: content"></div>
 		  </div>
-		  <div class="tab-pane" id="images" role="tabpanel">Hình ảnh</div>
+		  <div class="tab-pane" id="images" role="tabpanel">
+		  	<div th:replace="sanpham/sanpham_images :: content"></div>
+		  </div>
 		  <div class="tab-pane" id="details" role="tabpanel">Chi tiết</div>
 		  <div class="tab-pane p-3" id="shipping" role="tabpanel">
 		  	<div th:replace="sanpham/sanpham_shipping :: content"></div>
@@ -60,6 +63,8 @@
 
 </div>
 <script type="text/javascript">
+	MAX_FILE_SIZE = 1048576; // 1MB
+	
 	moduleURL = "[[@{/sanpham}]]";
 	brandModuleURL = "[[@{/nhanhieu}]]";
 

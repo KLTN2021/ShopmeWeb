@@ -30,7 +30,7 @@
 				<tr th:each="product : ${listProducts}">
 					<td>[[${product.maSanPham}]]</td>
 					<td>
-
+						<img th:src="@{${product.duongDanHinhAnhChinh}}" style="width: 120px" class="img-fluid" />
 					</td>
 					<td>[[${product.ten}]]</td>
 					<td>[[${product.nhanhieu.ten}]]</td>

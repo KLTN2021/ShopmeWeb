@@ -6,8 +6,8 @@ $(document).ready(function() {
 	$("#fileImage").change(function() {
 		fileSize = this.files[0].size;
 
-		if (fileSize > 1048576) {
-			this.setCustomValidity("bạn phải chọn hình ảnh có dung lượng nhỏ hơn 1MB!");
+		if (fileSize > MAX_FILE_SIZE) {
+			this.setCustomValidity("bạn phải chọn hình ảnh có dung lượng nhỏ hơn" + MAX_FILE_SIZE + "byte!");
 			this.reportValidity();
 		} else {
 			this.setCustomValidity("");
