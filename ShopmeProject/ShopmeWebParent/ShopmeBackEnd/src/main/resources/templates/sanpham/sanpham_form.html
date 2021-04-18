@@ -45,7 +45,13 @@
 		  <div class="tab-pane" id="images" role="tabpanel">
 		  	<div th:replace="sanpham/sanpham_images :: content"></div>
 		  </div>
-		  <div class="tab-pane" id="details" role="tabpanel">Chi tiết</div>
+		  <div class="tab-pane p-3" id="details" role="tabpanel">
+		  	<div th:replace="sanpham/sanpham_details :: content"></div>
+		  	<div>
+		  		<input type="button" class="btn btn-secondary" value="Add More Detail"
+		  			onclick="addNextDetailSection()" />
+		  	</div>	
+		  </div>
 		  <div class="tab-pane p-3" id="shipping" role="tabpanel">
 		  	<div th:replace="sanpham/sanpham_shipping :: content"></div>
 		  </div>
@@ -71,6 +77,8 @@
 	checkUniqueUrl = "[[@{/sanpham/check_unique}]]";
 </script>
 <script th:src="@{/js/common_form.js}"></script>
-<script th:src="@{/js/sanpham_form.js}"></script>
+<script th:src="@{/js/sanpham_form_overview.js}"></script>
+<script th:src="@{/js/sanpham_form_images.js}"></script>
+<script th:src="@{/js/sanpham_form_details.js}"></script>
 </body>
 </html> 
