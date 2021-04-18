@@ -1,7 +1,9 @@
 package com.shopme.common.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -74,6 +76,9 @@ public class SanPham {
 	
 	@OneToMany(mappedBy = "sanpham", cascade = CascadeType.ALL)
 	private Set<HinhAnhSanPham> hinhAnh = new HashSet<>();
+	
+	@OneToMany(mappedBy = "sanpham", cascade = CascadeType.ALL)
+	private List<ChiTietSanPham> chitiet = new ArrayList<>();
 
 	public Integer getMaSanPham() {
 		return maSanPham;
@@ -249,5 +254,17 @@ public class SanPham {
 		if (maSanPham == null || hinhAnhChinh == null) return "/images/image-thumbnail.png";
 
 		return "/product-images/" + this.maSanPham + "/" + this.hinhAnhChinh;
+	}
+
+	public List<ChiTietSanPham> getChitiet() {
+		return chitiet;
+	}
+
+	public void setChitiet(List<ChiTietSanPham> chitiet) {
+		this.chitiet = chitiet;
+	}
+	
+	public void themChiTietSP(String ten, String value) {
+		this.chitiet.add(new ChiTietSanPham(ten, value, this));
 	}
 }

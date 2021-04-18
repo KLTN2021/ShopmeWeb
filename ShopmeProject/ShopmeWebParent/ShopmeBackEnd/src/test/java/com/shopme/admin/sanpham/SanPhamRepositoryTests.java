@@ -108,4 +108,17 @@ public class SanPhamRepositoryTests {
 
 		assertThat(savedProduct.getHinhAnh().size()).isEqualTo(3);
 	}
+	
+	@Test
+	public void testSaveProductWithDetails() {
+		Integer productId = 2;
+		SanPham product = repo.findById(productId).get();
+		
+		product.themChiTietSP("Device Memory", "128 GB");
+		product.themChiTietSP("CPU Model", "MediaTek");
+		product.themChiTietSP("OS", "Android 10");
+
+		SanPham savedProduct = repo.save(product);
+		assertThat(savedProduct.getChitiet()).isNotEmpty();		
+	}
 }
