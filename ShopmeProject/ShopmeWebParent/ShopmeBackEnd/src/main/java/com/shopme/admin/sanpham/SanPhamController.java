@@ -51,11 +51,14 @@ public class SanPhamController {
 	@PostMapping("/sanpham/save")
 	public String saveProduct(SanPham product, RedirectAttributes ra,
 			@RequestParam("fileImage") MultipartFile mainImageMultipart,
-			@RequestParam("extraImage") MultipartFile[] extraImageMultiparts) 
+			@RequestParam("extraImage") MultipartFile[] extraImageMultiparts,
+			@RequestParam(name = "detailNames", required = false) String[] detailNames,
+			@RequestParam(name = "detailValues", required = false) String[] detailValues) 
 					throws IOException {
 			
 			setMainImageName(mainImageMultipart, product);
 			setExtraImageNames(extraImageMultiparts, product);
+			setProductDetails(detailNames, detailValues, product);
 
 			SanPham savedProduct = sanPhamService.save(product);
 
@@ -66,6 +69,19 @@ public class SanPhamController {
 			return "redirect:/sanpham";
 
 	} 
+	
+	private void setProductDetails(String[] detailNames, String[] detailValues, SanPham product) {
+		if (detailNames == null || detailNames.length == 0) return;
+
+		for (int count = 0; count < detailNames.length; count++) {
+			String ten = detailNames[count];
+			String value = detailValues[count];
+
+			if (!ten.isEmpty() && !value.isEmpty()) {
+				product.themChiTietSP(ten, value);
+			}
+		}
+	}
 	
 	private void saveUploadedImages(MultipartFile mainImageMultipart, 
 			MultipartFile[] extraImageMultiparts, SanPham savedProduct) throws IOException {
