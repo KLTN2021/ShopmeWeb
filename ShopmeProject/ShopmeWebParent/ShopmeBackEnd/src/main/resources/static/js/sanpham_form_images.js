@@ -10,7 +10,6 @@ $(document).ready(function() {
 			showExtraImageThumbnail(this, index);
 		});
 	});
-
 });
 
 function showExtraImageThumbnail(fileInput, index) {

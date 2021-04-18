@@ -29,4 +29,4 @@ function addNextDetailSection() {
 
 function removeDetailSectionById(id) {
 	$("#" + id).remove();
-} 
+}

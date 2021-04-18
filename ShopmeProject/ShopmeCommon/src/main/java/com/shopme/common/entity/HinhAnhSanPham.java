@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "sanpham_hinhanh")
@@ -55,4 +56,8 @@ public class HinhAnhSanPham {
 		this.sanpham = sanpham;
 	}
 	
+	@Transient
+	public String getDuongDanHinhAnh() {
+		return "/product-images/" + sanpham.getMaSanPham() + "/extras/" + this.ten;
+	}
 }
