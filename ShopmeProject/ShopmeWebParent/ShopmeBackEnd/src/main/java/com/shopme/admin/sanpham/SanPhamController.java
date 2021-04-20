@@ -154,4 +154,27 @@ public class SanPhamController {
 
 		return "redirect:/sanpham";
 	}
+	
+	@GetMapping("/sanpham/edit/{maSanPham}")
+	public String editProduct(@PathVariable("maSanPham") Integer maSanPham, Model model,
+			RedirectAttributes ra) {
+		try {
+			SanPham product = sanPhamService.get(maSanPham);
+			List<NhanHieu> listBrands = nhanHieuService.listAll();
+			Integer numberOfExistingExtraImages = product.getHinhAnh().size();
+
+			model.addAttribute("product", product);
+			model.addAttribute("listBrands", listBrands);
+			model.addAttribute("pageTitle", "Edit Product (ID: " + maSanPham + ")");
+			model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
+
+
+			return "sanpham/sanpham_form";
+
+		} catch (SanPhamNotFoundException e) {
+			ra.addFlashAttribute("message", e.getMessage());
+
+			return "redirect:/sanpham";
+		}
+	}
 }

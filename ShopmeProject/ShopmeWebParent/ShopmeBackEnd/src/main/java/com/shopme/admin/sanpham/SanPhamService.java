@@ -1,5 +1,6 @@
 package com.shopme.admin.sanpham;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Date;
 
 import javax.transaction.Transactional;
@@ -62,5 +63,13 @@ public class SanPhamService {
 		}
 
 		repo.deleteById(maSanPham);
+	}
+	
+	public SanPham get(Integer maSanPham) throws SanPhamNotFoundException {
+		try {
+			return repo.findById(maSanPham).get();
+		} catch (NoSuchElementException ex) {
+			throw new SanPhamNotFoundException("Không thể tìm thấy bất kỳ sản phẩm nào có ID " + maSanPham);
+		}
 	}
 }

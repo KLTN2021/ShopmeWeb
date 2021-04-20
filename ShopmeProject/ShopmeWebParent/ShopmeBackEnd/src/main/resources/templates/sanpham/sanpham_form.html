@@ -16,6 +16,8 @@
 		enctype="multipart/form-data"
 		th:object="${product}">
 		<input type="hidden" th:field="*{maSanPham}" />
+		<input th:if="${product.danhmuc != null}" type="hidden" 
+			id="categoryId" th:value="${product.danhmuc.maDanhMuc}" />
 	<div>
 		<ul class="nav nav-tabs" id="myTab" role="tablist">
 		  <li class="nav-item">
