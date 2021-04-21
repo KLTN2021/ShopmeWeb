@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.shopme.common.entity.DanhMuc;
+import com.shopme.common.exception.DanhMucNotFoundException;
 
 @Service
 @Transactional

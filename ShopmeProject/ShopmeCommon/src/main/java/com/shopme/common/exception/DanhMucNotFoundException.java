@@ -1,4 +1,4 @@
-package com.shopme.admin.danhmuc;
+package com.shopme.common.exception;
 
 public class DanhMucNotFoundException extends Exception {
 	public DanhMucNotFoundException(String message) {

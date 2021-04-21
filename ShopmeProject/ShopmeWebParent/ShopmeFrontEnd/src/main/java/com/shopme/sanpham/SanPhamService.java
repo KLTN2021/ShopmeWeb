@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shopme.common.entity.SanPham;
+import com.shopme.common.exception.SanPhamNotFoundException;
 
 @Service
 public class SanPhamService {
@@ -20,5 +21,14 @@ public class SanPhamService {
 
 		return repo.listByCategory(categoryId, categoryIdMatch, pageable);
 
+	}
+	
+	public SanPham getProduct(String biDanh) throws SanPhamNotFoundException {
+		SanPham product = repo.findByBiDanh(biDanh);
+		if (product == null) {
+			throw new SanPhamNotFoundException("Không thể tìm thấy bất kỳ sản phẩm nào có bí danh " + biDanh);
+		}
+
+		return product;
 	}
 }

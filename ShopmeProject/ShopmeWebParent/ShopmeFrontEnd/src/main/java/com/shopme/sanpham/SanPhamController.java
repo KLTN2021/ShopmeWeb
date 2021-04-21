@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.shopme.danhmuc.DanhMucService;
 import com.shopme.common.entity.DanhMuc;
 import com.shopme.common.entity.SanPham;
+import com.shopme.common.exception.DanhMucNotFoundException;
+import com.shopme.common.exception.SanPhamNotFoundException;
 
 @Controller
 public class SanPhamController {
@@ -25,35 +27,52 @@ public class SanPhamController {
 
 	@GetMapping("/c/{danhmuc_bidanh}/page/{pageNum}")
 	public String viewCategoryByPage(@PathVariable("danhmuc_bidanh") String biDanh,
-			@PathVariable("pageNum") int pageNum,
-			Model model) {
-		DanhMuc category = danhMucService.getCategory(biDanh);
-		if (category == null) {
-			return "error/404";
+				@PathVariable("pageNum") int pageNum,
+				Model model) {
+			try {
+				DanhMuc category = danhMucService.getCategory(biDanh);		
+				List<DanhMuc> listCategoryParents = danhMucService.getCategoryParents(category);
+	
+				Page<SanPham> pageProducts = sanPhamService.listByCategory(pageNum, category.getMaDanhMuc());
+				List<SanPham> listProducts = pageProducts.getContent();
+	
+				long startCount = (pageNum - 1) * SanPhamService.PRODUCTS_PER_PAGE + 1;
+				long endCount = startCount + SanPhamService.PRODUCTS_PER_PAGE - 1;
+				if (endCount > pageProducts.getTotalElements()) {
+					endCount = pageProducts.getTotalElements();
+				}
+	
+	
+				model.addAttribute("currentPage", pageNum);
+				model.addAttribute("totalPages", pageProducts.getTotalPages());
+				model.addAttribute("startCount", startCount);
+				model.addAttribute("endCount", endCount);
+				model.addAttribute("totalItems", pageProducts.getTotalElements());
+				model.addAttribute("pageTitle", category.getTen());
+				model.addAttribute("listCategoryParents", listCategoryParents);
+				model.addAttribute("listProducts", listProducts);
+				model.addAttribute("category", category);
+	
+				return "sanpham/sanpham_by_danhmuc";
+			} catch (DanhMucNotFoundException ex) {
+				return "error/404";
+			}
 		}
+	
+		@GetMapping("/p/{sanpham_bidanh}")
+		public String viewProductDetail(@PathVariable("sanpham_bidanh") String biDanh, Model model) {
 
-		List<DanhMuc> listCategoryParents = danhMucService.getCategoryParents(category);
+			try {
+				SanPham product = sanPhamService.getProduct(biDanh);
+				List<DanhMuc> listCategoryParents = danhMucService.getCategoryParents(product.getDanhmuc());
 
-		Page<SanPham> pageProducts = sanPhamService.listByCategory(pageNum, category.getMaDanhMuc());
-		List<SanPham> listProducts = pageProducts.getContent();
+				model.addAttribute("listCategoryParents", listCategoryParents);
+				model.addAttribute("product", product);
+				model.addAttribute("pageTitle", product.getTenNgan());
 
-		long startCount = (pageNum - 1) * SanPhamService.PRODUCTS_PER_PAGE + 1;
-		long endCount = startCount + SanPhamService.PRODUCTS_PER_PAGE - 1;
-		if (endCount > pageProducts.getTotalElements()) {
-			endCount = pageProducts.getTotalElements();
+				return "sanpham/sanpham_detail";
+			} catch (SanPhamNotFoundException e) {
+				return "error/404";
 		}
-
-
-		model.addAttribute("currentPage", pageNum);
-		model.addAttribute("totalPages", pageProducts.getTotalPages());
-		model.addAttribute("startCount", startCount);
-		model.addAttribute("endCount", endCount);
-		model.addAttribute("totalItems", pageProducts.getTotalElements());
-		model.addAttribute("pageTitle", category.getTen());
-		model.addAttribute("listCategoryParents", listCategoryParents);
-		model.addAttribute("listProducts", listProducts);
-		model.addAttribute("category", category);
-
-		return "sanpham_by_danhmuc";
 	}
 }

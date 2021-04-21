@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.shopme.common.entity.DanhMuc;
+import com.shopme.common.exception.DanhMucNotFoundException;
 
 @Service
 public class DanhMucService {
@@ -28,8 +29,13 @@ public class DanhMucService {
 		return listNoChildrenCategories;
 	}
 	
-	public DanhMuc getCategory(String biDanh) {
-		return repo.findByAliasEnabled(biDanh);
+	public DanhMuc getCategory(String biDanh) throws DanhMucNotFoundException {
+		DanhMuc category = repo.findByAliasEnabled(biDanh);
+		if (category == null) {
+			throw new DanhMucNotFoundException("Không thể tìm thấy bất kỳ danh mục nào có bí danh " + biDanh);
+		}
+
+		return category;
 	}
 
 	public List<DanhMuc> getCategoryParents(DanhMuc child) {

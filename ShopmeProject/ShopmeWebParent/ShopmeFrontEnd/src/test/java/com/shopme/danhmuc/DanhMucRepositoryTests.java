@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-public class DanhMucRepositoryTest {
+public class DanhMucRepositoryTests {
 	@Autowired private DanhMucRepository repo;
 
 	@Test

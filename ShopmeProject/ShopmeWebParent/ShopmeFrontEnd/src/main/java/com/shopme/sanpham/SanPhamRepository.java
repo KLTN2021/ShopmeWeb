@@ -13,4 +13,6 @@ public interface SanPhamRepository extends PagingAndSortingRepository<SanPham, I
 			+ "AND (p.danhmuc.maDanhMuc = ?1 OR p.danhmuc.tatCaMaDanhMucCha LIKE %?2%)"
 			+ " ORDER BY p.ten ASC")
 	public Page<SanPham> listByCategory(Integer categoryId, String categoryIDMatch, Pageable pageable);
+
+	public SanPham findByBiDanh(String biDanh);
 }
