@@ -50,11 +50,20 @@
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class="thead-dark">
 				<tr>
-					<th th:replace="fragments :: column_link('/sanpham', 'maSanPham', 'Mã sản phẩm', 'none')" />
+					<th class="hideable-column"> 
+					<th th:replace="fragments :: column_link('/sanpham', 'maSanPham', 'Mã sản phẩm', 'tag')" />
+					</th>
+					
 					<th>Hình ảnh chính</th>
 					<th th:replace="fragments :: column_link('/sanpham', 'ten', 'Tên sản phẩm', 'none')" />
-					<th th:replace="fragments :: column_link('/sanpham', 'nhanhieu', 'Nhãn hiệu', 'none')" />
-					<th th:replace="fragments :: column_link('/sanphan', 'danhmuc', 'Danh mục', 'none')" />
+					
+					<th class="hideable-column"> 
+					<th th:replace="fragments :: column_link('/sanpham', 'nhanhieu', 'Nhãn hiệu', 'tag')" />
+					</th>
+					
+					<th class="hideable-column"> 
+					<th th:replace="fragments :: column_link('/sanphan', 'danhmuc', 'Danh mục', 'tag')" />
+					</th>
 					
 					<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
 					<th>Trạng thái</th>
@@ -65,7 +74,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="product : ${listProducts}">
-					<td>[[${product.maSanPham}]]</td>
+					<td class="hideable-column">[[${product.maSanPham}]]</td>
 					<td>
 						<img th:src="@{${product.duongDanHinhAnhChinh}}" style="width: 120px" class="img-fluid" />
 					</td>
@@ -76,8 +85,8 @@
 							>[[${product.tenNgan}]]</a>					
 
 					</td>
-					<td>[[${product.nhanhieu.ten}]]</td>
-					<td>[[${product.danhmuc.ten}]]</td>
+					<td class="hideable-column">[[${product.nhanhieu.ten}]]</td>
+					<td class="hideable-column">[[${product.danhmuc.ten}]]</td>
 					
 					<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
 					<td>
@@ -105,6 +114,35 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	
+	<div class="less-details">
+		<div th:each="product : ${listProducts}" class="row m-1">
+			<div class="col-4">
+				<img th:src="@{${product.duongDanHinhAnhChinh}}" style="width: 80px" class="img-fluid" />			
+			</div>
+			<div class="col-8">
+				<div>
+					<a class="link-detail" th:href="@{'/sanpham/detail/' + ${product.maSanPham}}">[[${product.tenNgan}]]</a>				
+				</div>
+				<div class="mt-2">
+					<a class="fas fa-file-alt fa-2x icon-green link-detail"
+						th:href="@{'/sanpham/detail/' + ${product.maSanPham}}"
+						></a>
+
+					<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung', 'Nhân viên bán hàng')">
+					&nbsp; 	
+					<div th:replace="fragments :: edit('sanpham', '/sanpham/edit/' + ${product.maSanPham})" />
+					</th:block>
+
+					<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
+					&nbsp; 
+					<div th:replace="fragments :: delete('sanpham', ${product.maSanPham}, '/sanpham/delete/' + ${product.maSanPham}, true)" />
+					</th:block>		
+				</div>
+			</div>
+			<div>&nbsp;</div>
+		</div>	
 	</div>
 
 	<div th:replace="modal_fragments :: confirm_modal" />
