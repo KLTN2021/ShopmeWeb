@@ -1,22 +1,14 @@
 package com.shopme.admin.sanpham;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,11 +23,9 @@ import com.shopme.admin.security.ShopmeUserDetails;
 import com.shopme.common.entity.NhanHieu;
 import com.shopme.common.entity.DanhMuc;
 import com.shopme.common.entity.SanPham;
-import com.shopme.common.entity.HinhAnhSanPham;
 
 @Controller
 public class SanPhamController {
-	private static final Logger LOGGER = LoggerFactory.getLogger(SanPhamController.class);
 	
 	@Autowired private SanPhamService sanPhamService;
 	@Autowired private NhanHieuService nhanHieuService;
@@ -118,121 +108,21 @@ public class SanPhamController {
 			return "redirect:/sanpham";			
 		}
 			
-			setMainImageName(mainImageMultipart, product);
-			setExistingExtraImageNames(imageIDs, imageNames, product);
-			setNewExtraImageNames(extraImageMultiparts, product);
-			setProductDetails(detailIDs, detailNames, detailValues, product);
+		SanPhamSaveHelper.setMainImageName(mainImageMultipart, product);
+		SanPhamSaveHelper.setExistingExtraImageNames(imageIDs, imageNames, product);
+		SanPhamSaveHelper.setNewExtraImageNames(extraImageMultiparts, product);
+		SanPhamSaveHelper.setProductDetails(detailIDs, detailNames, detailValues, product);
 
-			SanPham savedProduct = sanPhamService.save(product);
+		SanPham savedProduct = sanPhamService.save(product);
 
-			saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
-			
-			deleteExtraImagesWeredRemovedOnForm(product);
-
-			ra.addFlashAttribute("message", "Sản phẩm đã được lưu thành công.");
-
-			return "redirect:/sanpham";
-
-	} 
-	
-	private void deleteExtraImagesWeredRemovedOnForm(SanPham product) {
-		String extraImageDir = "../product-images/" + product.getMaSanPham() + "/extras";
-		Path dirPath = Paths.get(extraImageDir);
-
-		try {
-			Files.list(dirPath).forEach(file -> {
-				String filename = file.toFile().getName();
-
-				if (!product.containsImageName(filename)) {
-					try {
-						Files.delete(file);
-						LOGGER.info("Đã xóa hình ảnh bổ sung: " + filename);
-
-					} catch (IOException e) {
-						LOGGER.error("Could not delete extra image: " + filename);
-					}
-				}
-
-			});
-		} catch (IOException ex) {
-			LOGGER.error("Could not list directory: " + dirPath);
-		}
-	}
-
-	private void setExistingExtraImageNames(String[] imageIDs, String[] imageNames, 
-			SanPham product) {
-		if (imageIDs == null || imageIDs.length == 0) return;
-
-		Set<HinhAnhSanPham> images = new HashSet<>();
-
-		for (int count = 0; count < imageIDs.length; count++) {
-			Integer maHinhAnh = Integer.parseInt(imageIDs[count]);
-			String ten = imageNames[count];
-
-			images.add(new HinhAnhSanPham(maHinhAnh, ten, product));
-		}
-
-		product.setHinhAnh(images);
-
-	}
-	
-	private void setProductDetails(String[] detailIDs, String[] detailNames, 
-			String[] detailValues, SanPham product) {
-		if (detailNames == null || detailNames.length == 0) return;
-
-		for (int count = 0; count < detailNames.length; count++) {
-			String ten = detailNames[count];
-			String value = detailValues[count];
-			Integer maChiTietSP = Integer.parseInt(detailIDs[count]);
-
-			if (maChiTietSP != 0) {
-				product.themChiTiet(maChiTietSP, ten, value);
-			} else if (!ten.isEmpty() && !value.isEmpty()) {
-				product.themChiTietSP(ten, value);
-			}
-		}
-	}
-	
-	private void saveUploadedImages(MultipartFile mainImageMultipart, 
-			MultipartFile[] extraImageMultiparts, SanPham savedProduct) throws IOException {
-		if (!mainImageMultipart.isEmpty()) {
-			String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
-			String uploadDir = "../product-images/" + savedProduct.getMaSanPham();
-
-			FileUploadUtil.cleanDir(uploadDir);		
-			FileUploadUtil.saveFile(uploadDir, fileName, mainImageMultipart);
-		}
+		SanPhamSaveHelper.saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
 		
-		if (extraImageMultiparts.length > 0) {
-			String uploadDir = "../product-images/" + savedProduct.getMaSanPham() + "/extras";
+		SanPhamSaveHelper.deleteExtraImagesWeredRemovedOnForm(product);
 
-			for (MultipartFile multipartFile : extraImageMultiparts) {
-				if (multipartFile.isEmpty()) continue;
+		ra.addFlashAttribute("message", "Sản phẩm đã được lưu thành công.");
 
-				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-			}
-		}
-	}
-	
-	private void setNewExtraImageNames(MultipartFile[] extraImageMultiparts, SanPham product) {
-		if (extraImageMultiparts.length > 0) {
-			for (MultipartFile multipartFile : extraImageMultiparts) {
-				if (!multipartFile.isEmpty()) {
-					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-					if (!product.containsImageName(fileName)) {
-						product.themHinhAnh(fileName);
-					}
-				}
-			}
-		}
-	}
+		return "redirect:/sanpham";
 
-	private void setMainImageName(MultipartFile mainImageMultipart, SanPham product) {
-		if (!mainImageMultipart.isEmpty()) {
-			String fileName = StringUtils.cleanPath(mainImageMultipart.getOriginalFilename());
-			product.setHinhAnhChinh(fileName);
-		}
 	}
 	
 	@GetMapping("/sanpham/{maSanPham}/trangThai/{status}")

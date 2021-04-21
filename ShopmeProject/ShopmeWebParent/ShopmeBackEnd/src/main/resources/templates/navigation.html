@@ -14,23 +14,47 @@
 		</button>
 		<div class="collapse navbar-collapse" id="topNavbar">
 			<ul class="navbar-nav">
-				<li class="nav-item" sec:authorize="hasAuthority('Quản trị viên')">
-					<a class="nav-link" th:href="@{/nguoidung}">Người dùng</a>
-				</li>
+				
+				<th:block sec:authorize="hasAuthority('Quản trị viên')">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown"
+						th:href="@{/nguoidung}">Người dùng</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" th:href="@{/nguoidung/new}">Tạo người dùng mới</a>
+						<a class="dropdown-item" th:href="@{/nguoidung}">Xem tất cả</a>
+					</div>
+				</li>						
+				</th:block>
 				
 				<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/danhmuc}">Danh mục</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown"
+						th:href="@{/danhmuc}">Danh mục</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" th:href="@{/danhmuc/new}">Tạo danh mục mới</a>
+						<a class="dropdown-item" th:href="@{/danhmuc}">Xem tất cả</a>
+					</div>	
 				</li>
 				
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/nhanhieu}">Nhãn hiệu</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown"
+						 th:href="@{/nhanhieu}">Nhãn hiệu</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" th:href="@{/nhanhieu/new}">Tạo nhãn hiệu mới</a>
+						<a class="dropdown-item" th:href="@{/nhanhieu}">Xem tất cả</a>
+					</div>	
 				</li>
 				</th:block>
 				
 				<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Nhân viên bán hàng', 'Người chỉnh sửa nội dung', 'Người giao hàng')">
-				<li class="nav-item">
-					<a class="nav-link" th:href="@{/sanpham}">Sản phẩm</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown"
+						th:href="@{/sanpham}">Sản phẩm</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" th:href="@{/sanpham/new}" 
+							sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">Tạo sản phẩm mới</a>
+						<a class="dropdown-item" th:href="@{/sanpham}">Xem tất cả</a>
+					</div>	
 				</li>
 				</th:block>
 				
