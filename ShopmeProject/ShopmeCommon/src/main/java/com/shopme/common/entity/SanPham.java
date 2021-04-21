@@ -293,4 +293,13 @@ public class SanPham {
 		}
 		return ten;
 	}
+	
+	@Transient
+	public float getGiamGia() {
+		if (chietKhau > 0) {
+			return giaBan * ((100 - chietKhau) / 100);
+		}
+		return this.giaBan;
+	}
+	
 }

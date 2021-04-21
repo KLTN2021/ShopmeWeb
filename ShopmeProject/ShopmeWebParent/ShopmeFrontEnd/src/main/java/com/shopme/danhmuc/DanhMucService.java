@@ -27,4 +27,23 @@ public class DanhMucService {
 
 		return listNoChildrenCategories;
 	}
+	
+	public DanhMuc getCategory(String biDanh) {
+		return repo.findByAliasEnabled(biDanh);
+	}
+
+	public List<DanhMuc> getCategoryParents(DanhMuc child) {
+		List<DanhMuc> listParents = new ArrayList<>();
+
+		DanhMuc parent = child.getDanhMucCha();
+
+		while (parent != null) {
+			listParents.add(0, parent);
+			parent = parent.getDanhMucCha();
+		}
+
+		listParents.add(child);
+
+		return listParents;
+	}
 }

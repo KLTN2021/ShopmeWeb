@@ -11,4 +11,7 @@ public interface DanhMucRepository extends CrudRepository<DanhMuc, Integer> {
 	
 	@Query("SELECT c FROM DanhMuc c WHERE c.trangThai = true ORDER BY c.ten ASC")
 	public List<DanhMuc> findAllTrangThai();
+	
+	@Query("SELECT c FROM DanhMuc c WHERE c.trangThai = true AND c.biDanh = ?1")
+	public DanhMuc findByAliasEnabled(String alias);
 }

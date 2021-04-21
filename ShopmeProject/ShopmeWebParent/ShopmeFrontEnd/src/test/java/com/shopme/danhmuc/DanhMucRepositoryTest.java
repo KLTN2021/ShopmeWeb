@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.shopme.common.entity.DanhMuc;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 public class DanhMucRepositoryTest {
@@ -21,5 +23,13 @@ public class DanhMucRepositoryTest {
 		categories.forEach(category -> {
 			System.out.println(category.getTen() + " (" + category.isTrangThai() + ")");
 		});
+	}
+	
+	@Test
+	public void testFindCategoryByAlias() {
+		String alias = "electronics";
+		DanhMuc category = repo.findByAliasEnabled(alias);
+
+		assertThat(category).isNotNull();
 	}
 }
