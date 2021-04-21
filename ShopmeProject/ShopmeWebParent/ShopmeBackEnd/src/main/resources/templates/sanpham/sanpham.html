@@ -17,11 +17,11 @@
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class="thead-dark">
 				<tr>
-					<th>Mã sản phẩm</th>
+					<th th:replace="fragments :: column_link('/sanpham', 'maSanPham', 'Mã sản phẩm', 'none')" />
 					<th>Hình ảnh chính</th>
-					<th>Tên sản phẩm</th>
-					<th>Nhãn hiệu</th>
-					<th>Danh mục</th>
+					<th th:replace="fragments :: column_link('/sanpham', 'ten', 'Tên sản phẩm', 'none')" />
+					<th th:replace="fragments :: column_link('/sanpham', 'nhanhieu', 'Nhãn hiệu', 'none')" />
+					<th th:replace="fragments :: column_link('/sanphan', 'danhmuc', 'Danh mục', 'none')" />
 					<th>Trạng thái</th>
 					<th></th>
 				</tr>								
@@ -35,8 +35,8 @@
 					<td>
 						<a class="link-detail"
 							th:href="@{'/sanpham/detail/' + ${product.maSanPham}}"
-							title="View details of this product"
-							>[[${product.ten}]]</a>					
+							th:title="${product.ten}"
+							>[[${product.tenNgan}]]</a>					
 
 					</td>
 					<td>[[${product.nhanhieu.ten}]]</td>
@@ -67,6 +67,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<div th:replace="fragments :: pagination('/sanpham', 'sanpham')"></div>
 
 	<div th:replace="fragments :: footer"></div>
 

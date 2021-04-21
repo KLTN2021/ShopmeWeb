@@ -285,4 +285,12 @@ public class SanPham {
 
 		return false;
 	}
+	
+	@Transient
+	public String getTenNgan() {
+		if (ten.length() > 70) {
+			return ten.substring(0, 70).concat("...");
+		}
+		return ten;
+	}
 }
