@@ -24,4 +24,19 @@ public interface SanPhamRepository extends PagingAndSortingRepository<SanPham, I
 			+ "OR p.nhanhieu.ten LIKE %?1% "
 			+ "OR p.danhmuc.ten LIKE %?1%")
 	public Page<SanPham> findAll(String keyword, Pageable pageable);
+	
+	@Query("SELECT p FROM SanPham p WHERE p.danhmuc.maDanhMuc = ?1 "
+			+ "OR p.danhmuc.tatCaMaDanhMucCha LIKE %?2%")	
+	public Page<SanPham> findAllInCategory(Integer categoryId, String categoryIdMatch, 
+			Pageable pageable);
+
+	@Query("SELECT p FROM SanPham p WHERE (p.danhmuc.maDanhMuc = ?1 "
+			+ "OR p.danhmuc.tatCaMaDanhMucCha LIKE %?2%) AND "
+			+ "(p.ten LIKE %?3% " 
+			+ "OR p.moTaNgan LIKE %?3% "
+			+ "OR p.moTaDayDu LIKE %?3% "
+			+ "OR p.nhanhieu.ten LIKE %?3% "
+			+ "OR p.danhmuc.ten LIKE %?3%)")			
+	public Page<SanPham> searchInCategory(Integer categoryId, String categoryIdMatch, 
+			String keyword, Pageable pageable);
 }

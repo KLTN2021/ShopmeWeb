@@ -25,7 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopme.admin.FileUploadUtil;
 import com.shopme.admin.nhanhieu.NhanHieuService;
+import com.shopme.admin.danhmuc.DanhMucService;
 import com.shopme.common.entity.NhanHieu;
+import com.shopme.common.entity.DanhMuc;
 import com.shopme.common.entity.SanPham;
 import com.shopme.common.entity.HinhAnhSanPham;
 
@@ -35,20 +37,24 @@ public class SanPhamController {
 	
 	@Autowired private SanPhamService sanPhamService;
 	@Autowired private NhanHieuService nhanHieuService;
+	@Autowired private DanhMucService danhMucService;
 
 	@GetMapping("/sanpham")
 	public String listFirstPage(Model model) {
-		return listByPage(1, model, "ten", "asc", null);
+		return listByPage(1, model, "ten", "asc", null, 0);
 	}
 	
 	@GetMapping("/sanpham/page/{pageNum}")
 	public String listByPage(
 			@PathVariable(name = "pageNum") int pageNum, Model model,
 			@Param("sortField") String sortField, @Param("sortDir") String sortDir,
-			@Param("keyword") String keyword
+			@Param("keyword") String keyword,
+			@Param("categoryId") Integer categoryId
 			) {
-		Page<SanPham> page = sanPhamService.listByPage(pageNum, sortField, sortDir, keyword);
+		Page<SanPham> page = sanPhamService.listByPage(pageNum, sortField, sortDir, keyword, categoryId);
 		List<SanPham> listProducts = page.getContent();
+		
+		List<DanhMuc> listCategories = danhMucService.listCategoriesUsedInForm();
 
 		long startCount = (pageNum - 1) * SanPhamService.PRODUCTS_PER_PAGE + 1;
 		long endCount = startCount + SanPhamService.PRODUCTS_PER_PAGE - 1;
@@ -57,6 +63,8 @@ public class SanPhamController {
 		}
 
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		
+		if (categoryId != null) model.addAttribute("categoryId", categoryId); 
 		
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("totalPages", page.getTotalPages());
@@ -68,6 +76,7 @@ public class SanPhamController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);		
 		model.addAttribute("listProducts", listProducts);
+		model.addAttribute("listCategories", listCategories);		
 		
 		return "sanpham/sanpham";		
 	}
