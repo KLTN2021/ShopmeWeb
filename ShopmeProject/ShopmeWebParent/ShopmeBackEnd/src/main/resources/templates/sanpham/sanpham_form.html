@@ -42,20 +42,45 @@
 		  	<div th:replace="sanpham/sanpham_overview :: content"></div>
 		  </div>
 		  <div class="tab-pane" id="description" role="tabpanel">
+		  	<th:block sec:authorize="hasAuthority('Nhân viên bán hàng')">
+		  	<div th:replace="sanpham/sanpham_description_read_only :: content"></div>
+		  	</th:block>
+
+		  	<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
 		  	<div th:replace="sanpham/sanpham_description :: content"></div>
+		  	</th:block>
 		  </div>
 		  <div class="tab-pane" id="images" role="tabpanel">
+		  	<th:block sec:authorize="hasAuthority('Nhân viên bán hàng')">
+		  	<div th:replace="sanpham/sanpham_images_read_only :: content"></div>
+		  	</th:block>		  
+
+		  	<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
 		  	<div th:replace="sanpham/sanpham_images :: content"></div>
+		  	</th:block>
 		  </div>
 		  <div class="tab-pane p-3" id="details" role="tabpanel">
+		  	<th:block sec:authorize="hasAuthority('Nhân viên bán hàng')">
+		  	<div th:replace="sanpham/sanpham_details_read_only :: content"></div>
+		  	</th:block>		  	
+
+		  	<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
 		  	<div th:replace="sanpham/sanpham_details :: content"></div>
 		  	<div>
 		  		<input type="button" class="btn btn-secondary" value="Add More Detail"
 		  			onclick="addNextDetailSection()" />
-		  	</div>	
+		  			
+		  	</div>
+		  	</th:block>	
 		  </div>
 		  <div class="tab-pane p-3" id="shipping" role="tabpanel">
+		  	<th:block sec:authorize="hasAuthority('Nhân viên bán hàng')">
+		  	<div th:replace="sanpham/sanpham_shipping_read_only :: content"></div>
+		  	</th:block>		  
+
+		  	<th:block sec:authorize="hasAnyAuthority('Quản trị viên', 'Người chỉnh sửa nội dung')">
 		  	<div th:replace="sanpham/sanpham_shipping :: content"></div>
+		  	</th:block>
 		  </div>
 		</div>	
 	</div>

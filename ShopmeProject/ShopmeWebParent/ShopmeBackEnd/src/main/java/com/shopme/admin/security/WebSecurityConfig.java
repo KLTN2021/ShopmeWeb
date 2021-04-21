@@ -44,7 +44,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/nguoidung/**").hasAuthority("Quản trị viên")
 			.antMatchers("/danhmuc/**", "/nhanhieu/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung")
-			.antMatchers("/sanpham/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung", "Nhân viên bán hàng", "Người giao hàng")
+			
+			.antMatchers("/sanpham/new", "/sanpham/delete/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung")
+
+			.antMatchers("/sanpham/edit/**", "/sanpham/save", "/sanpham/check_unique")
+				.hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung", "Nhân viên bán hàng")
+
+			.antMatchers("/sanpham", "/sanpham/", "/sanpham/detail/**", "/sanpham/page/**")
+				.hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung", "Nhân viên bán hàng", "Người giao hàng")
+
+			.antMatchers("/sanpham/**").hasAnyAuthority("Quản trị viên", "Người chỉnh sửa nội dung")
 			.anyRequest().authenticated()
 			.and()
 			.formLogin()

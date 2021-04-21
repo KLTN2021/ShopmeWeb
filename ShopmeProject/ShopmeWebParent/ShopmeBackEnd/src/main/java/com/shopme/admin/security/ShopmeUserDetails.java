@@ -15,6 +15,8 @@ import com.shopme.common.entity.TaiKhoan;
 
 public class ShopmeUserDetails implements UserDetails {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private TaiKhoan user;
 
 	public ShopmeUserDetails(TaiKhoan user) {
@@ -74,6 +76,10 @@ public class ShopmeUserDetails implements UserDetails {
 	
 	public void setTen(String ten) {
 		this.user.setTen(ten);
+	}
+	
+	public boolean hasPhanQuyen(String roleName) {
+		return user.hasPhanQuyen(roleName);
 	}
 
 }

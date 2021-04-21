@@ -94,82 +94,16 @@
 		</div>			  	
 	  </div>
 	  <div class="tab-pane" id="description" role="tabpanel">
-		<div class="m-2">
-			<label>Mô tả ngắn:</label>
-			<div th:utext="${product.moTaNgan}" class="border p-2 m-2"></div>
-		</div>
-
-		<div class="m-2">
-			<label>Mô tả đầy đủ:</label>
-			<div th:utext="${product.moTaDayDu}" class="border p-2 m-2"></div>
-		</div>	  
+		<div th:replace="sanpham/sanpham_description_read_only :: content"></div>
 	  </div>
 	  <div class="tab-pane" id="images" role="tabpanel">
-		<div class="row">
-			<div class="col border m-3 p-2">
-				<div><label>Hình ảnh chính: [[${product.hinhAnhChinh}]]</label></div>
-				<div class="m-2">
-					<img alt="Main image preview" class="img-fluid"
-						th:src="@{${product.duongDanHinhAnhChinh}}"/>
-				</div>
-			</div>
-
-			<th:block th:each="productImage, status : ${product.hinhAnh}">
-			<div class="col border m-3 p-2">
-				<div>
-					<label>Hình ảnh #[[${status.index + 1}]]: [[${productImage.ten}]]</label>				
-				</div>
-				<div class="m-2">
-					<img th:alt="'Extra image #' + ${status.index + 1} + ' preview'" class="img-fluid"
-						th:src="@{${productImage.duongDanHinhAnh}}"/>
-				</div>				
-			</div>		
-			</th:block>	  
-		  </div>
+		<div th:replace="sanpham/sanpham_images_read_only :: content"></div>
 	  </div>
 	  <div class="tab-pane p-3" id="details" role="tabpanel">
-		<div>
-			<table class="table table-striped table-bordered table-hover">
-				<thead class="thead-dark">
-					<tr>
-						<th width="40%">Tên</th>
-						<th>Value</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="detail: ${product.chitiet}">
-						<td>[[${detail.ten}]]</td>
-						<td>[[${detail.value}]]</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<div th:replace="sanpham/sanpham_details_read_only :: content"></div>
 	  </div>
 	  <div class="tab-pane p-3" id="shipping" role="tabpanel">
-		<div class="form-group row">
-			<label class="col-sm-2 col-form-label">Chiều dài (inch):</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" th:value="${product.chieuDai}" readonly/>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label class="col-sm-2 col-form-label">Chiều rộng (inch):</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" th:value="${product.chieuRong}" readonly/>
-			</div>
-		</div>		
-		<div class="form-group row">
-			<label class="col-sm-2 col-form-label">Chiều cao (inch):</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" th:value="${product.chieuCao}" readonly/>
-			</div>
-		</div>		
-		<div class="form-group row">
-			<label class="col-sm-2 col-form-label">Cân nặng (pounds):</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" th:value="${product.canNang}" readonly/>
-			</div>
-		</div>		
+		<div th:replace="sanpham/sanpham_shipping_read_only :: content"></div>
 	  </div>
 	</div>
 </div>

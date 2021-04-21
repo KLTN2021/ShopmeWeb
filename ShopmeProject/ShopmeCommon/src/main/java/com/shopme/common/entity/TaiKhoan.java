@@ -1,6 +1,7 @@
 package com.shopme.common.entity;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -148,6 +149,19 @@ public class TaiKhoan {
 	@Transient
 	public String getHoTen() {
 		return nHo + " " + nTen;
+	}
+	
+	public boolean hasPhanQuyen(String roleName) {
+		Iterator<PhanQuyen> iterator = phanquyen.iterator();
+
+		while (iterator.hasNext()) {
+			PhanQuyen role = iterator.next();
+			if (role.getTen().equals(roleName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 	
 }

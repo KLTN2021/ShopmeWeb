@@ -66,6 +66,15 @@ public class SanPhamService {
 		return repo.save(product);
 	}
 	
+	public void saveProductPrice(SanPham productInForm) {
+		SanPham productInDB = repo.findById(productInForm.getMaSanPham()).get();
+		productInDB.setChiPhi(productInForm.getChiPhi());
+		productInDB.setGiaBan(productInForm.getGiaBan());
+		productInDB.setChietKhau(productInForm.getChietKhau());
+
+		repo.save(productInDB);
+	}
+	
 	public String checkUnique(Integer maSanPham, String ten) {
 		boolean isCreatingNew = (maSanPham == null || maSanPham == 0);
 		SanPham productByName = repo.findByTen(ten);
