@@ -105,6 +105,13 @@ public class DanhMucService {
 	}
 	
 	public DanhMuc save(DanhMuc category) {
+		DanhMuc parent = category.getDanhMucCha();
+		if (parent != null) {
+			String allParentIds = parent.getTatCaMaDanhMucCha() == null ? "-" : parent.getTatCaMaDanhMucCha();
+			allParentIds += String.valueOf(parent.getMaDanhMuc()) + "-";
+			category.setTatCaMaDanhMucCha(allParentIds);
+		}
+		
 		return repo.save(category);
 	}
 

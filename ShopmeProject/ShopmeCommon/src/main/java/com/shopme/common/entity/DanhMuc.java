@@ -33,6 +33,9 @@ public class DanhMuc {
 	
 	private boolean trangThai;
 	
+	@Column(name = "tatca_cha_id", length = 256, nullable = true)
+	private String tatCaMaDanhMucCha;
+	
 	@OneToOne
 	@JoinColumn(name = "danhMucCha_id")
 	private DanhMuc danhMucCha;
@@ -177,6 +180,14 @@ public class DanhMuc {
 	@Override
 	public String toString() {
 		return this.ten;
+	}
+
+	public String getTatCaMaDanhMucCha() {
+		return tatCaMaDanhMucCha;
+	}
+
+	public void setTatCaMaDanhMucCha(String tatCaMaDanhMucCha) {
+		this.tatCaMaDanhMucCha = tatCaMaDanhMucCha;
 	}
 	
 	
