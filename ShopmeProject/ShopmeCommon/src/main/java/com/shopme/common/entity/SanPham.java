@@ -3,6 +3,7 @@ package com.shopme.common.entity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -74,10 +75,10 @@ public class SanPham {
 	@JoinColumn(name = "nhanhieu_id")
 	private NhanHieu nhanhieu;
 	
-	@OneToMany(mappedBy = "sanpham", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "sanpham", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<HinhAnhSanPham> hinhAnh = new HashSet<>();
 	
-	@OneToMany(mappedBy = "sanpham", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "sanpham", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ChiTietSanPham> chitiet = new ArrayList<>();
 
 	public Integer getMaSanPham() {
@@ -266,5 +267,22 @@ public class SanPham {
 	
 	public void themChiTietSP(String ten, String value) {
 		this.chitiet.add(new ChiTietSanPham(ten, value, this));
+	}
+	
+	public void themChiTiet(Integer maSanPham, String ten, String value) {
+		this.chitiet.add(new ChiTietSanPham(maSanPham, ten, value, this));
+	}
+
+	public boolean containsImageName(String imageName) {
+		Iterator<HinhAnhSanPham> iterator = hinhAnh.iterator();
+
+		while (iterator.hasNext()) {
+			HinhAnhSanPham image = iterator.next();
+			if (image.getTen().equals(imageName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

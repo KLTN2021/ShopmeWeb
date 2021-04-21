@@ -1,8 +1,15 @@
 package com.shopme.admin.sanpham;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +25,12 @@ import com.shopme.admin.FileUploadUtil;
 import com.shopme.admin.nhanhieu.NhanHieuService;
 import com.shopme.common.entity.NhanHieu;
 import com.shopme.common.entity.SanPham;
+import com.shopme.common.entity.HinhAnhSanPham;
 
 @Controller
 public class SanPhamController {
+	private static final Logger LOGGER = LoggerFactory.getLogger(SanPhamController.class);
+	
 	@Autowired private SanPhamService sanPhamService;
 	@Autowired private NhanHieuService nhanHieuService;
 
@@ -52,17 +62,23 @@ public class SanPhamController {
 	public String saveProduct(SanPham product, RedirectAttributes ra,
 			@RequestParam("fileImage") MultipartFile mainImageMultipart,
 			@RequestParam("extraImage") MultipartFile[] extraImageMultiparts,
+			@RequestParam(name = "detailIDs", required = false) String[] detailIDs,
 			@RequestParam(name = "detailNames", required = false) String[] detailNames,
-			@RequestParam(name = "detailValues", required = false) String[] detailValues) 
+			@RequestParam(name = "detailValues", required = false) String[] detailValues,
+			@RequestParam(name = "imageIDs", required = false) String[] imageIDs,
+			@RequestParam(name = "imageNames", required = false) String[] imageNames)
 					throws IOException {
 			
 			setMainImageName(mainImageMultipart, product);
-			setExtraImageNames(extraImageMultiparts, product);
-			setProductDetails(detailNames, detailValues, product);
+			setExistingExtraImageNames(imageIDs, imageNames, product);
+			setNewExtraImageNames(extraImageMultiparts, product);
+			setProductDetails(detailIDs, detailNames, detailValues, product);
 
 			SanPham savedProduct = sanPhamService.save(product);
 
 			saveUploadedImages(mainImageMultipart, extraImageMultiparts, savedProduct);
+			
+			deleteExtraImagesWeredRemovedOnForm(product);
 
 			ra.addFlashAttribute("message", "The product has been saved successfully.");
 
@@ -70,14 +86,59 @@ public class SanPhamController {
 
 	} 
 	
-	private void setProductDetails(String[] detailNames, String[] detailValues, SanPham product) {
+	private void deleteExtraImagesWeredRemovedOnForm(SanPham product) {
+		String extraImageDir = "../product-images/" + product.getMaSanPham() + "/extras";
+		Path dirPath = Paths.get(extraImageDir);
+
+		try {
+			Files.list(dirPath).forEach(file -> {
+				String filename = file.toFile().getName();
+
+				if (!product.containsImageName(filename)) {
+					try {
+						Files.delete(file);
+						LOGGER.info("Deleted extra image: " + filename);
+
+					} catch (IOException e) {
+						LOGGER.error("Could not delete extra image: " + filename);
+					}
+				}
+
+			});
+		} catch (IOException ex) {
+			LOGGER.error("Could not list directory: " + dirPath);
+		}
+	}
+
+	private void setExistingExtraImageNames(String[] imageIDs, String[] imageNames, 
+			SanPham product) {
+		if (imageIDs == null || imageIDs.length == 0) return;
+
+		Set<HinhAnhSanPham> images = new HashSet<>();
+
+		for (int count = 0; count < imageIDs.length; count++) {
+			Integer maHinhAnh = Integer.parseInt(imageIDs[count]);
+			String ten = imageNames[count];
+
+			images.add(new HinhAnhSanPham(maHinhAnh, ten, product));
+		}
+
+		product.setHinhAnh(images);
+
+	}
+	
+	private void setProductDetails(String[] detailIDs, String[] detailNames, 
+			String[] detailValues, SanPham product) {
 		if (detailNames == null || detailNames.length == 0) return;
 
 		for (int count = 0; count < detailNames.length; count++) {
 			String ten = detailNames[count];
 			String value = detailValues[count];
+			Integer maChiTietSP = Integer.parseInt(detailIDs[count]);
 
-			if (!ten.isEmpty() && !value.isEmpty()) {
+			if (maChiTietSP != 0) {
+				product.themChiTiet(maChiTietSP, ten, value);
+			} else if (!ten.isEmpty() && !value.isEmpty()) {
 				product.themChiTietSP(ten, value);
 			}
 		}
@@ -105,12 +166,14 @@ public class SanPhamController {
 		}
 	}
 	
-	private void setExtraImageNames(MultipartFile[] extraImageMultiparts, SanPham product) {
+	private void setNewExtraImageNames(MultipartFile[] extraImageMultiparts, SanPham product) {
 		if (extraImageMultiparts.length > 0) {
 			for (MultipartFile multipartFile : extraImageMultiparts) {
 				if (!multipartFile.isEmpty()) {
 					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-					product.themHinhAnh(fileName);
+					if (!product.containsImageName(fileName)) {
+						product.themHinhAnh(fileName);
+					}
 				}
 			}
 		}

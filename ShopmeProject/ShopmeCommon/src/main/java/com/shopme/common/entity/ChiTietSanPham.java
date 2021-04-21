@@ -29,6 +29,18 @@ public class ChiTietSanPham {
 
 	public ChiTietSanPham() {
 	}
+	
+	
+
+	public ChiTietSanPham(Integer maChiTietSP, String ten, String value, SanPham sanpham) {
+		super();
+		this.maChiTietSP = maChiTietSP;
+		this.ten = ten;
+		this.value = value;
+		this.sanpham = sanpham;
+	}
+
+
 
 	public ChiTietSanPham(String ten, String value, SanPham sanpham) {
 		this.ten = ten;

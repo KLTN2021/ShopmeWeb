@@ -26,6 +26,12 @@ public class HinhAnhSanPham {
 
 	public HinhAnhSanPham() {
 	}
+	
+	public HinhAnhSanPham(Integer maHinhAnh, String ten, SanPham sanpham) {
+		this.maHinhAnh = maHinhAnh;
+		this.ten = ten;
+		this.sanpham = sanpham;
+	}
 
 	public HinhAnhSanPham(String ten, SanPham sanpham) {
 		this.ten = ten;
