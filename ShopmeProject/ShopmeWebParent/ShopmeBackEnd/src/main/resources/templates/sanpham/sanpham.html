@@ -32,14 +32,20 @@
 					<td>
 						<img th:src="@{${product.duongDanHinhAnhChinh}}" style="width: 120px" class="img-fluid" />
 					</td>
-					<td>[[${product.ten}]]</td>
+					<td>
+						<a class="link-detail"
+							th:href="@{'/sanpham/detail/' + ${product.maSanPham}}"
+							title="View details of this product"
+							>[[${product.ten}]]</a>					
+
+					</td>
 					<td>[[${product.nhanhieu.ten}]]</td>
 					<td>[[${product.danhmuc.ten}]]</td>
 					<td>
 						<div th:replace="fragments :: status(${product.trangThai}, 'sanpham', '/sanpham/' + ${product.maSanPham})" />
 					</td>
 					<td>
-						<a class="fas fa-file-alt fa-2x icon-green"
+						<a class="fas fa-file-alt fa-2x icon-green link-detail"
 							th:href="@{'/sanpham/detail/' + ${product.maSanPham}}"
 							title="View details of this product"
 							></a>
@@ -54,18 +60,31 @@
 	</div>
 
 	<div th:replace="modal_fragments :: confirm_modal" />
+	
+	<div class="modal fade" id="detailModal">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
 
 	<div th:replace="fragments :: footer"></div>
 
 </div>
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
-	moduleURL = "[[@{/nhanhieu}]]";
+	moduleURL = "[[@{/sanpham}]]";
 
 	$(document).ready(function() {
 		$(".link-delete").on("click", function(e) {
 			e.preventDefault();
 			showDeleteConfirmModal($(this), 'sanpham');
+		});
+		
+		$(".link-detail").on("click", function(e) {
+			e.preventDefault();
+			linkDetailURL = $(this).attr("href");
+			$("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
 		});
 	});
 </script>

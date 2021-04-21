@@ -80,7 +80,7 @@ public class SanPhamController {
 			
 			deleteExtraImagesWeredRemovedOnForm(product);
 
-			ra.addFlashAttribute("message", "The product has been saved successfully.");
+			ra.addFlashAttribute("message", "Sản phẩm đã được lưu thành công.");
 
 			return "redirect:/sanpham";
 
@@ -97,7 +97,7 @@ public class SanPhamController {
 				if (!product.containsImageName(filename)) {
 					try {
 						Files.delete(file);
-						LOGGER.info("Deleted extra image: " + filename);
+						LOGGER.info("Đã xóa hình ảnh bổ sung: " + filename);
 
 					} catch (IOException e) {
 						LOGGER.error("Could not delete extra image: " + filename);
@@ -228,11 +228,27 @@ public class SanPhamController {
 
 			model.addAttribute("product", product);
 			model.addAttribute("listBrands", listBrands);
-			model.addAttribute("pageTitle", "Edit Product (ID: " + maSanPham + ")");
+			model.addAttribute("pageTitle", "Chỉnh sửa thông tin sản phẩm (Mã sản phẩm: " + maSanPham + ")");
 			model.addAttribute("numberOfExistingExtraImages", numberOfExistingExtraImages);
 
 
 			return "sanpham/sanpham_form";
+
+		} catch (SanPhamNotFoundException e) {
+			ra.addFlashAttribute("message", e.getMessage());
+
+			return "redirect:/sanpham";
+		}
+	}
+	
+	@GetMapping("/sanpham/detail/{maSanPham}")
+	public String viewProductDetails(@PathVariable("maSanPham") Integer maSanPham, Model model,
+			RedirectAttributes ra) {
+		try {
+			SanPham product = sanPhamService.get(maSanPham);			
+			model.addAttribute("product", product);		
+
+			return "sanpham/sanpham_detail_modal";
 
 		} catch (SanPhamNotFoundException e) {
 			ra.addFlashAttribute("message", e.getMessage());

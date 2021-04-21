@@ -4,7 +4,7 @@
 <div th:fragment="content" th:remove="tag">
 	<div class="row" id="divProductImages">
 		<div class="col border m-3 p-2">
-			<div><label>Main Image: [[${product.hinhAnhChinh}]]</label></div>
+			<div><label>Hình ảnh chính: [[${product.hinhAnhChinh}]]</label></div>
 			<div class="m-2">
 				<img id="thumbnail" alt="Main image preview" class="img-fluid"
 					th:src="@{${product.duongDanHinhAnhChinh}}"/>
@@ -20,7 +20,7 @@
 		<th:block th:each="productImage, status : ${product.hinhAnh}">
 			<div class="col border m-3 p-2" th:id="'divExtraImage' + ${status.index}">
 			<div>
-				<label>Extra Image #[[${status.index + 1}]]: [[${productImage.ten}]]</label>
+				<label>Hình ảnh #[[${status.index + 1}]]: [[${productImage.ten}]]</label>
 				<a name="linkRemoveExtraImage"
 					class="btn fas fa-times-circle fa-2x icon-dark float-right"
 					title="Remove this image"></a>
@@ -45,7 +45,7 @@
 		
 		<div class="col border m-3 p-2" th:id="'divExtraImage' + ${numberOfExistingExtraImages}">
 			<div th:id="'extraImageHeader' + ${numberOfExistingExtraImages}">
-				<label>Extra Image  [[${numberOfExistingExtraImages}]]:</label>
+				<label>Hình ảnh  [[${numberOfExistingExtraImages}]]:</label>
 			</div>
 			<div class="m-2">
 				<img th:id="'extraThumbnail' + ${numberOfExistingExtraImages}" 
