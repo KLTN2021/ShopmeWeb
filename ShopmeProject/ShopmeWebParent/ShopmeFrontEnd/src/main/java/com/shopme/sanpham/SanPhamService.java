@@ -12,7 +12,8 @@ import com.shopme.common.exception.SanPhamNotFoundException;
 @Service
 public class SanPhamService {
 	public static final int PRODUCTS_PER_PAGE = 10;
-
+	public static final int SEARCH_RESULTS_PER_PAGE = 10;
+	
 	@Autowired private SanPhamRepository repo;
 
 	public Page<SanPham> listByCategory(int pageNum, Integer categoryId) {
@@ -30,5 +31,11 @@ public class SanPhamService {
 		}
 
 		return product;
+	}
+	
+	public Page<SanPham> search(String keyword, int pageNum) {
+		Pageable pageable = PageRequest.of(pageNum - 1, SEARCH_RESULTS_PER_PAGE);
+		return repo.search(keyword, pageable);
+
 	}
 }

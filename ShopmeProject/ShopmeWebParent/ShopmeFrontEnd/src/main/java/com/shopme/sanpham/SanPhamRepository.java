@@ -15,4 +15,10 @@ public interface SanPhamRepository extends PagingAndSortingRepository<SanPham, I
 	public Page<SanPham> listByCategory(Integer categoryId, String categoryIDMatch, Pageable pageable);
 
 	public SanPham findByBiDanh(String biDanh);
+	
+	@Query(value = "SELECT * FROM sanpham WHERE trang_thai = true AND "
+			+ "MATCH(ten, mota_ngan, mota_daydu) AGAINST (?1)", 
+			nativeQuery = true)
+	public Page<SanPham> search(String keyword, Pageable pageable);
+	
 }

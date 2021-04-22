@@ -4,7 +4,8 @@
 <body>
 <div class="container-fluid">
 	<div th:replace="navigation :: header_menu"></div>
-
+	
+	<div th:replace="navigation :: search_nav"></div>
 	<div th:replace="breadcrumb :: content"></div>
 
 	<div class="row text-center">
@@ -22,23 +23,7 @@
 	<div class="row">&nbsp;</div>
 	<div class="row">
 		<th:block th:each="product : ${listProducts}">
-		<div class="col">
-			<div>
-				<a th:href="@{'/p/' + ${product.biDanh}}">
-					<img th:src="@{${product.duongDanHinhAnhChinh}}" width="150" />
-					<br/>
-					<b>[[${product.tenNgan}]]</b>
-				</a>
-			</div>
-			<div th:if="${product.chietKhau <= 0}">
-				<span>$ [[${product.giaBan}]]</span>
-			</div>
-			<div th:if="${product.chietKhau > 0}">
-				<span style="font-size: larger; color: darkred">$ [[${product.giamGia}]]</span>
-				<del><span>$ [[${product.giaBan}]]</span></del>
-			</div>
-
-		</div>
+		<div th:replace="sanpham/sanpham_fragment :: content"></div>
 		</th:block>
 	</div>
 
